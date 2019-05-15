@@ -18,14 +18,17 @@ from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from HomeSwitchHome import views
 from HomeSwitchHome.views import *
+from django.urls import reverse_lazy
 
 
 urlpatterns = [
 	path('', views.home, name='home'),
-    path('administracion/', views.administracion, name='administracion'),
     path('administracion/agregar_propiedad', views.agregar_propiedad, name='agregar_prop'),
     path('administracion/registrar', views.RegistroUsuario.as_view(), name= 'RegistroAdmin'),
-    path('administracion/iniciarsesion', views.Login.as_view(), name= 'InicioAdmin')
+    path('administracion/iniciarsesion', views.Login.as_view(), name= 'InicioAdmin'),
+    url (r'^', views.home, name = 'home'),
+	url (r'^cerrarsesion', views.Logout, name='salir',kwargs={'next_page':reverse_lazy('InicioAdmin')}),
+    url (r'^administracion/', views.administracion, name='administracion'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
