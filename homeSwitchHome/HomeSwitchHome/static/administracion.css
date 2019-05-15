@@ -1,0 +1,33 @@
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.menu-lateral-container {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 55px;
+  left: 0;
+  background-color: #343a40 ;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.menu-lateral-container-title {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #ddd   ;
+  display: block;
+}
+
+.main-container {
+  margin-left: 160px; 
+}
+
+.propiedad{
+  padding: 10px;
+  background-color: #f9f9f9;
+  margin-bottom: 5px;
+}

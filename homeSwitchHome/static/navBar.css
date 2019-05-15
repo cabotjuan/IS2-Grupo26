@@ -1,0 +1,9 @@
+div.navBar{
+	height: 50px;
+	background-color: #784b71;
+	position: fixed;
+	top: 0;
+	display: inline-block;
+	width: 100%;
+	margin: 0;
+}

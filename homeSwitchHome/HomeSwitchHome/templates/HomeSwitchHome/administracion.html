@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "administracion.css" %}">
+
+<title>Administracion</title>
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-4">Administración</h1>
+			<p class="lead"></p>
+		</div>
+	</div>
+	{% if agregar_prop %}
+		
+	{% else %}
+	<div class="prop-container">
+		<h1>Listado de Propiedades</h1>
+		<hr>
+		{% include 'HomeSwitchHome/listado_prop.html' %}
+	</div>
+	{% endif %}
+</div>
+<div class="menu-lateral-container">
+	<h2 class="menu-lateral-container-title">Menu</h2>
+	<a class="btn btn-primary btn-sm" href="{% url 'agregar_prop' %}">Agregar Propiedad</a>
+</div>

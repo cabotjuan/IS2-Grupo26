@@ -1,0 +1,22 @@
+body{
+	margin: 0
+}
+
+.container{
+	align-content: center;
+	width: 100%;
+	text-align: center;
+	background: #d8d8d8;
+	position: absolute;
+    margin-top: 51px;
+}
+
+div.navBar{
+	height: 50px;
+	background-color: #784b71;
+	position: fixed;
+	top: 0;
+	display: inline-block;
+	width: 100%;
+	margin: 0;
+}

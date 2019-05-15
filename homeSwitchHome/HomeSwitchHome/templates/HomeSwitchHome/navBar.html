@@ -1,5 +1,8 @@
-{% extends "HomeSwitchHome/home.html" %}
-Hola 2
-{% block content %}
-	hola de navBar
-{% endblock %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static "navBar.css" %}">
+<div class="navbar-container">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<a class="navbar-brand" href="#">Home Switch Home</a>
+	</nav>
+</div>

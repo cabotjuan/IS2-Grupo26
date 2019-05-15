@@ -16,8 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from HomeSwitchHome import views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
 	path('', views.home, name='home'),
-    path('admin/', admin.site.urls),
+    path('administracion/', views.administracion, name='administracion'),
+    path('administracion/agregar_propiedad', views.agregar_propiedad, name='agregar_prop'),
 ]
+
+urlpatterns += staticfiles_urlpatterns()
