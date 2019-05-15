@@ -15,13 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from HomeSwitchHome import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from HomeSwitchHome import views
+from HomeSwitchHome.views import *
+
 
 urlpatterns = [
 	path('', views.home, name='home'),
     path('administracion/', views.administracion, name='administracion'),
     path('administracion/agregar_propiedad', views.agregar_propiedad, name='agregar_prop'),
+    path('administracion/registrar', views.RegistroUsuario.as_view(), name= 'RegistroAdmin'),
+    path('administracion/iniciarsesion', views.Login.as_view(), name= 'InicioAdmin')
 ]
 
 urlpatterns += staticfiles_urlpatterns()
