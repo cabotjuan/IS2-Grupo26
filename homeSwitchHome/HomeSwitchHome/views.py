@@ -16,10 +16,10 @@ def home(request):
 	return render(request, 'HomeSwitchHome/home.html',{})
 
 def administracion(request):
-	#if request.user.is_authenticated
-	return render(request, 'HomeSwitchHome/administracion.html', {})
-	#else
-	#	return render(request, 'HomeSwitchHome/login.html',{})
+	if request.user.is_authenticated
+		return render(request, 'HomeSwitchHome/administracion.html', {})
+	else
+		return render(request, 'HomeSwitchHome/login.html',{})
 
 def Prop_list(request):
 	propiedades = Propiedad.objects.all()
