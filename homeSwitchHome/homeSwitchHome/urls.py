@@ -27,7 +27,7 @@ urlpatterns = [
     path('administracion/registrar', views.RegistroUsuario.as_view(), name= 'RegistroAdmin'),
     path('administracion/iniciarsesion', views.Login.as_view(), name= 'InicioAdmin'),
  #    url(r'^', views.home, name = 'home'),
-	# url(r'^cerrarsesion', views.Logout, name='salir',kwargs={'next_page':reverse_lazy('InicioAdmin')}),
+	path('administracion/cerrarsesion', views.Logout.as_view(), name='salir'),
  	path('administracion/', views.administracion, name='administracion'),
 ]
 

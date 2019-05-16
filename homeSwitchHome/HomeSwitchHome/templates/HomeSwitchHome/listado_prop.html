@@ -1,45 +1,21 @@
+
+{% for Propiedad in propiedades %} 
 	<div class="Propiedad">
-		<div class="propiedad-fila">casa quinta</div>
+		<div class="propiedad-fila">{{ Propiedad.titulo }}</div>
 		<details>	
-			<div class="propiedad-fila">casa quinta en muy buen estado. comodidades. dos dormitorios cocina comedor baño lavadero  patio...</div>
-			<div class="propiedad-fila">Argentina</div>
-			<div class="propiedad-fila">Buenos Aires</div>
-			<div class="propiedad-fila">Siccardi 1234</div>
+			<div class="propiedad-fila">{{ Propiedad.descripcion }}</div>
+			<div class="propiedad-fila">{{ Propiedad.pais }}</div>
+			<div class="propiedad-fila">{{ Propiedad.provincia }}</div>
+			<div class="propiedad-fila">{{ Propiedad.direccion }}</div>
 		</details>
 		<button class="btn btn-primary btn-sm">Modificar</button>
 		<button class="btn btn-primary btn-sm">Eliminar</button>
 	</div>
-	<div class="Propiedad">
-		<div class="propiedad-fila">casa quinta</div>
-		<details>	
-			<div class="propiedad-fila">casa quinta en muy buen estado. comodidades. dos dormitorios cocina comedor baño lavadero  patio...</div>
-			<div class="propiedad-fila">Argentina</div>
-			<div class="propiedad-fila">Buenos Aires</div>
-			<div class="propiedad-fila">Siccardi 1234</div>
-		</details>
-	</div>
-	<div class="Propiedad">
-		<div class="propiedad-fila">casa quinta</div>
-		<details>	
-			<div class="propiedad-fila">casa quinta en muy buen estado. comodidades. dos dormitorios cocina comedor baño lavadero  patio...</div>
-			<div class="propiedad-fila">Argentina</div>
-			<div class="propiedad-fila">Buenos Aires</div>
-			<div class="propiedad-fila">Siccardi 1234</div>
-		</details>
-	</div>
 
-
-
-
-{% comment %}
-
-{% for Propiedad in prop_list %} 
-	{{ Propiedad.titulo }}
-	{{ Propiedad.descripcion }}
-	{{ Propiedad.pais }}
-	{{ Propiedad.provincia }}
-	{{ Propiedad.direccion }}
-	{{ Propiedad.fotos }}
+	
+	
+	
+	
+	
+	
 {% endfor %}
-
-{% endcomment %}
