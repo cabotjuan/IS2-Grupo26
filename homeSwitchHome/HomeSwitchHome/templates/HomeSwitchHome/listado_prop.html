@@ -8,8 +8,8 @@
 			<div class="propiedad-fila">{{ Propiedad.provincia }}</div>
 			<div class="propiedad-fila">{{ Propiedad.direccion }}</div>
 		</details>
-		<button class="btn btn-primary btn-sm">Modificar</button>
-		<button class="btn btn-primary btn-sm">Eliminar</button>
+	<a class="btn btn-primary btn-sm" href="{% url 'modificar_prop' Propiedad.id %}">Modificar</a>
+	<a class="btn btn-primary btn-sm">Eliminar</a>
 	</div>
 
 	

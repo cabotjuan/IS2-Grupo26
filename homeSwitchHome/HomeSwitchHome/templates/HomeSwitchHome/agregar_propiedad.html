@@ -15,7 +15,14 @@
 		</div>
 	</div>
 	<div class="prop-container">
-		<h1>Agregar Propiedad</h1>
+
+		<h1>
+			{% if request.path == '/administracion/agregar_propiedad' %} 
+				Agregar Propiedad
+			{% else %}
+				Modificar Propiedad
+			{% endif %}
+		</h1>
 		<hr>
 
 		<form method="post"> {% csrf_token %}

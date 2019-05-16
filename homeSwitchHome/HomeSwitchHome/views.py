@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Propiedad
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -30,23 +30,27 @@ def administracion(request):
 		return redirect(reverse_lazy('InicioAdmin'))
 	
 def agregar_propiedad(request):
-
+	form = forms.PropiedadForm(request.POST or None)
 	if request.method == 'GET':
-		form = forms.PropiedadForm()
 		return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form})
 	else:
-		form = forms.PropiedadForm(request.POST)
 		if form.is_valid():
 			form.save()
 			return redirect(reverse_lazy('administracion'))
-	# if request.method == 'POST':
-	# 	form = forms.PropiedadForm()
-	# 	if form.is_valid():
-	# 		form.save()
-	# 		return redirect(reverse_lazy('InicioAdmin'))
-	# else:
- #    	form = forms.PropiedadForm()
 
+def modificar_propiedad(request, id):
+	prop = get_object_or_404(Propiedad, id=id)
+	form = forms.PropiedadForm(request.POST or None, instance=prop)
+
+	if request.method == 'GET':
+		return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form})
+	else:
+		if form.is_valid():
+			prop = form.save()
+			return redirect(reverse_lazy('administracion'))
+		else:
+			return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form,
+				'error':'Error al Actualizar propiedad.'})
 
 class RegistroUsuario (CreateView):
 	model= User

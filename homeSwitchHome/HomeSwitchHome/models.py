@@ -23,8 +23,8 @@ class Semana(models.Model):
 	numero_semana = models.IntegerField()
 
 class Subasta(models.Model):
-	fecha_inicio = models.DateTimeField(auto_now_add=True)
-	fecha_fin = models.DateTimeField(blank=True)
+	fecha_inicio = models.DsateField(auto_now_add=True)
+	fecha_fin = models.DateField(blank=True)
 
 class Postor(models.Model):
 	mail = models.EmailField()
