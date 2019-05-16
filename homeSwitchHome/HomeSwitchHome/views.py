@@ -13,11 +13,11 @@ from django.shortcuts import redirect
 
 from django.contrib.auth.views import LoginView, LogoutView
 
+from HomeSwitchHome import forms
 
 # Create your views here.
 
 def home(request):
-
 	return render(request, 'HomeSwitchHome/home.html',{})
 
 
@@ -30,8 +30,22 @@ def administracion(request):
 		return redirect(reverse_lazy('InicioAdmin'))
 	
 def agregar_propiedad(request):
-	return render(request, 'HomeSwitchHome/agregar_propiedad.html')
-	#propiedades = Propiedad.objects.all()
+
+	if request.method == 'GET':
+		form = forms.PropiedadForm()
+		return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form})
+	else:
+		form = forms.PropiedadForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect(reverse_lazy('administracion'))
+	# if request.method == 'POST':
+	# 	form = forms.PropiedadForm()
+	# 	if form.is_valid():
+	# 		form.save()
+	# 		return redirect(reverse_lazy('InicioAdmin'))
+	# else:
+ #    	form = forms.PropiedadForm()
 
 
 class RegistroUsuario (CreateView):

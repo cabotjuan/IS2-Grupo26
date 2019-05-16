@@ -17,6 +17,12 @@
 	<div class="prop-container">
 		<h1>Agregar Propiedad</h1>
 		<hr>
-		
+
+		<form method="post"> {% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value="Save">
+		</form>
+
+
 	</div>
 </div>
