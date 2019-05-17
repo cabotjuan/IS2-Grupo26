@@ -20,14 +20,23 @@ from HomeSwitchHome import forms
 def home(request):
 	return render(request, 'HomeSwitchHome/home.html',{})
 
+def listado_prop(request):
+	propiedades = Propiedad.objects.all()
+	template = 'HomeSwitchHome/listado_prop.html'
+	return render(request, template, {'propiedades':propiedades})
+	
 
 def administracion(request):
-	propiedades = Propiedad.objects.all()
 	if request.user.is_authenticated:
 		template = 'HomeSwitchHome/administracion.html'
-		return render(request, template, {'propiedades':propiedades})
+		return render(request, template, {})
 	else:
 		return redirect(reverse_lazy('InicioAdmin'))
+
+
+def propiedad(request, id):
+	p = Propiedad.objects.get(id=id)
+	return render(request, 'HomeSwitchHome/propiedad.html',{'Propiedad':p})
 	
 def agregar_propiedad(request):
 	form = forms.PropiedadForm(request.POST or None)

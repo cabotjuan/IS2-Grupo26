@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "administracion.css" %}">
+
+<title>Administracion</title>
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+	<div class="prop-container">
+		<h1>{{Propiedad.titulo}}</h1>
+		<hr>
+		<a class="btn btn-outline-danger" href="{% url 'modificar_prop' Propiedad.id %}">Modificar</a>
+		<a class="btn btn-outline-danger" href="#">Eliminar</a>
+		<a class="btn btn-success" href="#">Habilitar Subasta</a>
+		<hr>
+
+		<div class="row">
+			<div class="col">
+				Descripcion:		<h5>{{Propiedad.descripcion}}</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				Pais:		<h5>{{Propiedad.pais}}</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				Provincia:		<h5>{{Propiedad.provincia}}</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				Direccion:		<h5>{{Propiedad.direccion}}</h5>
+			</div>
+		</div>
+		
+
+
+
+
+	</div>

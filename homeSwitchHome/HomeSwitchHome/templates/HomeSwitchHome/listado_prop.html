@@ -1,21 +1,26 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-{% for Propiedad in propiedades %} 
-	<div class="Propiedad">
-		<div class="propiedad-fila">{{ Propiedad.titulo }}</div>
-		<details>	
-			<div class="propiedad-fila">{{ Propiedad.descripcion }}</div>
-			<div class="propiedad-fila">{{ Propiedad.pais }}</div>
-			<div class="propiedad-fila">{{ Propiedad.provincia }}</div>
-			<div class="propiedad-fila">{{ Propiedad.direccion }}</div>
-		</details>
-	<a class="btn btn-primary btn-sm" href="{% url 'modificar_prop' Propiedad.id %}">Modificar</a>
-	<a class="btn btn-primary btn-sm">Eliminar</a>
+{% load static %}
+<link rel="stylesheet" href="{% static "administracion.css" %}">
+
+<title>Administracion</title>
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-4">Administración</h1>
+			<p class="lead"></p>
+		</div>
 	</div>
 
-	
-	
-	
-	
-	
-	
-{% endfor %}
+<div class="prop-container">
+		<h1>Listado de Propiedades</h1>
+		<hr>
+		<ul class="list-group">
+		{% for Propiedad in propiedades %} 
+			<a class='list-group-item list-group-item-action' href='/administracion/propiedad/{{Propiedad.id}}'>{{ Propiedad.titulo }}</a>
+		{% endfor %}
+		</ul>
+	</div>

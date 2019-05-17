@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'HomeSwitchHome'
 ]
 
@@ -125,3 +126,6 @@ LOGIN_URL = '/administracion/iniciarsesion'
 LOGIN_REDIRECT_URL = '/administracion/'
 
 LOGOUT_REDIRECT_URL = '/administracion/iniciarsesion'
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

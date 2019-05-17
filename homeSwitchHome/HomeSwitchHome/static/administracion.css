@@ -2,16 +2,28 @@ body {
   font-family: "Lato", sans-serif;
 }
 
-.menu-lateral-container {
-  height: 100%;
-  width: 160px;
+.cerrar-sesion-btn{
+  right: 10px;
+  top: 11px;
   position: fixed;
-  z-index: 1;
-  top: 55px;
-  left: 0;
-  background-color: #343a40 ;
-  overflow-x: hidden;
-  padding-top: 20px;
+}
+.show-username{
+  position: absolute;
+  right: 135px;
+  top: 15px;
+  color: white !important;
+
+}
+
+.menu-lateral-container {
+    height: auto;
+    width: auto;
+    position: absolute;
+    z-index: 1;
+    padding: 20px;
+    right: 60px;
+    left: 60px;
+
 }
 
 .menu-lateral-container-title {
@@ -22,12 +34,20 @@ body {
   display: block;
 }
 
-.main-container {
-  margin-left: 160px; 
+.main-container { 
+  margin-top: 56px;
 }
 
 .propiedad{
   padding: 10px;
   background-color: #f9f9f9;
   margin-bottom: 5px;
+}
+.prop-container{
+  margin-top: 75px;
+  padding: 10px;
+}
+
+.form-container{
+  padding-right: 150px;
 }

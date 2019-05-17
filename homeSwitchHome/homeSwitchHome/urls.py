@@ -23,6 +23,8 @@ from django.urls import reverse_lazy
 
 urlpatterns = [
 	path('', views.home, name='home'),
+    path('administracion/listado_prop', views.listado_prop, name='listado_prop'),
+    path('administracion/propiedad/<id>', views.propiedad, name='prop'),
     path('administracion/agregar_propiedad', views.agregar_propiedad, name='agregar_prop'),
     path('administracion/modificar_propiedad/<id>', views.modificar_propiedad, name='modificar_prop'),
     path('administracion/registrar', views.RegistroUsuario.as_view(), name= 'RegistroAdmin'),

@@ -14,15 +14,9 @@
 			<p class="lead"></p>
 		</div>
 	</div>
-	
-	<div class="prop-container">
-		<h1>Listado de Propiedades</h1>
-		<hr>
-		{% include 'HomeSwitchHome/listado_prop.html' %}
-	</div>
 
 </div>
 <div class="menu-lateral-container">
-	<h2 class="menu-lateral-container-title">Menu</h2>
-	<a class="btn btn-primary btn-sm" href="{% url 'agregar_prop' %}">Agregar Propiedad</a>
+	<a class='btn btn-outline-info btn-lg btn-block' href="{% url 'agregar_prop' %}">Agregar Propiedad</a>
+		<a class="btn btn-outline-info btn-lg btn-block" href="{% url 'listado_prop' %}">Ver Listado Propiedades</a>
 </div>
