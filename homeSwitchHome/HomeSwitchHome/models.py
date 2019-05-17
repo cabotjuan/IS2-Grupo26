@@ -1,5 +1,5 @@
 from django.db import models
-
+from datetime import date
 # Create your models here.
 
 class Propiedad(models.Model):
@@ -18,10 +18,12 @@ class Semana(models.Model):
 	propiedad = models.ForeignKey('Propiedad', on_delete=models.DO_NOTHING)
 	subasta = models.OneToOneField('Subasta', null=True, on_delete=models.DO_NOTHING)
 	#reserva = models.OneToOneField('Reserva', null=True, on_delete=models.DO_NOTHING)
-	monto_base = models.FloatField()
-	costo = models.FloatField()
-	numero_semana = models.IntegerField()
-
+	monto_base = models.FloatField(blank=True)
+	costo = models.FloatField(blank=True)
+	numero_semana = models.IntegerField(blank=True)
+	fecha_inicio_sem = models.DateField(blank=True)
+	fecha_fin_sem = models.DateField(blank=True)
+	
 class Subasta(models.Model):
 	fecha_inicio = models.DateField(auto_now_add=True)
 	fecha_fin = models.DateField(blank=True)

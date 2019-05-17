@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Propiedad
+from .models import Propiedad, Semana, Subasta
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
@@ -10,6 +10,9 @@ from django.contrib.auth import login, authenticate
 from django.urls import path
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
+from . import fechas
+from .fechas import get_start_end_dates
+
 
 from django.contrib.auth.views import LoginView, LogoutView
 
@@ -39,13 +42,20 @@ def propiedad(request, id):
 	return render(request, 'HomeSwitchHome/propiedad.html',{'Propiedad':p})
 	
 def agregar_propiedad(request):
+
 	form = forms.PropiedadForm(request.POST or None)
 	if request.method == 'GET':
 		return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form})
 	else:
 		if form.is_valid():
-			form.save()
+			p = form.save()
+
+			for i in range(1,53):
+				Semana.objects.create(propiedad= p, monto_base= 0, costo=0, numero_semana=i, fecha_inicio_sem=(get_start_end_dates(2019, i))[0], fecha_fin_sem=(get_start_end_dates(2019, i))[1])
 			return redirect(reverse_lazy('administracion'))
+
+	
+
 
 def modificar_propiedad(request, id):
 	prop = get_object_or_404(Propiedad, id=id)
@@ -60,6 +70,8 @@ def modificar_propiedad(request, id):
 		else:
 			return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form,
 				'error':'Error al Actualizar propiedad.'})
+
+	
 
 class RegistroUsuario (CreateView):
 	model= User
