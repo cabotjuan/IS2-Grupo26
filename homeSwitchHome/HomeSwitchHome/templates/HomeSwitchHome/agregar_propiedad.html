@@ -28,7 +28,14 @@
 		</h1>
 		<hr>
 
-	{% include 'HomeSwitchHome/admin_formulario.html' %}	
+		{% load crispy_forms_tags %}
+		<div class="form-container">
+			<form method="post"> {% csrf_token %}
+				{{ form|crispy }}
+				{{ formset.as_p }}
+				<input class="btn btn-primary" type="submit" value="Listo">
+			</form>
+		</div>
 
 	</div>
 </div>

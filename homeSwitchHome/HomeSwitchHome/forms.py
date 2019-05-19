@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from HomeSwitchHome.models import Propiedad
+from HomeSwitchHome.models import Propiedad, Foto
 
 class PropiedadForm(ModelForm):
 	class Meta:
@@ -7,7 +7,6 @@ class PropiedadForm(ModelForm):
 		fields = [
 			'titulo',
 			'descripcion',
-			'fotos',
 			'pais',
 			'provincia',
 			'direccion'

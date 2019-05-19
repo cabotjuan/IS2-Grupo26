@@ -11,8 +11,13 @@
 		<h1>{{Propiedad.titulo}}</h1>
 		<hr>
 		<a class="btn btn-outline-danger" href="{% url 'modificar_prop' Propiedad.id %}">Modificar</a>
-		<a class="btn btn-outline-danger" href="#">Eliminar</a>
-		<a class="btn btn-success" href="#">Habilitar Subasta</a>
+		{% if not Propiedad.subastas_activas %}
+		<a class="btn btn-outline-danger" href="{%url 'eliminar_propiedad' Propiedad.id %}">Eliminar</a>
+		{% else %}
+		<a class="btn btn-outline-danger" href="">Eliminar</a>
+		{% endif %}
+		<a class="btn btn-success" href="{%url 'listado_sem' Propiedad.id %}">Habilitar Subasta</a>
+		<a class="btn btn-danger" href="{%url 'cerrar_subasta' Propiedad.id %}">Cerrar Subasta</a>
 		<hr>
 
 		<div class="row">
@@ -35,9 +40,15 @@
 				Direccion:		<h5>{{Propiedad.direccion}}</h5>
 			</div>
 		</div>
-		
+	<!--	
+		<div class="row gallery">
+			{% for f in Propiedad.foto_set.all %}
+				<div class="col-md-3">
+					<img src="{{f.archivo.url}}" alt="Sin Imagen" class="img-thumbnail">
+				</div>
+			{% endfor %}
+		</div>
 
-
-
+-->
 
 	</div>

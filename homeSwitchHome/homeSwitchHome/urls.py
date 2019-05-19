@@ -32,6 +32,9 @@ urlpatterns = [
  #    url(r'^', views.home, name = 'home'),
 	path('administracion/cerrarsesion', views.Logout.as_view(), name='salir'),
  	path('administracion/', views.administracion, name='administracion'),
+ 	path('administracion/eliminarpropiedad/<id>', views.eliminar_propiedad, name='eliminar_propiedad'),
+    path('administracion/propiedad/<id>/listado_sem', views.listado_sem, name='listado_sem'),
+    path('administracion/propiedad/<id>/cerrar_subasta', views.cerrar_subasta, name='cerrar_subasta')
 ]
 
 urlpatterns += staticfiles_urlpatterns()

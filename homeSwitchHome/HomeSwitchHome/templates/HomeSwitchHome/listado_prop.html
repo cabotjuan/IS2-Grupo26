@@ -19,8 +19,27 @@
 		<h1>Listado de Propiedades</h1>
 		<hr>
 		<ul class="list-group">
-		{% for Propiedad in propiedades %} 
-			<a class='list-group-item list-group-item-action' href='/administracion/propiedad/{{Propiedad.id}}'>{{ Propiedad.titulo }}</a>
-		{% endfor %}
+			{% if propiedades %}
+				{% for Propiedad in propiedades %} 
+
+					<a class='list-group-item list-group-item-action' href='/administracion/propiedad/{{Propiedad.id}}'>{{ Propiedad.titulo }} 
+
+					{% if Propiedad.subastas_activas %}
+					<span class="badge badge-primary">{{Propiedad.subastas_activas}} Subastas activas</span>
+					{% endif %}
+
+					</a>
+						
+				{% endfor %}
+			{% else %}
+
+				<div class="listado-propiedad-container">
+					<h3 class="listado-propiedad-msg">
+						
+						No hay propiedades que mostrar
+
+					</h3>
+				</div>
+			{% endif %}
 		</ul>
 	</div>

@@ -11,6 +11,3 @@ def get_start_end_dates(year, week):
      return d + dlt,  d + dlt + timedelta(days=6)
 
 
-fe=date
-fe= date.today()
-print((get_start_end_dates(fe.isocalendar()[0], fe.isocalendar()[1]))[0])

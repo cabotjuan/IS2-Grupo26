@@ -5,18 +5,43 @@
 
 <title>Administracion</title>
 
-{% include 'HomeSwitchHome/navBar.html' %}
 
-<div class="main-container">
-	<div class="jumbotron jumbotron-fluid">
-		<div class="container">
-			<h1 class="display-4">Administración</h1>
-			<p class="lead"></p>
+{% if request.user.is_authenticated %}
+
+	{% include 'HomeSwitchHome/navBar.html' %}
+
+	<div class="main-container">
+		<div class="jumbotron jumbotron-fluid">
+			<div class="container">
+				<h1 class="display-4">Administración</h1>
+				<p class="lead"></p>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="menu-lateral-container">
+		<a class='btn btn-outline-info btn-lg btn-block' href="{% url 'agregar_prop' %}">Agregar Propiedad</a>
+			<a class="btn btn-outline-info btn-lg btn-block" href="{% url 'listado_prop' %}">Ver Listado Propiedades</a>
+	</div>
+
+{% else %}
+
+	<div class="main-container">
+		<div class="jumbotron jumbotron-fluid">
+			<div class="container">
+				<h1 class="display-4">¡Bienvenido/a a la página de Administración de HOME SWITCH HOME!</h1>
+				<p class="lead"></p>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="botones-sesion-container">
+		<div class="botones-sesion-contenido">
+			<a class="btn btn-outline-success btn-lg" href="{% url 'InicioAdmin' %}">Iniciar Sesión</a>
+			<a class="btn btn-outline-primary btn-lg" href="{% url 'RegistroAdmin' %}">Registrarse</a>
 		</div>
 	</div>
 
-</div>
-<div class="menu-lateral-container">
-	<a class='btn btn-outline-info btn-lg btn-block' href="{% url 'agregar_prop' %}">Agregar Propiedad</a>
-		<a class="btn btn-outline-info btn-lg btn-block" href="{% url 'listado_prop' %}">Ver Listado Propiedades</a>
-</div>
+{% endif %}

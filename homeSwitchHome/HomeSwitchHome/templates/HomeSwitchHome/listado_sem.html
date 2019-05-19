@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "administracion.css" %}">
+
+
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-4">Administración</h1>
+			<p class="lead"></p>
+		</div>
+	</div>
+
+<div class="prop-container">
+		<h1>Habilitar Subasta</h1>
+		<hr>
+		<form method="POST">
+			{% csrf_token %}
+			<h5>1. Selecciona una semana:</h5>
+			<ul class="list-group">
+				<div class="input-group">
+				  <select name='semana' class="custom-select" id="inputGroupSelect04" required>
+				    <option selected disabled> Seleccionar.. </option>
+					{% for Semana in listado %} 
+						{% if Semana.habilitada %}
+						    <option value="{{Semana.numero_semana}}">{{Semana.numero_semana}} ({{Semana.fecha_inicio_sem}} al {{Semana.fecha_fin_sem}})</option>
+						{% else %}
+						    <option disabled class="opcion-sem">{{Semana.numero_semana}} ({{Semana.fecha_inicio_sem}} al {{Semana.fecha_fin_sem}})- No Disponible - 
+							</option>
+						{% endif %}
+							 
+					{% endfor %}
+
+				  </select>
+				</div>
+			</ul>
+			<hr>
+			<h5>2. Ingresa un monto base:</h5>
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+				<span class="input-group-text">$</span>
+				</div>
+				<input type="text" name='monto' class="form-control" aria-label="Dollar amount (with dot and two decimal places)" required>
+			</div>
+			<hr>
+			<input type="submit" class="btn btn-success btn-lg btn-block" value="Listo"></input>
+
+		</form>
+
+</div>

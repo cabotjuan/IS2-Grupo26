@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'HomeSwitchHome'
+    'HomeSwitchHome',
+    'extra_views'
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,6 @@ LOGOUT_REDIRECT_URL = '/administracion/iniciarsesion'
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
