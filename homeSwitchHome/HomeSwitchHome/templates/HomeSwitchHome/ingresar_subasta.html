@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "home.css" %}">
+
+<title>Home Switch Home</title>
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<img class="logo-hsh-home" src="{% static "logotext.png" %}">
+			<p class="lead"></p>
+		</div>
+	</div>
+	<div class="prop-container">
+		<h1>{{semana.propiedad.titulo}}</h1>
+		<hr>
+
+		<div class="row">
+			<div class="col">
+				Descripcion:		<h5>{{semana.propiedad.descripcion}}</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				Pais:		<h5>{{semana.propiedad.pais}}</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				Provincia:		<h5>{{semana.propiedad.provincia}}</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				Direccion:		<h5>{{semana.propiedad.direccion}}</h5>
+			</div>
+		</div>
+	</div>
+
+	<h1>Ingresar a la Subasta</h1>
+	<hr>
+	<form method="POST">
+		{% csrf_token %}
+		<h5>1. ingresar correo electronico:</h5>
+			{{form.mail}}
+		<hr>
+		<h5>2. ingresar monto de puja:</h5>
+		<h6>
+			Monto Base: {{semana.monto_base}}
+		</h6>
+		{% if monto_mas_alto %}
+		<h6>
+			Puja mas alta: {{monto_mas_alto}}
+		</h6>
+		{% endif %}
+			{{form.monto_puja}}
+		
+		<hr>
+		<input type="submit" class="btn btn-success btn-lg btn-block" value="Enviar"></input>
+
+	</form>
+
+</div>

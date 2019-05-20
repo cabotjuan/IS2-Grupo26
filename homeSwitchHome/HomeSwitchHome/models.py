@@ -1,5 +1,6 @@
 from django.db import models
-from datetime import date
+from datetime import date, timezone
+from django.utils import timezone
 # Create your models here.
 
 class Propiedad(models.Model):
@@ -28,8 +29,12 @@ class Subasta(models.Model):
 	fecha_fin = models.DateField(blank=True)
 
 class Postor(models.Model):
+	subasta = models.ForeignKey('Subasta', on_delete=models.CASCADE)	
 	mail = models.EmailField()
-	monto_puja = models.FloatField()		
+	monto_puja = models.FloatField()	
+	fecha_puja = models.DateTimeField(default=timezone.now)
+	class Meta:
+		order_with_respect_to = 'fecha_puja'	
 
 class Foto(models.Model):
 	archivo = models.ImageField(blank=True, null=True)

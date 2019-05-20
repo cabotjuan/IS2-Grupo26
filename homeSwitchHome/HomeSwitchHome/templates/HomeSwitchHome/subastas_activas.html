@@ -1,0 +1,46 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "home.css" %}">
+
+<title>Home Switch Home</title>
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<img class="logo-hsh-home" src="{% static "logotext.png" %}">
+			<p class="lead"></p>
+		</div>
+	</div>
+
+<div class="prop-container">
+		<h1>Subastas activas</h1>
+		<hr>
+		<ul class="list-group">
+			{% if semanas %}
+				{% for semana in semanas %} 
+					<div class="media subasta-activa">
+						<img src="..." class="mr-3" alt="...">
+						<div class="media-body">
+							<h5 class="mt-0">{{ semana.propiedad.titulo }}
+								<a class='bt-ingresar btn btn-outline-primary btn-sm' href='/ingresarsubasta/{{semana.subasta.id}}'>Ingresar</a> 
+							</h5>
+							<h6>({{ semana.subasta.fecha_inicio }} al {{ semana.subasta.fecha_fin }})</h6>
+							{{ semana.propiedad.descripcion }}
+						</div>
+					</div>
+				{% endfor %}
+			{% else %}
+
+				<div class="listado-propiedad-container">
+					<h3 class="listado-propiedad-msg">
+						
+						No hay propiedades que mostrar
+
+					</h3>
+				</div>
+			{% endif %}
+		</ul>
+	</div>

@@ -1,21 +1,42 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 {% load static %}
 <link rel="stylesheet" href="{% static "home.css" %}">
+
+<title>Home Switch Home</title>
 
 {% include 'HomeSwitchHome/navBar.html' %}
 
 <div class="main-container">
 	<div class="jumbotron jumbotron-fluid">
 		<div class="container">
-			{# <h1 class="display-4">Administración</h1> #}
 			<img class="logo-hsh-home" src="{% static "logotext.png" %}">
 			<p class="lead"></p>
 		</div>
 	</div>
+	<div class="prop-container">
+		<h1>{{Propiedad.titulo}}</h1>
+		<hr>
 
-</div>
-
-	<div class="menu-lateral-container">
-		<a class='btn btn-outline-info btn-lg btn-block' href="cuadrillaprop">Ver propiedades</a>
-			<a class="btn btn-outline-info btn-lg btn-block" href="{% url 'subastas_activas' %}">Ver subastas activas</a>
+		<div class="row">
+			<div class="col">
+				Descripcion:		<h5>{{Propiedad.descripcion}}</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				Pais:		<h5>{{Propiedad.pais}}</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				Provincia:		<h5>{{Propiedad.provincia}}</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				Direccion:		<h5>{{Propiedad.direccion}}</h5>
+			</div>
+		</div>
 	</div>
+</div>

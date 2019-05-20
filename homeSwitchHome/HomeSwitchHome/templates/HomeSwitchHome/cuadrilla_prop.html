@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "home.css" %}">
+
+<title>Home Switch Home</title>
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<img class="logo-hsh-home" src="{% static "logotext.png" %}">
+			<p class="lead"></p>
+		</div>
+	</div>
+
+<div class="prop-container">
+		<h1>Cuadrilla de Propiedades</h1>
+		<hr>
+		<ul class="list-group">
+			{% if propiedades %}
+				{% for Propiedad in propiedades %} 
+
+					<a class='list-group-item list-group-item-action' href='/administracion/propiedad/{{Propiedad.id}}'>{{ Propiedad.titulo }} 
+
+
+					</a>
+						
+				{% endfor %}
+			{% else %}
+
+				<div class="listado-propiedad-container">
+					<h3 class="listado-propiedad-msg">
+						
+						No hay propiedades que mostrar
+
+					</h3>
+				</div>
+			{% endif %}
+		</ul>
+	</div>

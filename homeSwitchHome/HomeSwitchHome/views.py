@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Propiedad, Semana, Subasta, Foto 
+from .models import Propiedad, Semana, Subasta, Foto, Postor
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
@@ -36,7 +36,10 @@ def propiedad(request, id):
 	p = Propiedad.objects.get(id=id)
 	return render(request, 'HomeSwitchHome/propiedad.html',{'Propiedad':p})
 
-	
+def ver_prop(request, id):
+	p = Propiedad.objects.get(id=id)
+	return render(request, 'HomeSwitchHome/ver_prop.html',{'Propiedad':p})
+
 def eliminar_propiedad(request, id):
 	p= Propiedad.objects.get(id=id)
 	p.delete()
@@ -114,26 +117,71 @@ def listado_sem(request, id):
 	else:
 		return render(request, 'HomeSwitchHome/listado_sem.html', {'listado':listado})	
 
+def determinar_ganador(request, id):	
+
+	sub = Subasta.objects.get(id=id)
+	print('HOLAAAA')
+	print(sub.id)
+	hay_ganador = Postor.objects.filter(subasta=sub).exists()
+	if hay_ganador:
+		ganador = Postor.objects.filter(subasta=sub).latest('fecha_puja')
+	else:
+		ganador = None
+	Subasta.objects.filter(id=id).delete()
+	return render(request, 'HomeSwitchHome/determinar_ganador.html',{'ganador':ganador})
+
 def cerrar_subasta(request, id):
 
-	listado_hab = Semana.objects.filter(propiedad=id).filter(habilitada = False)
+	listado_hab = Semana.objects.filter(propiedad=id).filter(habilitada = False).filter(subasta_id__isnull=False)
 	############################################### CERRAR SUBASTA . BORRA LA SUBASTA y disminuye cant subastas #########################################
 	if request.method == 'POST':
 		propiedad = Propiedad.objects.get(id=id)
-
-
 		nro = request.POST.get('semana')
 		sem = listado_hab.get(numero_semana= nro)
 		subasta = sem.subasta
-		print(subasta.id)
-		Subasta.objects.filter(id=subasta.id).delete()
-		
 		propiedad.subastas_activas-=1
 		propiedad.save()
-
-		return redirect(reverse_lazy('administracion')+'propiedad/'+id)
+		return redirect(reverse_lazy('administracion')+'determinarganador/'+str(subasta.id))
 	else:
-		return render(request, 'HomeSwitchHome/cerrar_subasta.html', {'listado_hab':listado_hab})	
+		return render(request, 'HomeSwitchHome/cerrar_subasta.html', {'listado_hab':listado_hab})
+
+def ver_cuadrilla_propiedades(request):
+
+	propiedades= Propiedad.objects.all()
+	template = 'HomeSwitchHome/cuadrilla_prop.html'
+	return render(request, template, {'propiedades':propiedades})
+
+def ver_subastas_activas(request):
+	semanas= Semana.objects.exclude(subasta_id__isnull = True)
+	template = 'HomeSwitchHome/subastas_activas.html'
+	return render(request, template, {'semanas':semanas})
+
+
+def ingresar_subasta(request, id):
+	semana = Semana.objects.get(subasta=Subasta.objects.get(id=id))
+	args={}
+	if request.method == 'POST':
+		form = forms.PostorForm(request.POST)
+		
+		if form.is_valid(): 
+			print('Formulario Valido')
+			monto_puja = float(request.POST.get('monto_puja'))
+			if Postor.objects.count() > 0:
+				ultpostor = Postor.objects.latest('fecha_puja')
+				if monto_puja > ultpostor.monto_puja:
+					form.save()
+			else:
+				form.save()
+		else:
+			print('formulario invalido!')
+		return redirect(reverse_lazy('home'))
+	else:
+		form = forms.PostorForm()
+		if Postor.objects.count() > 0:
+			args={'form':form,'semana':semana, 'monto_mas_alto':(Postor.objects.latest('fecha_puja')).monto_puja}
+		else:
+			args={'form':form,'semana':semana}
+		return render(request, 'HomeSwitchHome/ingresar_subasta.html', args)
 
 class RegistroUsuario (CreateView):
 	model= User
@@ -163,4 +211,4 @@ class Login (LoginView):
     template_name = 'HomeSwitchHome/admin_formulario.html'
 
 class Logout(LogoutView):
-    pass
+	pass

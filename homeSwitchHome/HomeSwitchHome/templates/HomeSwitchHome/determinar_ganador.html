@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "administracion.css" %}">
+
+
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-4">Administración</h1>
+			<p class="lead"></p>
+		</div>
+	</div>
+	<hr>
+	{% if ganador %}
+		<div class="alert alert-success" role="alert">
+			<h1>El ganador es {{ganador.mail}} por la suma de ${{ganador.monto_puja}}</h1>
+		</div>
+		<a class="btn btn-outline-success" href="{% url 'administracion' %}">Listo</a>
+	{% else %}
+		<div class="alert alert-danger" role="alert">
+			<h1>No se pudo determinar un ganador (No se han encontrado postores).</h1>			
+		</div>
+		<a class="btn btn-outline-danger" href="{% url 'administracion' %}">Listo</a>
+
+	{% endif %}
+	<hr>
+</div>

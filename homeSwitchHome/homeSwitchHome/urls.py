@@ -34,7 +34,12 @@ urlpatterns = [
  	path('administracion/', views.administracion, name='administracion'),
  	path('administracion/eliminarpropiedad/<id>', views.eliminar_propiedad, name='eliminar_propiedad'),
     path('administracion/propiedad/<id>/listado_sem', views.listado_sem, name='listado_sem'),
-    path('administracion/propiedad/<id>/cerrar_subasta', views.cerrar_subasta, name='cerrar_subasta')
+    path('administracion/propiedad/<id>/cerrar_subasta', views.cerrar_subasta, name='cerrar_subasta'),
+    path('administracion/determinarganador/<id>', views.determinar_ganador, name='determinar_ganador'),
+    path('cuadrillaprop', views.ver_cuadrilla_propiedades, name= 'cuadrilla_prop'),
+    path('subastasactivas', views.ver_subastas_activas, name= 'subastas_activas'),
+    path('ingresarsubasta/<id>', views.ingresar_subasta, name= 'ingresar_subasta'),
+    path('propiedad/<id>', views.ver_prop, name='ver_prop')
 ]
 
 urlpatterns += staticfiles_urlpatterns()

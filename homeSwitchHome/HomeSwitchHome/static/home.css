@@ -1,22 +1,48 @@
 body{
-	margin: 0
+	margin: 0;
+ 	font-family: "Lato", sans-serif;
+}
+
+.menu-lateral-container {
+    height: auto;
+    width: auto;
+    position: absolute;
+    z-index: 1;
+    padding: 20px;
+    right: 60px;
+    left: 60px;
+
+}
+
+.menu-lateral-container-title {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #ddd   ;
+  display: block;
+}
+
+.main-container { 
+  margin-top: 50px;
 }
 
 .container{
-	align-content: center;
-	width: 100%;
-	text-align: center;
-	background: #d8d8d8;
-	position: absolute;
-    margin-top: 51px;
+	margin-left: 0;
 }
 
-div.navBar{
-	height: 50px;
-	background-color: #784b71;
-	position: fixed;
-	top: 0;
-	display: inline-block;
-	width: 100%;
-	margin: 0;
+.logo-hsh-home{
+	width: 600px;
+}
+
+.bt-ingresar {
+  margin-top: 25px;
+  right: 25px;
+  position: absolute;
+}
+
+.subasta-activa {
+    padding: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #00a1e1;
 }

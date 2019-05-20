@@ -122,11 +122,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (
+                os.path.join(BASE_DIR,'static-assets'), # if your static files folder is named "staticfiles"
+)
+
 
 LOGIN_URL = '/administracion/iniciarsesion'
 LOGIN_REDIRECT_URL = '/administracion/'
 
-LOGOUT_REDIRECT_URL = '/administracion/iniciarsesion'
+LOGOUT_REDIRECT_URL = '/administracion/'
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
