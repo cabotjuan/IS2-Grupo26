@@ -14,7 +14,6 @@ from . import fechas
 from .fechas import get_start_end_dates
 from datetime import date
 from django.contrib.auth.views import LoginView, LogoutView
-from extra_views import CreateWithInlinesView, UpdateWithInlinesView
 from HomeSwitchHome import forms
 from django.forms import modelformset_factory
 # Create your views here.

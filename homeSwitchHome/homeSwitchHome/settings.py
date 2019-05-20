@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'HomeSwitchHome',
-    'extra_views'
+    'HomeSwitchHome'
 ]
 
 MIDDLEWARE = [

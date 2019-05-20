@@ -11,10 +11,8 @@
 		<h1>{{Propiedad.titulo}}</h1>
 		<hr>
 		<a class="btn btn-outline-danger" href="{% url 'modificar_prop' Propiedad.id %}">Modificar</a>
-		{% if not Propiedad.subastas_activas %}
+		{% if Propiedad.subastas_activas < 1 %}
 		<a class="btn btn-outline-danger" href="{%url 'eliminar_propiedad' Propiedad.id %}">Eliminar</a>
-		{% else %}
-		<a class="btn btn-outline-danger" href="">Eliminar</a>
 		{% endif %}
 		<a class="btn btn-success" href="{%url 'listado_sem' Propiedad.id %}">Habilitar Subasta</a>
 		<a class="btn btn-danger" href="{%url 'cerrar_subasta' Propiedad.id %}">Cerrar Subasta</a>
