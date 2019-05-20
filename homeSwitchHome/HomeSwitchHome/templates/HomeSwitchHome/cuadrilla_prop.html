@@ -21,13 +21,9 @@
 		<ul class="list-group">
 			{% if propiedades %}
 				{% for Propiedad in propiedades %} 
-
-					<a class='list-group-item list-group-item-action' href='/administracion/propiedad/{{Propiedad.id}}'>{{ Propiedad.titulo }} 
-
-
-					</a>
-						
+					<a class='list-group-item list-group-item-action' href='propiedad/{{ Propiedad.id}}'>{{ Propiedad.titulo }}</a>
 				{% endfor %}
+						
 			{% else %}
 
 				<div class="listado-propiedad-container">

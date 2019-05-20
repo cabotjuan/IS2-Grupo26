@@ -19,7 +19,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from HomeSwitchHome import views
 from HomeSwitchHome.views import *
 from django.urls import reverse_lazy
-
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
 	path('', views.home, name='home'),
@@ -41,5 +42,6 @@ urlpatterns = [
     path('ingresarsubasta/<id>', views.ingresar_subasta, name= 'ingresar_subasta'),
     path('propiedad/<id>', views.ver_prop, name='ver_prop')
 ]
-
 urlpatterns += staticfiles_urlpatterns()
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

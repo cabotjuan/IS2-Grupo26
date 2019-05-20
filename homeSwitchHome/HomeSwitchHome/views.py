@@ -16,6 +16,8 @@ from datetime import date
 from django.contrib.auth.views import LoginView, LogoutView
 from HomeSwitchHome import forms
 from django.forms import modelformset_factory
+from django.template import RequestContext
+from django.contrib import messages
 # Create your views here.
 
 def home(request):
@@ -58,21 +60,34 @@ def eliminar_propiedad(request, id):
 # 		return redirect(reverse_lazy('administracion'))
 
 def agregar_propiedad(request):
-#	Imageformset = modelformset_factory(Foto, fields=('archivo','propiedad'),extra=5)
-	form = forms.PropiedadForm(request.POST or None)
+	Imageformset = modelformset_factory(Foto, form= forms.ImageForm ,min_num=0, max_num=5,extra=5)
+	
 
 	if request.method == 'GET':
-#		formset = Imageformset(queryset=Foto.objects.none())
-		return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form})
+
+		form = forms.PropiedadForm()
+		formset = Imageformset(queryset=Foto.objects.none())
+		return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form, 'formset':formset})
 	else:
-#		formset = Imageformset(request.POST, request.FILES)
-		if form.is_valid():
-			p = form.save()
-#			for f in formset:
-#				foto = Foto(archivo=f.cleaned_data.get('archivo'), propiedad=p)
-#				foto.save()
+
+		### POST ###
+
+		form = forms.PropiedadForm(request.POST)
+		formset = Imageformset(request.POST, request.FILES, queryset=Foto.objects.none())
+
+		if form.is_valid() and formset.is_valid():
+			form = form.save(commit = False)
+			form.save()
+			file_list = [i for i in formset.cleaned_data if i]
+			print('LISTA: ---------------') 
+			print(file_list) 
+			for f in file_list:
+				archivo = f['archivo']
+				foto = Foto(archivo=archivo, propiedad=form)
+				foto.save()
+				#messages.success(request, "Guardado!")
 			for i in range(1,53):
-				Semana.objects.create(propiedad= p, monto_base= 0, costo=0, numero_semana=i, fecha_inicio_sem=(get_start_end_dates(2019, i))[0], fecha_fin_sem=(get_start_end_dates(2019, i))[1])
+				Semana.objects.create(propiedad= form, monto_base= 0, costo=0, numero_semana=i, fecha_inicio_sem=(get_start_end_dates(2019, i))[0], fecha_fin_sem=(get_start_end_dates(2019, i))[1])
 			return redirect(reverse_lazy(administracion))
 
 
@@ -157,7 +172,12 @@ def ver_subastas_activas(request):
 
 
 def ingresar_subasta(request, id):
-	semana = Semana.objects.get(subasta=Subasta.objects.get(id=id))
+	subasta=Subasta.objects.get(id=id)
+	semana = Semana.objects.get(subasta=subasta)
+	print('------------')
+	print(subasta.id)
+	print(semana.subasta.id)
+	print('------------')
 	args={}
 	if request.method == 'POST':
 		form = forms.PostorForm(request.POST)
@@ -168,9 +188,13 @@ def ingresar_subasta(request, id):
 			if Postor.objects.count() > 0:
 				ultpostor = Postor.objects.latest('fecha_puja')
 				if monto_puja > ultpostor.monto_puja:
-					form.save()
+					f = form.save(commit=False)
+					f.subasta = subasta
+					f.save() 
 			else:
-				form.save()
+				f = form.save(commit=False)
+				f.subasta = subasta
+				f.save()
 		else:
 			print('formulario invalido!')
 		return redirect(reverse_lazy('home'))

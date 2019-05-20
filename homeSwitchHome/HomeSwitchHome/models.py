@@ -37,5 +37,5 @@ class Postor(models.Model):
 		order_with_respect_to = 'fecha_puja'	
 
 class Foto(models.Model):
-	archivo = models.ImageField(blank=True, null=True)
+	archivo = models.ImageField(blank=True, null=True, upload_to='images/')
 	propiedad = models.ForeignKey('Propiedad', on_delete= models.CASCADE)

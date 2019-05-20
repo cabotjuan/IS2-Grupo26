@@ -30,10 +30,11 @@
 
 		{% load crispy_forms_tags %}
 		<div class="form-container">
-			<form method="post"> {% csrf_token %}
+			<form id='form' action="" enctype="multipart/form-data" method="post"> 
+				{% csrf_token %}
 				{{ form|crispy }}
 				{{ formset.as_p }}
-				<input class="btn btn-primary" type="submit" value="Listo">
+				<input class="btn btn-primary" name='submit' type="submit" value="Listo">
 			</form>
 		</div>
 

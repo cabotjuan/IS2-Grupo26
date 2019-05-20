@@ -38,5 +38,14 @@
 				Direccion:		<h5>{{Propiedad.direccion}}</h5>
 			</div>
 		</div>
+
+		<div class="row gallery">
+		{% for f in Propiedad.foto_set.all %}
+		<div class="col-md-3">
+			<img src="{{f.archivo.url}}" alt="Sin Imagen" class="img-thumbnail">
+		</div>
+		{% endfor %}
+		</div>
+		
 	</div>
 </div>
