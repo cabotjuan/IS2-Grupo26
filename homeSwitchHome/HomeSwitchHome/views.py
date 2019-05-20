@@ -186,7 +186,7 @@ def ingresar_subasta(request, id):
 			print('Formulario Valido')
 			monto_puja = float(request.POST.get('monto_puja'))
 			if Postor.objects.count() > 0:
-				ultpostor = Postor.objects.latest('fecha_puja')
+				ultpostor = Postor.objects.filter(subasta=subasta).latest('fecha_puja')
 				if monto_puja > ultpostor.monto_puja:
 					f = form.save(commit=False)
 					f.subasta = subasta
