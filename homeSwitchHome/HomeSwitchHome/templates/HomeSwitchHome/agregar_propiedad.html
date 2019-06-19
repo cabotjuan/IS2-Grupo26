@@ -27,13 +27,13 @@
 			{% endif %}
 		</h1>
 		<hr>
-
 		{% load crispy_forms_tags %}
 		<div class="form-container">
 			<form id='form' action="" enctype="multipart/form-data" method="post"> 
 				{% csrf_token %}
 				{{ form|crispy }}
 				{{ formset.as_p }}
+				<hr>
 				<input class="btn btn-primary" name='submit' type="submit" value="Listo">
 			</form>
 		</div>

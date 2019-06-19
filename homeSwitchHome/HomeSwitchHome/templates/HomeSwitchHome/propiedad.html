@@ -1,5 +1,8 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 {% load static %}
 <link rel="stylesheet" href="{% static "administracion.css" %}">
 
@@ -12,7 +15,7 @@
 		<hr>
 		<a class="btn btn-outline-danger" href="{% url 'modificar_prop' Propiedad.id %}">Modificar</a>
 		{% if Propiedad.subastas_activas < 1 %}
-		<a class="btn btn-outline-danger" href="{%url 'eliminar_propiedad' Propiedad.id %}">Eliminar</a>
+		<a class="btn btn-danger" id="lanzarModal" href="#">Eliminar</a>
 		{% endif %}
 		<a class="btn btn-success" href="{%url 'listado_sem' Propiedad.id %}">Habilitar Subasta</a>
 		<a class="btn btn-danger" href="{%url 'cerrar_subasta' Propiedad.id %}">Cerrar Subasta</a>
@@ -35,6 +38,11 @@
 		</div>
 		<div class="row">
 			<div class="col">
+				Localidad:		<h5>{{Propiedad.localidad}}</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
 				Direccion:		<h5>{{Propiedad.direccion}}</h5>
 			</div>
 
@@ -50,3 +58,38 @@
 
 
 	</div>
+
+
+<div id="eliminarModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Eliminar Propiedad</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+		{% if Propiedad.subastas_activas < 1 %}
+			<div class="modal-body">
+				<p>¿Confirma que desea eliminar la propiedad?</p>
+			</div>
+		  	<a class="btn btn-danger btn-sm" href="{%url 'eliminar_propiedad' Propiedad.id %}" style="margin: 14px;">Eliminar</a>
+		{% else %}
+			<div class="modal-body">
+				<p>No se puede eliminar la propiedad(tiene subastas o reservas activas).</p>
+			</div>	
+		{% endif %}
+    </div>
+  </div>
+</div> 	
+
+
+
+<script>
+	$(document).ready(function(){
+		$( "#lanzarModal" ).click(function() {
+			$("#eliminarModal").modal()
+		});
+	});
+</script>

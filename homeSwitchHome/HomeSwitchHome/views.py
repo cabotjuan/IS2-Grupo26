@@ -44,6 +44,7 @@ def ver_prop(request, id):
 def eliminar_propiedad(request, id):
 	p= Propiedad.objects.get(id=id)
 	p.delete()
+	messages.success(request, 'Propiedad eliminada.')
 	return redirect(reverse_lazy(listado_prop))
 	
 # class AgregarPropiedad(CreateWithInlinesView):
@@ -67,7 +68,7 @@ def agregar_propiedad(request):
 
 		form = forms.PropiedadForm()
 		formset = Imageformset(queryset=Foto.objects.none())
-		return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form, 'formset':formset})
+		#return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form, 'formset':formset})
 	else:
 
 		### POST ###
@@ -76,35 +77,70 @@ def agregar_propiedad(request):
 		formset = Imageformset(request.POST, request.FILES, queryset=Foto.objects.none())
 
 		if form.is_valid() and formset.is_valid():
+			print('Form OK')
 			form = form.save(commit = False)
 			form.save()
 			file_list = [i for i in formset.cleaned_data if i]
-			print('LISTA: ---------------') 
-			print(file_list) 
 			for f in file_list:
 				archivo = f['archivo']
 				foto = Foto(archivo=archivo, propiedad=form)
 				foto.save()
-				#messages.success(request, "Guardado!")
 			for i in range(1,53):
 				Semana.objects.create(propiedad= form, monto_base= 0, costo=0, numero_semana=i, fecha_inicio_sem=(get_start_end_dates(2019, i))[0], fecha_fin_sem=(get_start_end_dates(2019, i))[1])
+			messages.success(request, "Propiedad Agregada!")
 			return redirect(reverse_lazy(administracion))
+
+		else:
+			print('Form Error')
+	return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form, 'formset':formset})
 
 
 def modificar_propiedad(request, id):
+	Imageformset = modelformset_factory(Foto, form= forms.ImageForm ,min_num=0, max_num=5,extra=5)
 	prop = get_object_or_404(Propiedad, id=id)
 	form = forms.PropiedadForm(request.POST or None, instance=prop)
+	fotos = Foto.objects.filter(propiedad=prop)
+	formset = Imageformset(queryset=fotos)
 
+	if request.method == 'POST':
+		formset = Imageformset(request.POST,request.FILES, queryset=Foto.objects.filter(propiedad=prop))
 
-	if request.method == 'GET':
-		return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form})
-	else:
-		if form.is_valid():
-			prop = form.save()
+		
+		print('VALIDACION form:')
+		print(form.is_valid())
+		print('VALIDACION formset:')
+		print(formset.is_valid())
+
+		if form.is_valid() and formset.is_valid():
+			print('Form OK!')
+			
+			form = form.save(commit = False)
+			form.save()
+
+			Foto.objects.filter(propiedad=prop).delete()
+			
+			#if hasattr(formset, 'deleted_objects'):
+			#	for obj in formset.deleted_objects:
+			#		obj.delete() 
+			file_list = [i for i in formset.cleaned_data if i]
+			print('FILELIST',file_list)
+			for f in file_list:
+			 	archivo = f['archivo']
+			 	foto = Foto(archivo=archivo, propiedad=form)
+			 	foto.save()
+
+			messages.success(request, 'Propiedad modificada!')
 			return redirect(reverse_lazy('administracion'))
 		else:
-			return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form,
-				'error':'Error al Actualizar propiedad.'})
+			messages.success(request, 'La propiedad no se ha modificado.')
+			return redirect(reverse_lazy('administracion'))
+
+	return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form, 'formset':formset})
+
+
+
+
+
 
 def listado_sem(request, id):
 	listado= Semana.objects.filter(fecha_inicio_sem__gte= date.today()).filter(propiedad=id)
@@ -206,14 +242,17 @@ def ingresar_subasta(request, id):
 			args={'form':form,'semana':semana}
 		return render(request, 'HomeSwitchHome/ingresar_subasta.html', args)
 
-class RegistroUsuario (CreateView):
+class RegistroAdmin (CreateView):
 	model= User
 	template_name= "HomeSwitchHome/admin_formulario.html"
 	form_class = UserCreationForm
 	success_url=reverse_lazy('administracion')
 
 	def form_valid(self, form):
-		form.save()
+		u = form.save(commit=False)
+		u.is_staff = True
+		u.is_superuser = True
+		u.save()
 		usuario = form.cleaned_data.get('username')
 		password = form.cleaned_data.get('password1')
 		usuario = authenticate(username=usuario, password=password)
