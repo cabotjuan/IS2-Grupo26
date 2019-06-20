@@ -242,6 +242,51 @@ def ingresar_subasta(request, id):
 			args={'form':form,'semana':semana}
 		return render(request, 'HomeSwitchHome/ingresar_subasta.html', args)
 
+#perfil = Perfil.objects.get(usuario=request.user)
+#tarjeta = Tarjeta.objects.get(usuario=request.user)
+def RegistroUsuario(request):
+	if request.method == 'POST':
+		user_form = forms.UserForm(request.POST, prefix="user_form")
+		perfil_form = forms.PerfilForm(request.POST, prefix="perfil_form")
+		tarj_form = forms.TarjetaForm(request.POST, prefix="tarj_form")
+		print('-------------')
+		print(user_form.is_valid())
+		print(perfil_form.is_valid())
+		print(tarj_form.is_valid())
+		print('-------------')
+		if user_form.is_valid() and perfil_form.is_valid() and tarj_form.is_valid():
+			u = user_form.save(commit= False)
+			p = perfil_form.save(commit=False)
+			t = tarj_form.save(commit=False)
+			u.username = u.email
+			print(u)
+			p.usuario_id = u.id
+			t.usuario_id = u.id 
+			u.save()
+			p.save()
+			t.save()
+			messages.success(request, 'Your profile was successfully updated!')
+			return redirect('home')
+		else:
+			return render(request, 'HomeSwitchHome/user_auth.html', {
+			'user_form': user_form,
+			'perfil_form': perfil_form,
+			'tarj_form': tarj_form
+			})
+
+			#messages.error(request, 'Datos Incorrectos.')
+			#return redirect('RegistroUser')
+	else:
+		user_form = forms.UserForm(prefix="user_form")
+		perfil_form = forms.PerfilForm(prefix="perfil_form")
+		tarj_form = forms.TarjetaForm(prefix="tarj_form")
+		return render(request, 'HomeSwitchHome/user_auth.html', {
+		'user_form': user_form,
+		'perfil_form': perfil_form,
+		'tarj_form': tarj_form
+})
+
+
 class RegistroAdmin (CreateView):
 	model= User
 	template_name= "HomeSwitchHome/admin_formulario.html"
@@ -258,6 +303,9 @@ class RegistroAdmin (CreateView):
 		usuario = authenticate(username=usuario, password=password)
 		login(self.request, usuario)
 		return redirect(reverse_lazy('administracion'))
+
+class LoginUser(LoginView):
+	template_name = 'HomeSwitchHome/user_auth.html'	
 
 class Login (LoginView):
 	# template_name="HomeSwitchHome/admin_formulario.html"

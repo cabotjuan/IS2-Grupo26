@@ -23,26 +23,27 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
+    # USER VIEWS
 	path('', views.home, name='home'),
+    path('registrarUsuario', views.RegistroUsuario, name= 'RegistroUser'),
+    path('iniciar_sesion_usuario', views.Login.as_view(), name= 'InicioUser'),
+    path('cuadrillaprop', views.ver_cuadrilla_propiedades, name= 'cuadrilla_prop'),
+    path('subastasactivas', views.ver_subastas_activas, name= 'subastas_activas'),
+    path('ingresarsubasta/<id>', views.ingresar_subasta, name= 'ingresar_subasta'),
+    path('propiedad/<id>', views.ver_prop, name='ver_prop'),
+    # ADMIN VIEWS
     path('administracion/listado_prop', views.listado_prop, name='listado_prop'),
     path('administracion/propiedad/<id>', views.propiedad, name='prop'),
     path('administracion/agregar_propiedad', views.agregar_propiedad, name='agregar_prop'),
     path('administracion/modificar_propiedad/<id>', views.modificar_propiedad, name='modificar_prop'),
     path('administracion/registrar', views.RegistroAdmin.as_view(), name= 'RegistroAdmin'),
-    #path('administracion/registrarUsuario', views.RegistroUsuario.as_view(), name= 'RegistroUser'),
     path('administracion/iniciarsesion', views.Login.as_view(), name= 'InicioAdmin'),
-    #path('administracion/iniciar_sesion_usuario', views.Login.as_view(), name= 'InicioUser'),
- #    url(r'^', views.home, name = 'home'),
 	path('administracion/cerrarsesion', views.Logout.as_view(), name='salir'),
  	path('administracion/', views.administracion, name='administracion'),
  	path('administracion/eliminarpropiedad/<id>', views.eliminar_propiedad, name='eliminar_propiedad'),
     path('administracion/propiedad/<id>/listado_sem', views.listado_sem, name='listado_sem'),
     path('administracion/propiedad/<id>/cerrar_subasta', views.cerrar_subasta, name='cerrar_subasta'),
     path('administracion/determinarganador/<id>', views.determinar_ganador, name='determinar_ganador'),
-    path('cuadrillaprop', views.ver_cuadrilla_propiedades, name= 'cuadrilla_prop'),
-    path('subastasactivas', views.ver_subastas_activas, name= 'subastas_activas'),
-    path('ingresarsubasta/<id>', views.ingresar_subasta, name= 'ingresar_subasta'),
-    path('propiedad/<id>', views.ver_prop, name='ver_prop')
 ]
 urlpatterns += staticfiles_urlpatterns()
 
