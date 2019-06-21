@@ -26,6 +26,8 @@
 	<div class="menu-lateral-container">
 		<a class='btn btn-outline-info btn-lg btn-block' href="{% url 'agregar_prop' %}">Agregar Propiedad</a>
 			<a class="btn btn-outline-info btn-lg btn-block" href="{% url 'listado_prop' %}">Ver Listado Propiedades</a>
+		<a class="btn btn-outline-info btn-lg btn-block" href="{%url 'abrir_subastas'%}">Abrir subastas</a>
+		<a class="btn btn-outline-info btn-lg btn-block" href="{%url 'cerrar_subastas'%}">Cerrar subastas</a>
 	</div>
 
 {% elif not request.user.is_authenticated %}

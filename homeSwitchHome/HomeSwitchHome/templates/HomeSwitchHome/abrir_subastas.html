@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "home.css" %}">
+	{% include 'HomeSwitchHome/navBar.html' %}
+
+	<div class="main-container">
+		<div class="jumbotron jumbotron-fluid">
+			<div class="container">
+				<h1 class="display-4">Administración</h1>
+				<p class="lead"></p>
+			</div>
+		</div>
+
+	</div>
+		
+		
+		<div>
+			<h1>Abrir Subastas</h1>
+		</div>
+			<form method="post">
+				{% csrf_token %}
+				Monto Base:
+				<input name='monto' type="text">
+				<input class="btn btn-primary" type="submit" value="OK">
+
+			</form>

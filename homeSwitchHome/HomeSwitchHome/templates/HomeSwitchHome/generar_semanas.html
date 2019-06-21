@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "home.css" %}">
+	{% include 'HomeSwitchHome/navBar.html' %}
+
+	<div class="main-container">
+		<div class="jumbotron jumbotron-fluid">
+			<div class="container">
+				<h1 class="display-4">Administración</h1>
+				<p class="lead"></p>
+			</div>
+		</div>
+
+	</div>
+		
+		
+		<div>
+			<h1>Elija el año para el que desea generar semanas</h1>
+		</div>
+			<form method="post">
+			{% csrf_token %}
+			{% if not existe2019 %}
+				<input class="btn btn-primary" name='año' type="submit" value="2019">
+			{% else %}
+				<input class="btn btn-primary" name='año' type="submit" value="2019" disabled="true">
+				Ya no hay Semanas Disponibles para generar en 2019.
+			{% endif %}
+			<br>
+			<br>
+			{% if not existe2020 %}
+				<input class="btn btn-primary" name='año' type="submit" value="2020">
+			{% else %}
+				<input class="btn btn-primary" name='año' type="submit" value="2020" disabled="true">
+				No hay Semanas Disponibles para generar en 2020.
+			{% endif %}
+			<br><br>
+			</form>

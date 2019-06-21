@@ -29,7 +29,7 @@ class Semana(models.Model):
 	fecha_inicio_sem = models.DateField(blank=True)
 	fecha_fin_sem = models.DateField(blank=True)
 	habilitada = models.BooleanField(default=True)
-
+	fecha_creacion = models.DateField(auto_now_add=True, blank=True)
 class Reserva(models.Model):
 	usuario = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
 	fecha_reserva = models.DateField(blank=True)
@@ -37,7 +37,7 @@ class Reserva(models.Model):
 class Subasta(models.Model):
 	usuario = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
 	fecha_inicio = models.DateField(blank=True)
-	fecha_fin = models.DateField(blank=True)
+	fecha_inicio_sem = models.DateField(blank=True)
 
 class Postor(models.Model):
 	usuario = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)

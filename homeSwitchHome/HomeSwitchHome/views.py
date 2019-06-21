@@ -61,17 +61,24 @@ def eliminar_propiedad(request, id):
 # 			Semana.objects.create(propiedad= p, monto_base= 0, costo=0, numero_semana=i, fecha_inicio_sem=(get_start_end_dates(2019, i))[0], fecha_fin_sem=(get_start_end_dates(2019, i))[1])
 # 		return redirect(reverse_lazy('administracion'))
 
-# def generar_semanas (request, id): #### ID??? ####
+def generar_semanas (request, id): #### ID??? ####
 
-# 	### ENGANCHE DE SEMANA CON PROPIEDAD CON ID? ###
-# 	### NUMERO DEL AÑO ELEGIDO POR EL ADMIN ###
-# 	if request.method == 'POST':
+	### ENGANCHE DE SEMANA CON PROPIEDAD CON ID? ###
+	### NUMERO DEL AÑO ELEGIDO POR EL ADMIN ###
+	p= Propiedad.objects.get(id=id)
 
-# 		for i in range(1,53):
-# 		 	Semana.objects.create(propiedad= id, monto_base= 0, costo=0, numero_semana=i, fecha_inicio_sem=(get_start_end_dates(2019, i))[0], fecha_fin_sem=(get_start_end_dates(2019, i))[1])
-# 	else:
+	if request.method == 'POST':
+		año = int(request.POST.get('año'))
+		print(año)
+		for i in range(1,53):
+			Semana.objects.create(propiedad= p, monto_base= 0, costo=0, numero_semana=i, fecha_inicio_sem=(get_start_end_dates(año, i))[0], fecha_fin_sem=(get_start_end_dates(año, i))[1])
+		messages.success(request, "Semanas generadas!")
+		return redirect(reverse_lazy('prop', kwargs= {'id':id}))
+	else:
+		existe2019=Semana.objects.filter(propiedad=p, fecha_inicio_sem__year=2019).exists()
+		existe2020=Semana.objects.filter(propiedad=p, fecha_inicio_sem__year=2020).exists()
 
-# 		return render(request, 'HomeSwitchHome/.html', {}) ### RENDER PARA BOTONES DE ELECCION DE AÑO ###
+		return render(request, 'HomeSwitchHome/generar_semanas.html', {'existe2019':existe2019,'existe2020':existe2020,}) ### RENDER PARA BOTONES DE ELECCION DE AÑO ###
 
 
 
@@ -160,9 +167,66 @@ def modificar_propiedad(request, id):
 	return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form, 'formset':formset})
 
 
-#def prop_acotado():
 
 
+
+
+
+def abrir_subastas(request):
+	ct=0
+	if request.method == 'POST':
+		monto = request.POST.get('monto')		
+		semanas = Semana.objects.all()
+		for sem in semanas:
+			delta = monthdelta(sem.fecha_creacion,date.today())
+			if delta >=6 and sem.habilitada:
+				print('INGRESA')
+				ct+=1
+				propiedad = Propiedad.objects.get(id=sem.propiedad_id)
+				propiedad.subastas_activas+=1
+				propiedad.save()
+				sem.monto_base = monto
+				sub = Subasta.objects.create(fecha_inicio = date.today(), fecha_inicio_sem=sem.fecha_inicio_sem)
+				sem.subasta = sub
+				sem.habilitada = False
+				sem.save()
+		messages.success(request,'Se abrieron '+str(ct)+' Subastas.')
+		return redirect(reverse_lazy('administracion'))
+	return render(request,'HomeSwitchHome/abrir_subastas.html',{})
+
+def cerrar_subastas(request):
+	ct=0
+	subastas = Subasta.objects.all()
+	for sub in subastas:
+		delta = date.today()-sub.fecha_inicio
+		if delta.days >= 3:
+			print('INGRESA')
+			ct+=1
+			hay_postores = Postor.objects.filter(subasta=sub).exists()
+			if not hay_postores:
+				messages.info(request,'No se encontró ganador válido(No hay postores).')
+			else:
+				ganador_valido = False
+				while hay_postores and not ganador_valido:
+					ultpostor = Postor.objects.filter(subasta=sub).latest('fecha_puja')
+					ultpostor_perfil = Perfil.objects.get(usuario_id=ultpostor.usuario_id)
+					tiene_reservas = Reserva.objects.filter(usuario_id=ultpostor.usuario_id, fecha_reserva=sub.fecha_inicio_sem).exists()
+					if not tiene_reservas and ultpostor_perfil.creditos >= 1:
+						ganador_valido = True
+					else:
+						ultpostor.delete()
+						hay_postores = Postor.objects.filter(subasta=sub).exists()
+				if ganador_valido:
+					Reserva.objects.create(usuario_id=ultpostor.usuario_id,fecha_reserva=sub.fecha_inicio_sem)
+				else:
+					messages.info(request,'No se encontró ganador válido (Creditos insuficientes/Reservas Activas).')
+				sub.delete()
+	if ct:
+		messages.success(request,'Se Cerraron '+str(ct)+' Subastas.')
+	else:
+		messages.info(request,'No hay subastas para cerrar.')
+
+	return redirect(reverse_lazy('administracion'))
 
 
 def listado_sem(request, id):
@@ -170,7 +234,6 @@ def listado_sem(request, id):
 	############################################### GUARDAR SEMANA Y CREAR SUBASTA #########################################
 	if request.method == 'POST':
 		propiedad = Propiedad.objects.get(id=id)
-		
 		propiedad.subastas_activas+=1
 		propiedad.save()
 		nro = request.POST.get('semana')
