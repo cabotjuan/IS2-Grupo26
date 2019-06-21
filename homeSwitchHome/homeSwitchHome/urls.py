@@ -50,6 +50,7 @@ urlpatterns = [
     path('administracion/propiedad/<id>', views.propiedad, name='prop'),
     path('administracion/agregar_propiedad', views.agregar_propiedad, name='agregar_prop'),
     path('administracion/modificar_propiedad/<id>', views.modificar_propiedad, name='modificar_prop'),
+    path('administracion/modificar_propiedad/<id>/borrar_fotos', views.borrar_fotos, name='borrar_fotos'),
     path('administracion/registrar', views.RegistroAdmin.as_view(), name= 'RegistroAdmin'),
     path('administracion/iniciarsesion', views.Login.as_view(), name= 'InicioAdmin'),
 	path('administracion/cerrarsesion', views.Logout.as_view(), name='salir'),

@@ -26,7 +26,12 @@
 				Modificar Propiedad
 			{% endif %}
 		</h1>
-		
+		<ul class="messages">
+		{% for message in messages %}
+		<div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}><h4>{{ message }}</h4></div>
+		{% endfor %}
+		</ul>
+
 		<hr>
 		{% load crispy_forms_tags %}
 		<div class="form-container">
@@ -34,6 +39,13 @@
 				{% csrf_token %}
 				{{ form|crispy }}
 				{{ formset.as_p }}
+
+				
+				{% if not request.path == '/administracion/agregar_propiedad' %} 
+						<a class='btn btn-danger btn-sm' href="{{ id_prop }}/borrar_fotos">Borrar fotos</a>
+				{% endif %}
+				
+
 				<hr>
 				<input class="btn btn-primary" name='submit' type="submit" value="Listo">
 			</form>
