@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from HomeSwitchHome.models import Propiedad, Foto, Postor, Perfil, Tarjeta
 from django.core.exceptions import NON_FIELD_ERRORS
@@ -51,31 +51,21 @@ class PostorForm(ModelForm):
 			'monto_puja'
 		]
 
+class NewAuthenticationForm(AuthenticationForm):
+	class Meta:
+		fields=('Email',)
+		labels={'Nombre de usuario':'Email'}
+
+
 class UserForm(UserCreationForm):
-    class Meta:
-        model = User
-        fields = ['email',]
-
-    def clean_email(self):
-        # Get the email
-        email = self.cleaned_data.get('email')
-
-        # Check to see if any users already exist with this email as a username.
-        try:
-            match = User.objects.get(email=email)
-        except User.DoesNotExist:
-            # Unable to find a user, this is fine
-            return email
-
-        # A user was found with this as a username, raise an error.
-        raise forms.ValidationError('This email address is already in use.')
-
-# class UserForm(UserCreationForm):
-# 	  email = forms.EmailField(required=True, unique=True)
-# 	  class Meta:
-# 		model = User 
-# 	  	fields = ["username", "email", "password1", "password2"]
-
+	class Meta:
+		model = User
+		fields = ['email',]
+	def clean_email(self):
+		email = self.cleaned_data.get('email')
+		if User.objects.exclude(pk=self.instance.pk).filter(email__iexact=email):
+			raise forms.ValidationError('El Email ya se encuentra en uso.')
+		return email
 
 class PerfilForm(ModelForm):
 	class Meta:

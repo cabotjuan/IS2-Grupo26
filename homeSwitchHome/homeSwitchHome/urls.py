@@ -26,11 +26,14 @@ urlpatterns = [
     # USER VIEWS
 	path('', views.home, name='home'),
     path('registrarUsuario', views.RegistroUsuario, name= 'RegistroUser'),
-    path('iniciar_sesion_usuario', views.Login.as_view(), name= 'InicioUser'),
+    path('iniciar_sesion_usuario', views.userLogin, name= 'InicioUser'),
+    path('cerrar_sesion_usuario', views.userLogout, name='SalirUser'),
     path('cuadrillaprop', views.ver_cuadrilla_propiedades, name= 'cuadrilla_prop'),
     path('subastasactivas', views.ver_subastas_activas, name= 'subastas_activas'),
     path('ingresarsubasta/<id>', views.ingresar_subasta, name= 'ingresar_subasta'),
     path('propiedad/<id>', views.ver_prop, name='ver_prop'),
+    path('perfil', views.verPerfil, name='perfil'),
+    path('editar_perfil/<id>', views.editarPerfil, name='editarPerfil'),
     # ADMIN VIEWS
     path('administracion/listado_prop', views.listado_prop, name='listado_prop'),
     path('administracion/propiedad/<id>', views.propiedad, name='prop'),

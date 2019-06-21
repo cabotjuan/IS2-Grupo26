@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% load static %}
+<link rel="stylesheet" href="{% static "home.css" %}">
+{% load crispy_forms_tags %}
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-4">Mi perfil</h1>
+			<a class="btn btn-info" href="{%url 'editarPerfil' request.user.id %}">Editar</a>
+			<p class="lead"></p>
+		</div>
+	</div>
+
+</div>
+<ul class="messages">
+{% for message in messages %}
+<div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}><h4>{{ message }}</h4></div>
+{% endfor %}
+</ul>
+
+<div class="container">
+	<form method="post"> {% csrf_token %}
+	{{ perfil.non_field_errors }}
+	<h5>Usuario</h5>
+	{{ usuario|crispy }}
+	<hr>
+	<h5>Personal</h5>
+	{{ perfil|crispy }}
+	<hr>
+	<h5>Tarjeta</h5>
+	{{ tarjeta|crispy }}
+	<input class="btn btn-primary" type="submit" value="Listo">
+	</form>
+</div>

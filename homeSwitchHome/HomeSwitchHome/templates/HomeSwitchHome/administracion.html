@@ -5,7 +5,7 @@
 
 <title>Administracion</title>
 
-{% if request.user.is_authenticated %}
+{% if request.user.is_authenticated and request.user.is_staff  %}
 
 	{% include 'HomeSwitchHome/navBar.html' %}
 
@@ -28,7 +28,7 @@
 			<a class="btn btn-outline-info btn-lg btn-block" href="{% url 'listado_prop' %}">Ver Listado Propiedades</a>
 	</div>
 
-{% else %}
+{% elif not request.user.is_authenticated %}
 
 	<div class="main-container">
 		<div class="jumbotron jumbotron-fluid">
@@ -46,5 +46,7 @@
 			<a class="btn btn-outline-primary btn-lg" href="{% url 'RegistroAdmin' %}">Registrarse</a>
 		</div>
 	</div>
-
+{% endif %}
+{% if not request.user.is_staff and request.user.is_authenticated %}
+	Acceso Denegado.
 {% endif %}
