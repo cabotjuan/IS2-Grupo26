@@ -46,3 +46,4 @@ class PostorForm(ModelForm):
 			'usuario',
 			'monto_puja'
 		]
+

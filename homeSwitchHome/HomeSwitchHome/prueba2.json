@@ -1,0 +1,829 @@
+[
+{
+    "model": "HomeSwitchHome.propiedad",
+    "pk": 1,
+    "fields": {
+        "titulo": "Propiedad 1",
+        "descripcion": "Una propiedad",
+        "pais": "Argentina",
+        "provincia": "Buenos Aires",
+        "localidad": "La Plata",
+        "direccion": "Calle 123",
+        "subastas_activas": 0
+    }
+},
+{
+    "model": "HomeSwitchHome.propiedad",
+    "pk": 2,
+    "fields": {
+        "titulo": "prop2",
+        "descripcion": "lalalaa",
+        "pais": "arg",
+        "provincia": "bsas",
+        "localidad": "varela",
+        "direccion": "lalalala234",
+        "subastas_activas": 0
+    }
+},
+{
+    "model": "HomeSwitchHome.propiedad",
+    "pk": 3,
+    "fields": {
+        "titulo": "Propiedad 2",
+        "descripcion": "Descripcion para prop 2",
+        "pais": "Argentina",
+        "provincia": "Buenos Aires",
+        "localidad": "La Plata",
+        "direccion": "calle 123",
+        "subastas_activas": 0
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 1,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 1,
+        "fecha_inicio_sem": "2018-12-30",
+        "fecha_fin_sem": "2019-01-05",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 2,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 2,
+        "fecha_inicio_sem": "2019-01-06",
+        "fecha_fin_sem": "2019-01-12",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 3,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 3,
+        "fecha_inicio_sem": "2019-01-13",
+        "fecha_fin_sem": "2019-01-19",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 4,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 4,
+        "fecha_inicio_sem": "2019-01-20",
+        "fecha_fin_sem": "2019-01-26",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 5,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 5,
+        "fecha_inicio_sem": "2019-01-27",
+        "fecha_fin_sem": "2019-02-02",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 6,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 6,
+        "fecha_inicio_sem": "2019-02-03",
+        "fecha_fin_sem": "2019-02-09",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 7,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 7,
+        "fecha_inicio_sem": "2019-02-10",
+        "fecha_fin_sem": "2019-02-16",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 8,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 8,
+        "fecha_inicio_sem": "2019-02-17",
+        "fecha_fin_sem": "2019-02-23",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 9,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 9,
+        "fecha_inicio_sem": "2019-02-24",
+        "fecha_fin_sem": "2019-03-02",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 10,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 10,
+        "fecha_inicio_sem": "2019-03-03",
+        "fecha_fin_sem": "2019-03-09",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 11,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 11,
+        "fecha_inicio_sem": "2019-03-10",
+        "fecha_fin_sem": "2019-03-16",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 12,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 12,
+        "fecha_inicio_sem": "2019-03-17",
+        "fecha_fin_sem": "2019-03-23",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 13,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 13,
+        "fecha_inicio_sem": "2019-03-24",
+        "fecha_fin_sem": "2019-03-30",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 14,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 14,
+        "fecha_inicio_sem": "2019-03-31",
+        "fecha_fin_sem": "2019-04-06",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 15,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 15,
+        "fecha_inicio_sem": "2019-04-07",
+        "fecha_fin_sem": "2019-04-13",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 16,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 16,
+        "fecha_inicio_sem": "2019-04-14",
+        "fecha_fin_sem": "2019-04-20",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 17,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 17,
+        "fecha_inicio_sem": "2019-04-21",
+        "fecha_fin_sem": "2019-04-27",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 18,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 18,
+        "fecha_inicio_sem": "2019-04-28",
+        "fecha_fin_sem": "2019-05-04",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 19,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 19,
+        "fecha_inicio_sem": "2019-05-05",
+        "fecha_fin_sem": "2019-05-11",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 20,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 20,
+        "fecha_inicio_sem": "2019-05-12",
+        "fecha_fin_sem": "2019-05-18",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 21,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 21,
+        "fecha_inicio_sem": "2019-05-19",
+        "fecha_fin_sem": "2019-05-25",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 22,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 22,
+        "fecha_inicio_sem": "2019-05-26",
+        "fecha_fin_sem": "2019-06-01",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 23,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 23,
+        "fecha_inicio_sem": "2019-06-02",
+        "fecha_fin_sem": "2019-06-08",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 24,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 24,
+        "fecha_inicio_sem": "2019-06-09",
+        "fecha_fin_sem": "2019-06-15",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 25,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 25,
+        "fecha_inicio_sem": "2019-06-16",
+        "fecha_fin_sem": "2019-06-22",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 26,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 26,
+        "fecha_inicio_sem": "2019-06-23",
+        "fecha_fin_sem": "2019-06-29",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 27,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 27,
+        "fecha_inicio_sem": "2019-06-30",
+        "fecha_fin_sem": "2019-07-06",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 28,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 28,
+        "fecha_inicio_sem": "2019-07-07",
+        "fecha_fin_sem": "2019-07-13",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 29,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 29,
+        "fecha_inicio_sem": "2019-07-14",
+        "fecha_fin_sem": "2019-07-20",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 30,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 30,
+        "fecha_inicio_sem": "2019-07-21",
+        "fecha_fin_sem": "2019-07-27",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 31,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 31,
+        "fecha_inicio_sem": "2019-07-28",
+        "fecha_fin_sem": "2019-08-03",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 32,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 32,
+        "fecha_inicio_sem": "2019-08-04",
+        "fecha_fin_sem": "2019-08-10",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 33,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 33,
+        "fecha_inicio_sem": "2019-08-11",
+        "fecha_fin_sem": "2019-08-17",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 34,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 34,
+        "fecha_inicio_sem": "2019-08-18",
+        "fecha_fin_sem": "2019-08-24",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 35,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 35,
+        "fecha_inicio_sem": "2019-08-25",
+        "fecha_fin_sem": "2019-08-31",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 36,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 36,
+        "fecha_inicio_sem": "2019-09-01",
+        "fecha_fin_sem": "2019-09-07",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 37,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 37,
+        "fecha_inicio_sem": "2019-09-08",
+        "fecha_fin_sem": "2019-09-14",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 38,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 38,
+        "fecha_inicio_sem": "2019-09-15",
+        "fecha_fin_sem": "2019-09-21",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 39,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 39,
+        "fecha_inicio_sem": "2019-09-22",
+        "fecha_fin_sem": "2019-09-28",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 40,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 40,
+        "fecha_inicio_sem": "2019-09-29",
+        "fecha_fin_sem": "2019-10-05",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 41,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 41,
+        "fecha_inicio_sem": "2019-10-06",
+        "fecha_fin_sem": "2019-10-12",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 42,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 42,
+        "fecha_inicio_sem": "2019-10-13",
+        "fecha_fin_sem": "2019-10-19",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 43,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 43,
+        "fecha_inicio_sem": "2019-10-20",
+        "fecha_fin_sem": "2019-10-26",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 44,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 44,
+        "fecha_inicio_sem": "2019-10-27",
+        "fecha_fin_sem": "2019-11-02",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 45,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 45,
+        "fecha_inicio_sem": "2019-11-03",
+        "fecha_fin_sem": "2019-11-09",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 46,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 46,
+        "fecha_inicio_sem": "2019-11-10",
+        "fecha_fin_sem": "2019-11-16",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 47,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 47,
+        "fecha_inicio_sem": "2019-11-17",
+        "fecha_fin_sem": "2019-11-23",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 48,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 48,
+        "fecha_inicio_sem": "2019-11-24",
+        "fecha_fin_sem": "2019-11-30",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 49,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 49,
+        "fecha_inicio_sem": "2019-12-01",
+        "fecha_fin_sem": "2019-12-07",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 50,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 50,
+        "fecha_inicio_sem": "2019-12-08",
+        "fecha_fin_sem": "2019-12-14",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 51,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 51,
+        "fecha_inicio_sem": "2019-12-15",
+        "fecha_fin_sem": "2019-12-21",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 52,
+    "fields": {
+        "propiedad": 2,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 52,
+        "fecha_inicio_sem": "2019-12-22",
+        "fecha_fin_sem": "2019-12-28",
+        "habilitada": true
+    }
+},
+{
+    "model": "HomeSwitchHome.foto",
+    "pk": 11,
+    "fields": {
+        "archivo": "images/fotoquinta1.jpg",
+        "propiedad": 3
+    }
+}
+]

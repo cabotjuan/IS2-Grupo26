@@ -1,0 +1,18 @@
+[
+
+{
+	"model": "HomeSwitchHome.Propiedad",
+	"pk": 1,
+	"fields": {
+
+		"titulo": "Propiedad 1",
+		"descripcion": "Una propiedad",
+		"pais":"Argentina",
+		"provincia": "Buenos Aires",
+		"localidad": "La Plata",
+		"direccion": "Calle 123",
+		"subastas_activas": 0
+	}
+}
+
+]

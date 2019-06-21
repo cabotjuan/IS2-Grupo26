@@ -11,13 +11,14 @@ from django.urls import path
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from . import fechas
-from .fechas import get_start_end_dates
-from datetime import date
+from .fechas import get_start_end_dates, monthdelta
+from datetime import date, datetime
 from django.contrib.auth.views import LoginView, LogoutView
 from HomeSwitchHome import forms
 from django.forms import modelformset_factory
 from django.template import RequestContext
 from django.contrib import messages
+from django.db import models
 # Create your views here.
 
 def home(request):
@@ -60,6 +61,27 @@ def eliminar_propiedad(request, id):
 # 			Semana.objects.create(propiedad= p, monto_base= 0, costo=0, numero_semana=i, fecha_inicio_sem=(get_start_end_dates(2019, i))[0], fecha_fin_sem=(get_start_end_dates(2019, i))[1])
 # 		return redirect(reverse_lazy('administracion'))
 
+# def generar_semanas (request, id): #### ID??? ####
+
+# 	### ENGANCHE DE SEMANA CON PROPIEDAD CON ID? ###
+# 	### NUMERO DEL AÑO ELEGIDO POR EL ADMIN ###
+# 	if request.method == 'POST':
+
+# 		for i in range(1,53):
+# 		 	Semana.objects.create(propiedad= id, monto_base= 0, costo=0, numero_semana=i, fecha_inicio_sem=(get_start_end_dates(2019, i))[0], fecha_fin_sem=(get_start_end_dates(2019, i))[1])
+# 	else:
+
+# 		return render(request, 'HomeSwitchHome/.html', {}) ### RENDER PARA BOTONES DE ELECCION DE AÑO ###
+
+
+
+# def habilitar_sem_reserva (request, id): #### ID??? ####
+
+	
+
+# 	Semana.objects.filter(id=id).update()	############
+
+
 def agregar_propiedad(request):
 	Imageformset = modelformset_factory(Foto, form= forms.ImageForm ,min_num=0, max_num=5,extra=5)
 	
@@ -85,8 +107,8 @@ def agregar_propiedad(request):
 				archivo = f['archivo']
 				foto = Foto(archivo=archivo, propiedad=form)
 				foto.save()
-			for i in range(1,53):
-				Semana.objects.create(propiedad= form, monto_base= 0, costo=0, numero_semana=i, fecha_inicio_sem=(get_start_end_dates(2019, i))[0], fecha_fin_sem=(get_start_end_dates(2019, i))[1])
+			# for i in range(1,53):
+			# 	Semana.objects.create(propiedad= form, monto_base= 0, costo=0, numero_semana=i, fecha_inicio_sem=(get_start_end_dates(2019, i))[0], fecha_fin_sem=(get_start_end_dates(2019, i))[1])
 			messages.success(request, "Propiedad Agregada!")
 			return redirect(reverse_lazy(administracion))
 
@@ -138,6 +160,7 @@ def modificar_propiedad(request, id):
 	return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form, 'formset':formset})
 
 
+#def prop_acotado():
 
 
 
@@ -180,6 +203,57 @@ def determinar_ganador(request, id):
 	Subasta.objects.filter(id=id).delete()
 	return render(request, 'HomeSwitchHome/determinar_ganador.html',{'ganador':ganador})
 
+def buscar_x_fecha(request):
+	##################### REVISAR FECHAS DEL POST ###############################
+
+	if request.method == 'POST':
+		fecha1= datetime.strptime(request.POST.get('f1'), '%Y-%m-%d').date()
+		fecha2= datetime.strptime(request.POST.get('f2'), '%Y-%m-%d').date()
+		if  (fecha2>fecha1) and (monthdelta(fecha1,fecha2) <= 2) and (monthdelta(date.today(),fecha1) >= 6 ) : 
+			listado_res = Semana.objects.filter(fecha_inicio_sem__range= (fecha1,fecha2)).select_related('propiedad')
+			return render (request, 'HomeSwitchHome/cuadrilla_prop.html',{'propiedades':listado_res})
+		else:
+
+			if (fecha2<fecha1):
+
+				messages.error(request, 'La fecha de fin del rango debe ser posterior a la fecha de inicio')
+			elif (monthdelta(fecha1,fecha2) > 2):
+
+				messages.error(request, 'El rango entre fechas no debe superar los dos meses')
+
+			else:
+				messages.error(request, 'La busqueda debe ser para al menos dentro de 6 meses')
+			return render (request, 'HomeSwitchHome/buscar_x_fecha.html',{})
+			#return render (request, 'HomeSwitchHome/',{}) ### ADVERTIR RANGO MAYOR A 2 MESES O BUSQUEDA MENOR A 6 MESES ###
+
+	else:
+
+		return render (request, 'HomeSwitchHome/buscar_x_fecha.html',{})
+
+def buscar_x_zona (request):
+		listado_zonas= Propiedad.objects.values('localidad').distinct()
+		return render (request, 'HomeSwitchHome/buscar_x_zona.html',{'zonas':listado_zonas})
+
+def  ver_cuadrilla_x_zona (request, zona):
+	listado_res = Propiedad.objects.filter(localidad = zona)
+	return render (request, 'HomeSwitchHome/cuadrilla_prop.html',{'propiedades':listado_res})
+
+	##################### REVISAR LOCALIDAD DEL POST ###############################
+
+	# if request.method == 'POST':
+
+	# 	# <input type='ra'>
+
+	# 	listado_res = Propiedad.objects.filter(localidad = zona)
+	# 	return render (request, 'HomeSwitchHome/cuadrilla_prop.html',{'listado_res_prop':listado_res})
+
+
+	# else:
+
+	# 	listado_zonas= Propiedad.objects.values('localidad').distinct()
+	# 	return render (request, 'HomeSwitchHome/buscar_x_zona.html',{'zonas':listado_zonas})
+
+
 def cerrar_subasta(request, id):
 
 	listado_hab = Semana.objects.filter(propiedad=id).filter(habilitada = False).filter(subasta_id__isnull=False)
@@ -197,7 +271,8 @@ def cerrar_subasta(request, id):
 
 def ver_cuadrilla_propiedades(request):
 
-	propiedades= Propiedad.objects.all()
+	propiedades= Propiedad.objects.annotate(cnt=models.Count('id')).filter(cnt__lte = 1).order_by('id')
+#	propiedades= Propiedad.objects.all()
 	template = 'HomeSwitchHome/cuadrilla_prop.html'
 	return render(request, template, {'propiedades':propiedades})
 
@@ -274,3 +349,4 @@ class Login (LoginView):
 
 class Logout(LogoutView):
 	pass
+

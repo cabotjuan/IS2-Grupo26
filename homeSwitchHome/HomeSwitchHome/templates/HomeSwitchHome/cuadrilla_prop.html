@@ -16,12 +16,20 @@
 	</div>
 
 <div class="prop-container">
-		<h1>Cuadrilla de Propiedades</h1>
+		<div>
+			<h1>Cuadrilla de Propiedades</h1>
+			<a class="btn btn-primary btn-sm cerrar-sesion-btn" href="{% url 'buscar_x_fecha' %}">Buscar por fecha</a>
+			<a class="btn btn-primary btn-sm cerrar-sesion-btn" href="{% url 'buscar_x_zona'%}">Buscar por zona</a>
+		</div>
 		<hr>
 		<ul class="list-group">
 			{% if propiedades %}
 				{% for Propiedad in propiedades %} 
-					<a class='list-group-item list-group-item-action' href='propiedad/{{ Propiedad.id}}'>{{ Propiedad.titulo }}</a>
+					<a class='list-group-item list-group-item-action' href='propiedad/{{ Propiedad.id}}'>{{ Propiedad.titulo }}
+					<h6>{{Propiedad.localidad}}</h6>
+					
+					{# <img src="{{Propiedad.foto_set.all()[0].archivo.url}}" alt="Sin Imagen" class="img-thumbnail"> #}
+					</a>
 				{% endfor %}
 						
 			{% else %}

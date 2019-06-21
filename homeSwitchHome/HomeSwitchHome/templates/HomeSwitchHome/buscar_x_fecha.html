@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "home.css" %}">
+
+		
+		<ul class="messages">
+		{% for message in messages %}
+		<div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}><h4>{{ message }}</h4></div>
+		{% endfor %}
+		</ul>
+		<div>
+			<h1>Elija un rango de fechas</h1>
+		</div>
+		<form method="post">
+			{% csrf_token %}
+		  <h4> Fecha inicio: <input type="date" name="f1"> </h4>
+		  <h4> Fecha fin: <input type="date" name="f2"> </h4>
+		  <input value= 'Enviar' type="submit" class="btn btn-primary btn-sm">
+		</form>
+

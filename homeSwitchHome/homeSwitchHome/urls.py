@@ -39,10 +39,19 @@ urlpatterns = [
     path('administracion/propiedad/<id>/listado_sem', views.listado_sem, name='listado_sem'),
     path('administracion/propiedad/<id>/cerrar_subasta', views.cerrar_subasta, name='cerrar_subasta'),
     path('administracion/determinarganador/<id>', views.determinar_ganador, name='determinar_ganador'),
-    path('cuadrillaprop', views.ver_cuadrilla_propiedades, name= 'cuadrilla_prop'),
     path('subastasactivas', views.ver_subastas_activas, name= 'subastas_activas'),
     path('ingresarsubasta/<id>', views.ingresar_subasta, name= 'ingresar_subasta'),
-    path('propiedad/<id>', views.ver_prop, name='ver_prop')
+    path('propiedad/<id>', views.ver_prop, name='ver_prop'),
+    path('cuadrillaprop', views.ver_cuadrilla_propiedades, name= 'cuadrilla_prop'),
+    path('cuadrillaprop/porzona/<zona>', views.ver_cuadrilla_x_zona, name= 'cuadrilla_prop_por_zona'),
+    path('cuadrillaprop/buscar_x_zona', views.buscar_x_zona, name='buscar_x_zona'),
+    path('cuadrillaprop/porfecha', views.buscar_x_fecha, name='buscar_x_fecha'),
+   # path('propiedadesacotado', views.prop_acotado, name='prop_acotado')
+
+
+
+
+    #path('administracion/propiedad/<id>/generarsemanas', views.generar_semanas, name='generar_semanas')
 ]
 urlpatterns += staticfiles_urlpatterns()
 
