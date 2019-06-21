@@ -8,21 +8,23 @@
 </ul>
 <div class="jumbotron jumbotron-fluid">
 		<div class="container">
-			<h1 class="display-5">Registrarse</h1>
-			<p class="lead"> Al Registrarte en HomeSwitchHome, podras acceder a subastas y hot-Sales. Por favor, completa los siguientes campos: </p>
+			<h1 class="display-5">Iniciar Sesion</h1>
 		</div>
 	</div>		
 <div class="col-6">
 	<form method="post"> {% csrf_token %}
-		  {{ perfil_form.non_field_errors }}
-		{{ user_form|crispy }}
+		{{ form.non_field_errors }}
+		{% for field in form %}
+		{% if field.label == 'Nombre de usuario' %}
+			Email:
+		{% else %}
+			Contraseña:
+		{% endif %}
+		{{ field }}
+		{{ field.errors }}
+	</br></br></br>
+		{% endfor %}
 		<hr>
-		<h5>Perfil</h5>
-		{{ perfil_form|crispy }}
-		<hr>
-		<h5>Tarjeta</h5>
-		<p>(Costo basico: $ ---- )</p>
-		{{ tarj_form|crispy }}
 	<input class="btn btn-primary" type="submit" value="Listo">
 	</form>
 </div>

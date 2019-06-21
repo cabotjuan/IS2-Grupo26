@@ -53,7 +53,7 @@ class Foto(models.Model):
 
 
 class Perfil(models.Model):
-	usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+	usuario = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
 	nombre = models.CharField(max_length=20)
 	apellido = models.CharField(max_length=20)
 	fecha_nacimiento = models.DateField()
@@ -62,7 +62,7 @@ class Perfil(models.Model):
 
 class Tarjeta(models.Model):
 	TARJETAS_DISP = [('VISA', 'VISA'),('MASTERCARD', 'MASTERCARD')]
-	usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+	usuario = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
 	nro_tarjeta = models.IntegerField(primary_key=True)
 	marca = models.CharField(choices=TARJETAS_DISP, max_length=10) 
 	titular = models.CharField(max_length=20)

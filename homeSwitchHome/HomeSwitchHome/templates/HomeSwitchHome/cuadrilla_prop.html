@@ -28,7 +28,7 @@
 					<a class='list-group-item list-group-item-action' href='propiedad/{{ Propiedad.id}}'>{{ Propiedad.titulo }}
 					<h6>{{Propiedad.localidad}}</h6>
 					
-					{# <img src="{{Propiedad.foto_set.all()[0].archivo.url}}" alt="Sin Imagen" class="img-thumbnail"> #}
+					<img src="{{Propiedad.archivo.url}}" alt="Sin Imagen" class="img-thumbnail">
 					</a>
 				{% endfor %}
 						

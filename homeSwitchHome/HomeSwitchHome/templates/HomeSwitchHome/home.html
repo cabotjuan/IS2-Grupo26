@@ -14,7 +14,12 @@
 	</div>
 
 </div>
-
+			<ul class="messages">
+			    {% for message in messages %}
+			    <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}><h4>{{ message }}</h4></div>
+			    {% endfor %}
+			</ul>
+			
 	<div class="menu-lateral-container">
 		<a class='btn btn-outline-info btn-lg btn-block' href="cuadrillaprop">Ver propiedades</a>
 			<a class="btn btn-outline-info btn-lg btn-block" href="{% url 'subastas_activas' %}">Ver subastas activas</a>

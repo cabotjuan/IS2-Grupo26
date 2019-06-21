@@ -3,6 +3,26 @@ body{
  	font-family: "Lato", sans-serif;
 }
 
+.botones-sesion-container{
+  display: flex;
+  align-items: center;
+}
+.botones-sesion-contenido{
+  margin: 0 auto;
+  padding: 10px;
+}
+.cerrar-sesion-btn{
+  right: 10px;
+  top: 11px;
+  position: fixed;
+}
+.show-username{
+  position: absolute;
+  right: 135px;
+  top: 15px;
+  color: white !important;
+
+}
 .menu-lateral-container {
     height: auto;
     width: auto;

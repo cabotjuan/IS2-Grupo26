@@ -1,12 +1,12 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Propiedad, Semana, Subasta, Foto, Postor
+from django.shortcuts import render, get_object_or_404, render_to_response
+from .models import Propiedad, Semana, Subasta, Foto, Postor, Perfil, Tarjeta
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
 from django.views.generic.edit import FormView
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.urls import path
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
@@ -209,8 +209,10 @@ def buscar_x_fecha(request):
 	if request.method == 'POST':
 		fecha1= datetime.strptime(request.POST.get('f1'), '%Y-%m-%d').date()
 		fecha2= datetime.strptime(request.POST.get('f2'), '%Y-%m-%d').date()
-		if  (fecha2>fecha1) and (monthdelta(fecha1,fecha2) <= 2) and (monthdelta(date.today(),fecha1) >= 6 ) : 
+		if  (fecha2>fecha1) and (monthdelta(fecha1,fecha2) <= 2) and (monthdelta(date.today(),fecha1) >= 6 ) : 	
 			listado_res = Semana.objects.filter(fecha_inicio_sem__range= (fecha1,fecha2)).select_related('propiedad')
+			if not request.user.is_authenticated:
+				listado_res = listado_res[:5]
 			return render (request, 'HomeSwitchHome/cuadrilla_prop.html',{'propiedades':listado_res})
 		else:
 
@@ -231,11 +233,13 @@ def buscar_x_fecha(request):
 		return render (request, 'HomeSwitchHome/buscar_x_fecha.html',{})
 
 def buscar_x_zona (request):
-		listado_zonas= Propiedad.objects.values('localidad').distinct()
-		return render (request, 'HomeSwitchHome/buscar_x_zona.html',{'zonas':listado_zonas})
+	listado_zonas= Propiedad.objects.values('localidad').distinct()
+	return render (request, 'HomeSwitchHome/buscar_x_zona.html',{'zonas':listado_zonas})
 
 def  ver_cuadrilla_x_zona (request, zona):
 	listado_res = Propiedad.objects.filter(localidad = zona)
+	if not request.user.is_authenticated:
+				listado_res = listado_res[:5]
 	return render (request, 'HomeSwitchHome/cuadrilla_prop.html',{'propiedades':listado_res})
 
 	##################### REVISAR LOCALIDAD DEL POST ###############################
@@ -270,9 +274,9 @@ def cerrar_subasta(request, id):
 		return render(request, 'HomeSwitchHome/cerrar_subasta.html', {'listado_hab':listado_hab})
 
 def ver_cuadrilla_propiedades(request):
-
-	propiedades= Propiedad.objects.annotate(cnt=models.Count('id')).filter(cnt__lte = 1).order_by('id')
-#	propiedades= Propiedad.objects.all()
+	propiedades= Propiedad.objects.all()
+	if not request.user.is_authenticated:
+		propiedades = propiedades[:5]
 	template = 'HomeSwitchHome/cuadrilla_prop.html'
 	return render(request, template, {'propiedades':propiedades})
 
@@ -317,9 +321,59 @@ def ingresar_subasta(request, id):
 			args={'form':form,'semana':semana}
 		return render(request, 'HomeSwitchHome/ingresar_subasta.html', args)
 
+#perfil = Perfil.objects.get(usuario=request.user)
+#tarjeta = Tarjeta.objects.get(usuario=request.user)
+def RegistroUsuario(request):
+	if request.method == 'POST':
+		user_form = forms.UserForm(request.POST, prefix="user_form")
+		perfil_form = forms.PerfilForm(request.POST, prefix="perfil_form")
+		tarj_form = forms.TarjetaForm(request.POST, prefix="tarj_form")
+		print('-------------')
+		print(user_form.is_valid())
+		print(perfil_form.is_valid())
+		print(tarj_form.is_valid())
+		print('-------------')
+		if user_form.is_valid() and perfil_form.is_valid() and tarj_form.is_valid():
+			u = user_form.save(commit= False)
+			p = perfil_form.save(commit=False)
+			t = tarj_form.save(commit=False)
+			u.username = u.email
+			u.is_staff = False
+			u.is_superuser = False
+			u.save()
+			u = User.objects.get(username=u.email)
+			p.usuario_id = u.id
+			t.usuario_id = u.id 
+			p.save()
+			t.save()
+			password = user_form.cleaned_data.get('password1')
+			usuario = authenticate(username=u, password=password)
+			login(request, usuario)
+			messages.success(request, 'Perfil Creado con exito!')
+			return redirect('home')
+		else:
+			return render(request, 'HomeSwitchHome/user_auth.html', {
+			'user_form': user_form,
+			'perfil_form': perfil_form,
+			'tarj_form': tarj_form
+			})
+
+			#messages.error(request, 'Datos Incorrectos.')
+			#return redirect('RegistroUser')
+	else:
+		user_form = forms.UserForm(prefix="user_form")
+		perfil_form = forms.PerfilForm(prefix="perfil_form")
+		tarj_form = forms.TarjetaForm(prefix="tarj_form")
+		return render(request, 'HomeSwitchHome/user_auth.html', {
+		'user_form': user_form,
+		'perfil_form': perfil_form,
+		'tarj_form': tarj_form
+})
+
+
 class RegistroAdmin (CreateView):
 	model= User
-	template_name= "HomeSwitchHome/admin_formulario.html"
+	template_name= "HomeSwitchHome/admin_auth.html"
 	form_class = UserCreationForm
 	success_url=reverse_lazy('administracion')
 
@@ -334,19 +388,61 @@ class RegistroAdmin (CreateView):
 		login(self.request, usuario)
 		return redirect(reverse_lazy('administracion'))
 
+def userLogin(request):
+	if request.method == 'POST': 
+		form = AuthenticationForm(request.POST)
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+				# Redirect to a successpage
+				return redirect(reverse_lazy('home'))
+			else:
+				messages.error(request, 'Cuenta deshabilitada.')
+		else:
+			messages.error(request, 'Mail o contraseña Incorrecta.')
+	else:
+		form = AuthenticationForm()
+	return render(request,"HomeSwitchHome/iniciar_sesion.html",{'form':form})
+
+
+def userLogout(request):
+	logout(request)
+	return redirect(reverse_lazy('home'))
 class Login (LoginView):
-	# template_name="HomeSwitchHome/admin_formulario.html"
-	# form_class=AuthenticationForm
-	# success_url=reverse_lazy('administracion')
-
-	# def dispatch(self, request, *args, **kwargs):
-	# 	if request.user.is_authenticated:
-	# 		return HttpResponseRedirect(self.get_success_url())
-	# 	else:
-	# 		return super(Login,self).dispatch(request, *args, **kwargs)
-
-    template_name = 'HomeSwitchHome/admin_formulario.html'
-
+	template_name = 'HomeSwitchHome/admin_auth.html'
 class Logout(LogoutView):
 	pass
 
+def verPerfil(request):
+	print(request.user.id)
+	perfil = Perfil.objects.get(usuario=request.user.id)
+	tarjeta = Tarjeta.objects.get(usuario=request.user.id)
+	return render(request, 'HomeSwitchHome/mi_perfil.html', {'usuario': request.user,'perfil':perfil,'tarjeta':tarjeta})
+
+def editarPerfil(request, id):
+	user = User.objects.get(id=id)
+	perfil = Perfil.objects.get(usuario=id)
+	tarjeta = Tarjeta.objects.get(usuario=id)
+	user_form = forms.UserForm(request.POST or None, instance=user, prefix="user_form")
+	perfil_form = forms.PerfilForm(request.POST or None, instance=perfil, prefix="perfil_form")
+	tarj_form = forms.TarjetaForm(request.POST or None, instance=tarjeta, prefix="tarj_form")
+	#mail = user_form.cleaned_data.get('email')
+	if request.method == 'POST':
+		if user_form.is_valid() and perfil_form.is_valid() and tarj_form.is_valid():
+			messages.success(request,'Perfil Actualizado Correctamente.')
+			user_form.save()
+			perfil_form.save()
+			tarj_form.save()
+			usuario = user_form.cleaned_data.get('email')
+			password = user_form.cleaned_data.get('password1')
+			usuario = authenticate(username=usuario, password=password)
+			login(request, usuario)
+			return redirect('home')
+	#		elif not user_form.is_valid():
+	#			user_form['password'].validate()
+	#			if mail == user_form.cleaned_data.get('email'):
+
+	return render(request, 'HomeSwitchHome/editar_perfil.html',{'usuario':user_form,'perfil':perfil_form,'tarjeta':tarj_form})
