@@ -156,14 +156,18 @@ def modificar_propiedad(request, id):
 		else:
 			messages.success(request, 'La propiedad no se ha modificado.')
 			return redirect(reverse_lazy('administracion'))
-
-	return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form, 'formset':formset})
-
-
-#def prop_acotado():
+	print('ID>>>>>>>>>>>>>>>>>',prop.id)
+	print('ID>>>>>>>>>>>>>>>>>',id)
+	return render(request, 'HomeSwitchHome/agregar_propiedad.html', {'form':form, 'formset':formset, 'id_prop':prop.id})
 
 
-
+def borrar_fotos(request, id):
+	prop = Propiedad.objects.get(id=id)
+	fotos = Foto.objects.filter(propiedad=prop)
+	for f in fotos:
+		f.delete()
+	messages.success(request,'Fotos eliminadas.')
+	return redirect(reverse_lazy('modificar_prop',kwargs={'param': param}))
 
 def listado_sem(request, id):
 	listado= Semana.objects.filter(fecha_inicio_sem__gte= date.today()).filter(propiedad=id)

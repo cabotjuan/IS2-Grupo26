@@ -18,18 +18,24 @@
 <div class="prop-container">
 		<div>
 			<h1>Cuadrilla de Propiedades</h1>
-			<a class="btn btn-primary btn-sm cerrar-sesion-btn" href="{% url 'buscar_x_fecha' %}">Buscar por fecha</a>
-			<a class="btn btn-primary btn-sm cerrar-sesion-btn" href="{% url 'buscar_x_zona'%}">Buscar por zona</a>
+			<a class="btn btn-primary btn-sm" href="{% url 'buscar_x_fecha' %}">Buscar por fecha</a>
+			<a class="btn btn-primary btn-sm" href="{% url 'buscar_x_zona'%}">Buscar por zona</a>
 		</div>
 		<hr>
 		<ul class="list-group">
 			{% if propiedades %}
 				{% for Propiedad in propiedades %} 
-					<a class='list-group-item list-group-item-action' href='propiedad/{{ Propiedad.id}}'>{{ Propiedad.titulo }}
-					<h6>{{Propiedad.localidad}}</h6>
-					
-					<img src="{{Propiedad.archivo.url}}" alt="Sin Imagen" class="img-thumbnail">
-					</a>
+					<div class="media" style="padding: 10px; background-color:#ddd">
+						{% for f in Propiedad.foto_set.all|slice:":1" %}
+							<img src="{{f.archivo.url}}" class="mr-3" alt="Sin Imagen" class="img-thumbnail" style="height:75px; left:0px;">
+						{% endfor %}				
+						<div class="media-body">
+						<h5 class="mt-0">{{ Propiedad.titulo }}</h5>
+						{{Propiedad.localidad}}
+						</div>
+						
+						<a class="btn btn-outline-success btn-sm" href='propiedad/{{ Propiedad.id}}'>Ver detalle</a>
+					</div>
 				{% endfor %}
 						
 			{% else %}
