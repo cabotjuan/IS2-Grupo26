@@ -1,4 +1,19 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+	$(document).ready(function(){
+		$( "#lanzarModal" ).click(function() {
+			$("#eliminarModal").modal()
+		});$( "#lanzarModal2" ).click(function() {
+			$("#eliminarModal2").modal()
+		});
+	});
+</script>
+
+
+
 
 {% load static %}
 <link rel="stylesheet" href="{% static "home.css" %}">
@@ -18,10 +33,9 @@
 		<div>
 			<h1>Elija el año para el que desea generar semanas</h1>
 		</div>
-			<form method="post">
-			{% csrf_token %}
+
 			{% if not existe2019 %}
-				<input class="btn btn-primary" name='año' type="submit" value="2019">
+				<button id="lanzarModal" class="btn btn-primary">2019</button>
 			{% else %}
 				<input class="btn btn-primary" name='año' type="submit" value="2019" disabled="true">
 				Ya no hay Semanas Disponibles para generar en 2019.
@@ -29,10 +43,52 @@
 			<br>
 			<br>
 			{% if not existe2020 %}
-				<input class="btn btn-primary" name='año' type="submit" value="2020">
+				<button id="lanzarModal2" class="btn btn-primary">2020</button>
 			{% else %}
 				<input class="btn btn-primary" name='año' type="submit" value="2020" disabled="true">
 				No hay Semanas Disponibles para generar en 2020.
 			{% endif %}
 			<br><br>
+			<a class="btn btn-info" href="{%url 'administracion' %}">Cancelar</a>
+
+
+<div id="eliminarModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Generar Semanas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+			<div class="modal-body">
+				<p>¿Confirma que desea Generar Semanas 2019?</p>
+			</div>
+			<form method="post">
+			{% csrf_token %}
+			<input class="btn btn-primary" name='año' type="submit" style="margin: 14px;" value="2019">
 			</form>
+    </div>
+  </div>
+</div> 	
+
+<div id="eliminarModal2" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Generar Semanas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+			<div class="modal-body">
+				<p>¿Confirma que desea Generar Semanas 2020?</p>
+			</div>
+			<form method="post">
+			{% csrf_token %}
+			
+			<input class="btn btn-primary" name='año' type="submit" style="margin: 14px;" value="2020">
+		</form>
+    </div>
+  </div>
+</div> 	

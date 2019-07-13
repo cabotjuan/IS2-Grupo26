@@ -20,6 +20,7 @@
 			<h1>Cuadrilla de Propiedades</h1>
 			<a class="btn btn-primary btn-sm" href="{% url 'buscar_x_fecha' %}">Buscar por fecha</a>
 			<a class="btn btn-primary btn-sm" href="{% url 'buscar_x_zona'%}">Buscar por zona</a>
+			<a class="btn btn-primary btn-sm" href="{% url 'cuadrilla_prop'%}">Quitar Filtro</a>
 		</div>
 		<hr>
 		<ul class="list-group">
@@ -34,7 +35,7 @@
 						{{Propiedad.localidad}}
 						</div>
 						
-						<a class="btn btn-outline-success btn-sm" href='propiedad/{{ Propiedad.id}}'>Ver detalle</a>
+						<a class="btn btn-outline-success btn-sm" href='cuadrillaprop/propiedad/{{ Propiedad.id}}'>Ver detalle</a>
 					</div>
 				{% endfor %}
 						

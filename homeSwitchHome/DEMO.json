@@ -1,0 +1,1847 @@
+[
+{
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": {
+        "app_label": "admin",
+        "model": "logentry"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": {
+        "app_label": "auth",
+        "model": "permission"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": {
+        "app_label": "auth",
+        "model": "group"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": {
+        "app_label": "auth",
+        "model": "user"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": {
+        "app_label": "contenttypes",
+        "model": "contenttype"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": {
+        "app_label": "sessions",
+        "model": "session"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 7,
+    "fields": {
+        "app_label": "HomeSwitchHome",
+        "model": "propiedad"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 8,
+    "fields": {
+        "app_label": "HomeSwitchHome",
+        "model": "subasta"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 9,
+    "fields": {
+        "app_label": "HomeSwitchHome",
+        "model": "semana"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 10,
+    "fields": {
+        "app_label": "HomeSwitchHome",
+        "model": "postor"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 11,
+    "fields": {
+        "app_label": "HomeSwitchHome",
+        "model": "foto"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 12,
+    "fields": {
+        "app_label": "HomeSwitchHome",
+        "model": "tarjeta"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 13,
+    "fields": {
+        "app_label": "HomeSwitchHome",
+        "model": "reserva"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 14,
+    "fields": {
+        "app_label": "HomeSwitchHome",
+        "model": "perfil"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "122buy2nmgenjfpynfyy8kk4r2cdnh1c",
+    "fields": {
+        "session_data": "MWJkZjdjNTI5OTNlMjUzMjg1NWZmMjdlZTRhOTVkMDhmYjA0OGM2Yzp7Il9hdXRoX3VzZXJfaWQiOiI3IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzllYjgxN2MyOGIxNGNiMzU3YzBjMzA4MWUwMWY0N2ZkMzQxNTg3In0=",
+        "expire_date": "2019-07-05T16:52:21.449Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "5a41xnay41pwioelohv76bhnskq0fdhs",
+    "fields": {
+        "session_data": "Zjg3MzUwMTdhODcwMmVhZmQ5Njk2MWU4NDE2NzdjZGM5ZmYzOTIyYzp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmMjA4OGZmMjBjNjQ3ODRkY2E3ODY1NzVmMjcyNTBkYWYyMjQ5Yzg2In0=",
+        "expire_date": "2019-07-05T13:13:18.943Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "sotgqwrhk9d28fs2ra46hyzwdrm2f11a",
+    "fields": {
+        "session_data": "YmRiNjc5OWY1OTI4YmFmMjU5MjQxMjRjNjE2Nzg3YzAyOGYwYzcyNDp7Il9hdXRoX3VzZXJfaWQiOiIzIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI2ZDE3ZTIwODVhNjliZDU2NTExM2JiNTYxNGM0Y2RhYzc2NzM5OTYyIn0=",
+        "expire_date": "2019-06-03T20:19:38.279Z"
+    }
+},
+{
+    "model": "HomeSwitchHome.propiedad",
+    "pk": 4,
+    "fields": {
+        "titulo": "Casa quinta",
+        "descripcion": "Una descripcion",
+        "pais": "Argentina",
+        "provincia": "Buenos Aires",
+        "localidad": "City Bell",
+        "direccion": "calle 430 111",
+        "subastas_activas": 0
+    }
+},
+{
+    "model": "HomeSwitchHome.propiedad",
+    "pk": 5,
+    "fields": {
+        "titulo": "Departamento Tigre",
+        "descripcion": "una descripcion",
+        "pais": "Argentina",
+        "provincia": "Buenos Aires",
+        "localidad": "Tigre",
+        "direccion": "calle 123",
+        "subastas_activas": 0
+    }
+},
+{
+    "model": "HomeSwitchHome.propiedad",
+    "pk": 6,
+    "fields": {
+        "titulo": "Caba\u00f1a de lujo",
+        "descripcion": "una descripcion",
+        "pais": "Argentina",
+        "provincia": "Rio Negro",
+        "localidad": "Bariloche",
+        "direccion": "calle 123",
+        "subastas_activas": 0
+    }
+},
+{
+    "model": "HomeSwitchHome.propiedad",
+    "pk": 7,
+    "fields": {
+        "titulo": "Semi Piso",
+        "descripcion": "una descripcion",
+        "pais": "Argentina",
+        "provincia": "Neuquen",
+        "localidad": "Neuquen",
+        "direccion": "calle 123",
+        "subastas_activas": 0
+    }
+},
+{
+    "model": "HomeSwitchHome.propiedad",
+    "pk": 8,
+    "fields": {
+        "titulo": "una propiedad",
+        "descripcion": "una descripcion",
+        "pais": "Argentina",
+        "provincia": "provincia",
+        "localidad": "unalocalidad",
+        "direccion": "1234",
+        "subastas_activas": 2
+    }
+},
+{
+    "model": "HomeSwitchHome.propiedad",
+    "pk": 9,
+    "fields": {
+        "titulo": "propiedad2",
+        "descripcion": "desc",
+        "pais": "Argentina",
+        "provincia": "unaprovincia",
+        "localidad": "unalocalidad",
+        "direccion": "1234",
+        "subastas_activas": 0
+    }
+},
+{
+    "model": "HomeSwitchHome.propiedad",
+    "pk": 10,
+    "fields": {
+        "titulo": "propiedad3",
+        "descripcion": "desc",
+        "pais": "Argentina",
+        "provincia": "unaprovincia",
+        "localidad": "unalocalidad",
+        "direccion": "1234",
+        "subastas_activas": 0
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 261,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 1,
+        "fecha_inicio_sem": "2018-12-30",
+        "fecha_fin_sem": "2019-01-05",
+        "habilitada": true,
+        "fecha_creacion": "2018-01-22"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 262,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 2,
+        "fecha_inicio_sem": "2019-01-06",
+        "fecha_fin_sem": "2019-01-12",
+        "habilitada": true,
+        "fecha_creacion": "2017-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 263,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 3,
+        "fecha_inicio_sem": "2019-01-13",
+        "fecha_fin_sem": "2019-01-19",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 264,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 4,
+        "fecha_inicio_sem": "2019-01-20",
+        "fecha_fin_sem": "2019-01-26",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 265,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 5,
+        "fecha_inicio_sem": "2019-01-27",
+        "fecha_fin_sem": "2019-02-02",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 266,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 6,
+        "fecha_inicio_sem": "2019-02-03",
+        "fecha_fin_sem": "2019-02-09",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 267,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 7,
+        "fecha_inicio_sem": "2019-02-10",
+        "fecha_fin_sem": "2019-02-16",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 268,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 8,
+        "fecha_inicio_sem": "2019-02-17",
+        "fecha_fin_sem": "2019-02-23",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 269,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": 1,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 9,
+        "fecha_inicio_sem": "2019-02-24",
+        "fecha_fin_sem": "2019-03-02",
+        "habilitada": true,
+        "fecha_creacion": "2018-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 270,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 10,
+        "fecha_inicio_sem": "2019-03-03",
+        "fecha_fin_sem": "2019-03-09",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 271,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 11,
+        "fecha_inicio_sem": "2019-03-10",
+        "fecha_fin_sem": "2019-03-16",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 272,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 12,
+        "fecha_inicio_sem": "2019-03-17",
+        "fecha_fin_sem": "2019-03-23",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 273,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 13,
+        "fecha_inicio_sem": "2019-03-24",
+        "fecha_fin_sem": "2019-03-30",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 274,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 14,
+        "fecha_inicio_sem": "2019-03-31",
+        "fecha_fin_sem": "2019-04-06",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 275,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 15,
+        "fecha_inicio_sem": "2019-04-07",
+        "fecha_fin_sem": "2019-04-13",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 276,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 16,
+        "fecha_inicio_sem": "2019-04-14",
+        "fecha_fin_sem": "2019-04-20",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 277,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 17,
+        "fecha_inicio_sem": "2019-04-21",
+        "fecha_fin_sem": "2019-04-27",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 278,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 18,
+        "fecha_inicio_sem": "2019-04-28",
+        "fecha_fin_sem": "2019-05-04",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 279,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 19,
+        "fecha_inicio_sem": "2019-05-05",
+        "fecha_fin_sem": "2019-05-11",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 280,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 20,
+        "fecha_inicio_sem": "2019-05-12",
+        "fecha_fin_sem": "2019-05-18",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 281,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 21,
+        "fecha_inicio_sem": "2019-05-19",
+        "fecha_fin_sem": "2019-05-25",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 282,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 22,
+        "fecha_inicio_sem": "2019-05-26",
+        "fecha_fin_sem": "2019-06-01",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 283,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 23,
+        "fecha_inicio_sem": "2019-06-02",
+        "fecha_fin_sem": "2019-06-08",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 284,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 24,
+        "fecha_inicio_sem": "2019-06-09",
+        "fecha_fin_sem": "2019-06-15",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 285,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 25,
+        "fecha_inicio_sem": "2019-06-16",
+        "fecha_fin_sem": "2019-06-22",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 286,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 26,
+        "fecha_inicio_sem": "2019-06-23",
+        "fecha_fin_sem": "2019-06-29",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 287,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 27,
+        "fecha_inicio_sem": "2019-06-30",
+        "fecha_fin_sem": "2019-07-06",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 288,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 28,
+        "fecha_inicio_sem": "2019-07-07",
+        "fecha_fin_sem": "2019-07-13",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 289,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 29,
+        "fecha_inicio_sem": "2019-07-14",
+        "fecha_fin_sem": "2019-07-20",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 290,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 30,
+        "fecha_inicio_sem": "2019-07-21",
+        "fecha_fin_sem": "2019-07-27",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 291,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 31,
+        "fecha_inicio_sem": "2019-07-28",
+        "fecha_fin_sem": "2019-08-03",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 292,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 32,
+        "fecha_inicio_sem": "2019-08-04",
+        "fecha_fin_sem": "2019-08-10",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 293,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 33,
+        "fecha_inicio_sem": "2019-08-11",
+        "fecha_fin_sem": "2019-08-17",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 294,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 34,
+        "fecha_inicio_sem": "2019-08-18",
+        "fecha_fin_sem": "2019-08-24",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 295,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 35,
+        "fecha_inicio_sem": "2019-08-25",
+        "fecha_fin_sem": "2019-08-31",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 296,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 36,
+        "fecha_inicio_sem": "2019-09-01",
+        "fecha_fin_sem": "2019-09-07",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 297,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 37,
+        "fecha_inicio_sem": "2019-09-08",
+        "fecha_fin_sem": "2019-09-14",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 298,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 38,
+        "fecha_inicio_sem": "2019-09-15",
+        "fecha_fin_sem": "2019-09-21",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 299,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 39,
+        "fecha_inicio_sem": "2019-09-22",
+        "fecha_fin_sem": "2019-09-28",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 300,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 40,
+        "fecha_inicio_sem": "2019-09-29",
+        "fecha_fin_sem": "2019-10-05",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 301,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 41,
+        "fecha_inicio_sem": "2019-10-06",
+        "fecha_fin_sem": "2019-10-12",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 302,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 42,
+        "fecha_inicio_sem": "2019-10-13",
+        "fecha_fin_sem": "2019-10-19",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 303,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 43,
+        "fecha_inicio_sem": "2019-10-20",
+        "fecha_fin_sem": "2019-10-26",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 304,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 44,
+        "fecha_inicio_sem": "2019-10-27",
+        "fecha_fin_sem": "2019-11-02",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 305,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 45,
+        "fecha_inicio_sem": "2019-11-03",
+        "fecha_fin_sem": "2019-11-09",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 306,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 46,
+        "fecha_inicio_sem": "2019-11-10",
+        "fecha_fin_sem": "2019-11-16",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 307,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 47,
+        "fecha_inicio_sem": "2019-11-17",
+        "fecha_fin_sem": "2019-11-23",
+        "habilitada": true,
+        "fecha_creacion": "2018-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 308,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 48,
+        "fecha_inicio_sem": "2019-11-24",
+        "fecha_fin_sem": "2019-11-30",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 309,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 49,
+        "fecha_inicio_sem": "2019-12-01",
+        "fecha_fin_sem": "2019-12-07",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 310,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 50,
+        "fecha_inicio_sem": "2019-12-08",
+        "fecha_fin_sem": "2019-12-14",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 311,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 51,
+        "fecha_inicio_sem": "2019-12-15",
+        "fecha_fin_sem": "2019-12-21",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.semana",
+    "pk": 312,
+    "fields": {
+        "propiedad": 6,
+        "subasta": null,
+        "reserva": null,
+        "monto_base": 0.0,
+        "costo": 0.0,
+        "numero_semana": 52,
+        "fecha_inicio_sem": "2019-12-22",
+        "fecha_fin_sem": "2019-12-28",
+        "habilitada": true,
+        "fecha_creacion": "2019-06-21"
+    }
+},
+{
+    "model": "HomeSwitchHome.foto",
+    "pk": 12,
+    "fields": {
+        "archivo": "images/fotoquinta1_7iUsl73.jpg",
+        "propiedad": 4
+    }
+},
+{
+    "model": "HomeSwitchHome.foto",
+    "pk": 13,
+    "fields": {
+        "archivo": "images/fotoquinta2.jpg",
+        "propiedad": 4
+    }
+},
+{
+    "model": "HomeSwitchHome.foto",
+    "pk": 14,
+    "fields": {
+        "archivo": "images/fotoquinta3.jpg",
+        "propiedad": 4
+    }
+},
+{
+    "model": "HomeSwitchHome.foto",
+    "pk": 15,
+    "fields": {
+        "archivo": "images/fotodpto2_RCJJbxm.jpg",
+        "propiedad": 5
+    }
+},
+{
+    "model": "HomeSwitchHome.foto",
+    "pk": 18,
+    "fields": {
+        "archivo": "images/foto1_JIi24Xo.jpg",
+        "propiedad": 7
+    }
+},
+{
+    "model": "HomeSwitchHome.foto",
+    "pk": 19,
+    "fields": {
+        "archivo": "images/foto2_UXEShGg.jpg",
+        "propiedad": 7
+    }
+},
+{
+    "model": "HomeSwitchHome.foto",
+    "pk": 20,
+    "fields": {
+        "archivo": "images/foto3_ry4wwQ7.jpg",
+        "propiedad": 7
+    }
+},
+{
+    "model": "HomeSwitchHome.foto",
+    "pk": 21,
+    "fields": {
+        "archivo": "images/foto4_5sEt7vs.jpg",
+        "propiedad": 7
+    }
+},
+{
+    "model": "HomeSwitchHome.foto",
+    "pk": 22,
+    "fields": {
+        "archivo": "images/foto5_OAkrnAZ.jpg",
+        "propiedad": 7
+    }
+},
+{
+    "model": "HomeSwitchHome.foto",
+    "pk": 23,
+    "fields": {
+        "archivo": "images/fotobrc1_XSg8dim.jpg",
+        "propiedad": 6
+    }
+},
+{
+    "model": "HomeSwitchHome.foto",
+    "pk": 24,
+    "fields": {
+        "archivo": "images/fotobrc2_cBQ0cxB.jpg",
+        "propiedad": 6
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+        "name": "Can add log entry",
+        "content_type": 1,
+        "codename": "add_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+        "name": "Can change log entry",
+        "content_type": 1,
+        "codename": "change_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+        "name": "Can delete log entry",
+        "content_type": 1,
+        "codename": "delete_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+        "name": "Can view log entry",
+        "content_type": 1,
+        "codename": "view_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+        "name": "Can add permission",
+        "content_type": 2,
+        "codename": "add_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+        "name": "Can change permission",
+        "content_type": 2,
+        "codename": "change_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+        "name": "Can delete permission",
+        "content_type": 2,
+        "codename": "delete_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+        "name": "Can view permission",
+        "content_type": 2,
+        "codename": "view_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+        "name": "Can add group",
+        "content_type": 3,
+        "codename": "add_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+        "name": "Can change group",
+        "content_type": 3,
+        "codename": "change_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+        "name": "Can delete group",
+        "content_type": 3,
+        "codename": "delete_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+        "name": "Can view group",
+        "content_type": 3,
+        "codename": "view_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+        "name": "Can add user",
+        "content_type": 4,
+        "codename": "add_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+        "name": "Can change user",
+        "content_type": 4,
+        "codename": "change_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+        "name": "Can delete user",
+        "content_type": 4,
+        "codename": "delete_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+        "name": "Can view user",
+        "content_type": 4,
+        "codename": "view_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+        "name": "Can add content type",
+        "content_type": 5,
+        "codename": "add_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+        "name": "Can change content type",
+        "content_type": 5,
+        "codename": "change_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+        "name": "Can delete content type",
+        "content_type": 5,
+        "codename": "delete_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+        "name": "Can view content type",
+        "content_type": 5,
+        "codename": "view_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+        "name": "Can add session",
+        "content_type": 6,
+        "codename": "add_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+        "name": "Can change session",
+        "content_type": 6,
+        "codename": "change_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+        "name": "Can delete session",
+        "content_type": 6,
+        "codename": "delete_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+        "name": "Can view session",
+        "content_type": 6,
+        "codename": "view_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+        "name": "Can add propiedad",
+        "content_type": 7,
+        "codename": "add_propiedad"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+        "name": "Can change propiedad",
+        "content_type": 7,
+        "codename": "change_propiedad"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+        "name": "Can delete propiedad",
+        "content_type": 7,
+        "codename": "delete_propiedad"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+        "name": "Can view propiedad",
+        "content_type": 7,
+        "codename": "view_propiedad"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+        "name": "Can add subasta",
+        "content_type": 8,
+        "codename": "add_subasta"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+        "name": "Can change subasta",
+        "content_type": 8,
+        "codename": "change_subasta"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+        "name": "Can delete subasta",
+        "content_type": 8,
+        "codename": "delete_subasta"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+        "name": "Can view subasta",
+        "content_type": 8,
+        "codename": "view_subasta"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+        "name": "Can add semana",
+        "content_type": 9,
+        "codename": "add_semana"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+        "name": "Can change semana",
+        "content_type": 9,
+        "codename": "change_semana"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+        "name": "Can delete semana",
+        "content_type": 9,
+        "codename": "delete_semana"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+        "name": "Can view semana",
+        "content_type": 9,
+        "codename": "view_semana"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+        "name": "Can add postor",
+        "content_type": 10,
+        "codename": "add_postor"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+        "name": "Can change postor",
+        "content_type": 10,
+        "codename": "change_postor"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+        "name": "Can delete postor",
+        "content_type": 10,
+        "codename": "delete_postor"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+        "name": "Can view postor",
+        "content_type": 10,
+        "codename": "view_postor"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 41,
+    "fields": {
+        "name": "Can add foto",
+        "content_type": 11,
+        "codename": "add_foto"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 42,
+    "fields": {
+        "name": "Can change foto",
+        "content_type": 11,
+        "codename": "change_foto"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 43,
+    "fields": {
+        "name": "Can delete foto",
+        "content_type": 11,
+        "codename": "delete_foto"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 44,
+    "fields": {
+        "name": "Can view foto",
+        "content_type": 11,
+        "codename": "view_foto"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 45,
+    "fields": {
+        "name": "Can add tarjeta",
+        "content_type": 12,
+        "codename": "add_tarjeta"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 46,
+    "fields": {
+        "name": "Can change tarjeta",
+        "content_type": 12,
+        "codename": "change_tarjeta"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 47,
+    "fields": {
+        "name": "Can delete tarjeta",
+        "content_type": 12,
+        "codename": "delete_tarjeta"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 48,
+    "fields": {
+        "name": "Can view tarjeta",
+        "content_type": 12,
+        "codename": "view_tarjeta"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 49,
+    "fields": {
+        "name": "Can add reserva",
+        "content_type": 13,
+        "codename": "add_reserva"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 50,
+    "fields": {
+        "name": "Can change reserva",
+        "content_type": 13,
+        "codename": "change_reserva"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 51,
+    "fields": {
+        "name": "Can delete reserva",
+        "content_type": 13,
+        "codename": "delete_reserva"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 52,
+    "fields": {
+        "name": "Can view reserva",
+        "content_type": 13,
+        "codename": "view_reserva"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 53,
+    "fields": {
+        "name": "Can add perfil",
+        "content_type": 14,
+        "codename": "add_perfil"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 54,
+    "fields": {
+        "name": "Can change perfil",
+        "content_type": 14,
+        "codename": "change_perfil"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 55,
+    "fields": {
+        "name": "Can delete perfil",
+        "content_type": 14,
+        "codename": "delete_perfil"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 56,
+    "fields": {
+        "name": "Can view perfil",
+        "content_type": 14,
+        "codename": "view_perfil"
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$150000$NngRj5OEUdFd$9Pd7Gk7Wg95/zyFi5+wfLrKph6CgmZuxcwdEP+P3A+U=",
+        "last_login": "2019-06-21T16:52:21.386Z",
+        "is_superuser": false,
+        "username": "usuario@example.com",
+        "first_name": "",
+        "last_name": "",
+        "email": "usuario@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2019-06-21T16:03:44.961Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 8,
+    "fields": {
+        "password": "pbkdf2_sha256$150000$dWVwdtvOj6FT$3kWCXUcRsqyXDtynbt58UXmpShNuCALyHLDv5RxPsXE=",
+        "last_login": "2019-06-21T16:33:03.370Z",
+        "is_superuser": true,
+        "username": "ADMIN@example.com",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2019-06-21T16:04:39.936Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 9,
+    "fields": {
+        "password": "pbkdf2_sha256$150000$1K1amGNXbw0n$v2E+x0XKX8bligbRaUxZ55ThJrp7EFaC9e7WOtmy6M0=",
+        "last_login": "2019-06-21T16:18:47.903Z",
+        "is_superuser": false,
+        "username": "usuario2@example.com",
+        "first_name": "",
+        "last_name": "",
+        "email": "usuario2@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2019-06-21T16:18:47.064Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 10,
+    "fields": {
+        "password": "pbkdf2_sha256$150000$yqIQG4B1JZ4k$f5VB/deXqXh+nURWZpFMekqO5mWgH/6BjqlkStkfFAU=",
+        "last_login": "2019-06-21T16:19:38.418Z",
+        "is_superuser": false,
+        "username": "usuario3@example.com",
+        "first_name": "",
+        "last_name": "",
+        "email": "usuario3@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2019-06-21T16:19:37.627Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 11,
+    "fields": {
+        "password": "pbkdf2_sha256$150000$XgTvItfb7lFX$jznn+fEVzT7WR390vL4pd14oy5+DwT3pZlKu55E3Tjw=",
+        "last_login": "2019-06-21T16:20:54.114Z",
+        "is_superuser": false,
+        "username": "usuario4@example.com",
+        "first_name": "",
+        "last_name": "",
+        "email": "usuario4@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2019-06-21T16:20:53.318Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "HomeSwitchHome.reserva",
+    "pk": 1,
+    "fields": {
+        "usuario": 11,
+        "fecha_reserva": "2019-11-17"
+    }
+},
+{
+    "model": "HomeSwitchHome.perfil",
+    "pk": 2,
+    "fields": {
+        "usuario": 7,
+        "nombre": "unUsuario",
+        "apellido": "unApellido",
+        "fecha_nacimiento": "1999-01-01",
+        "creditos": 2,
+        "es_premium": false
+    }
+},
+{
+    "model": "HomeSwitchHome.perfil",
+    "pk": 3,
+    "fields": {
+        "usuario": 9,
+        "nombre": "unnombre",
+        "apellido": "unapellido",
+        "fecha_nacimiento": "1999-01-01",
+        "creditos": 2,
+        "es_premium": false
+    }
+},
+{
+    "model": "HomeSwitchHome.perfil",
+    "pk": 4,
+    "fields": {
+        "usuario": 10,
+        "nombre": "unnnombre",
+        "apellido": "unapellido",
+        "fecha_nacimiento": "1999-01-01",
+        "creditos": 2,
+        "es_premium": false
+    }
+},
+{
+    "model": "HomeSwitchHome.perfil",
+    "pk": 5,
+    "fields": {
+        "usuario": 11,
+        "nombre": "unnomb",
+        "apellido": "unapp",
+        "fecha_nacimiento": "1999-01-01",
+        "creditos": 2,
+        "es_premium": false
+    }
+},
+{
+    "model": "HomeSwitchHome.tarjeta",
+    "pk": 0,
+    "fields": {
+        "usuario": 11,
+        "marca": "VISA",
+        "titular": "titular",
+        "m_vencimiento": 10,
+        "a_vencimiento": 2020,
+        "cod_seguridad": 0
+    }
+},
+{
+    "model": "HomeSwitchHome.tarjeta",
+    "pk": 1234567777,
+    "fields": {
+        "usuario": 10,
+        "marca": "MASTERCARD",
+        "titular": "untitular",
+        "m_vencimiento": 10,
+        "a_vencimiento": 2020,
+        "cod_seguridad": 0
+    }
+},
+{
+    "model": "HomeSwitchHome.tarjeta",
+    "pk": 1234567890,
+    "fields": {
+        "usuario": 7,
+        "marca": "VISA",
+        "titular": "unTitular",
+        "m_vencimiento": 10,
+        "a_vencimiento": 2020,
+        "cod_seguridad": 0
+    }
+},
+{
+    "model": "HomeSwitchHome.tarjeta",
+    "pk": 123456789012,
+    "fields": {
+        "usuario": 9,
+        "marca": "MASTERCARD",
+        "titular": "unTitular",
+        "m_vencimiento": 10,
+        "a_vencimiento": 2021,
+        "cod_seguridad": 0
+    }
+}
+]

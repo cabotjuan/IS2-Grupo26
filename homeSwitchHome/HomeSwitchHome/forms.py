@@ -8,6 +8,14 @@ from HomeSwitchHome.models import Propiedad, Foto, Postor, Perfil, Tarjeta
 from django.core.exceptions import NON_FIELD_ERRORS
 from datetime import date
 
+
+class PropiedadConResForm(ModelForm):
+	class Meta:
+
+		model = Propiedad
+		fields = [
+			'descripcion',]
+
 class PropiedadForm(ModelForm):
 	class Meta:
 

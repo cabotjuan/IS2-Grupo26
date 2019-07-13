@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, render_to_response
-from .models import Propiedad, Semana, Subasta, Foto, Postor, Perfil, Tarjeta
+from .models import Propiedad, Semana, Subasta, Foto, Postor, Perfil, Tarjeta, Reserva
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
@@ -71,7 +71,9 @@ def generar_semanas (request, id): #### ID??? ####
 		año = int(request.POST.get('año'))
 		print(año)
 		for i in range(1,53):
-			Semana.objects.create(propiedad= p, monto_base= 0, costo=0, numero_semana=i, fecha_inicio_sem=(get_start_end_dates(año, i))[0], fecha_fin_sem=(get_start_end_dates(año, i))[1])
+			Semana.objects.create(propiedad= p, monto_base= 0, costo=0, numero_semana=i,
+			 fecha_inicio_sem=(get_start_end_dates(año, i))[0],
+			  fecha_fin_sem=(get_start_end_dates(año, i))[1])
 		messages.success(request, "Semanas generadas!")
 		return redirect(reverse_lazy('prop', kwargs= {'id':id}))
 	else:
@@ -127,7 +129,11 @@ def agregar_propiedad(request):
 def modificar_propiedad(request, id):
 	Imageformset = modelformset_factory(Foto, form= forms.ImageForm ,min_num=0, max_num=5,extra=5)
 	prop = get_object_or_404(Propiedad, id=id)
-	form = forms.PropiedadForm(request.POST or None, instance=prop)
+	if Semana.objects.filter(propiedad_id=prop.id, reserva_id__isnull=False).exists():
+		form = forms.PropiedadConResForm(request.POST or None, instance=prop)
+	else:
+		form = forms.PropiedadForm(request.POST or None, instance=prop)
+
 	fotos = Foto.objects.filter(propiedad=prop)
 	formset = Imageformset(queryset=fotos)
 
@@ -176,14 +182,17 @@ def borrar_fotos(request, id):
 
 def abrir_subastas(request):
 	ct=0
+	ct2=0
 	if request.method == 'POST':
 		monto = request.POST.get('monto')		
 		semanas = Semana.objects.all()
 		for sem in semanas:
 			delta = monthdelta(sem.fecha_creacion,date.today())
 			if delta >=6 and sem.habilitada:
+
 				print('INGRESA')
 				ct+=1
+				ct2+=1
 				propiedad = Propiedad.objects.get(id=sem.propiedad_id)
 				propiedad.subastas_activas+=1
 				propiedad.save()
@@ -192,7 +201,9 @@ def abrir_subastas(request):
 				sem.subasta = sub
 				sem.habilitada = False
 				sem.save()
-		messages.success(request,'Se abrieron '+str(ct)+' Subastas.')
+			elif delta >=6 and not sem.habilitada:
+				ct+=1
+		messages.success(request,'Se abrieron '+str(ct2)+' de '+str(ct)+' Subastas totales.')
 		return redirect(reverse_lazy('administracion'))
 	return render(request,'HomeSwitchHome/abrir_subastas.html',{})
 
@@ -276,9 +287,15 @@ def buscar_x_fecha(request):
 		fecha2= datetime.strptime(request.POST.get('f2'), '%Y-%m-%d').date()
 		if  (fecha2>fecha1) and (monthdelta(fecha1,fecha2) <= 2) and (monthdelta(date.today(),fecha1) >= 6 ) : 	
 			listado_res = Semana.objects.filter(fecha_inicio_sem__range= (fecha1,fecha2)).select_related('propiedad')
+			listado_prop = []
+			for s in listado_res:
+				p = Propiedad.objects.get(id=s.propiedad_id)
+				if p not in listado_prop:
+					listado_prop.append(p)
+
 			if not request.user.is_authenticated:
-				listado_res = listado_res[:5]
-			return render (request, 'HomeSwitchHome/cuadrilla_prop.html',{'propiedades':listado_res})
+				listado_prop = listado_prop[:5]
+			return render (request, 'HomeSwitchHome/cuadrilla_prop.html',{'propiedades':listado_prop})
 		else:
 
 			if (fecha2<fecha1):
