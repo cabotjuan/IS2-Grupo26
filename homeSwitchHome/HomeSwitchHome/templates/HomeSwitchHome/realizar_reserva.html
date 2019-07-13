@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "home.css" %}">
+
+<title>Home Switch Home</title>
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+	<div class="prop-container">
+		<h1>{{semana.propiedad.titulo}}</h1>
+		<h1>Semana En Reserva: {{semana.numero_semana}}</h1>
+		<h1>({{semana.fecha_inicio_sem}} a {{semana.fecha_fin_sem}})</h1>
+
+	<h1>Reservar Semana</h1>
+	<hr>
+	{%if not tieneRes and tieneCred %}
+		<h3>Estas seguro que deseas realizar la Reserva?</h3>
+		<a class="btn btn-primary btn-sm " href="{% url 'confirmar_reserva' semana.id %}">Confirmar</a>
+		<a class="btn btn-danger btn-sm " href='/propiedad/{{ semana.propiedad_id}}'>Cancelar</a>
+	{%elif tieneRes %}
+		<h3>Ya tienes Reservas en esta semana.</h3>
+	{% elif not tieneCred %}
+		<h3>No tienes Creditos Suficientes. </h3>
+	{% endif %}
+</div>

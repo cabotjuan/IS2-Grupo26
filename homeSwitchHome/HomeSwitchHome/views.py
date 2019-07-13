@@ -12,7 +12,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from . import fechas
 from .fechas import get_start_end_dates, monthdelta
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from django.contrib.auth.views import LoginView, LogoutView
 from HomeSwitchHome import forms
 from django.forms import modelformset_factory
@@ -34,61 +34,166 @@ def administracion(request):
 		template = 'HomeSwitchHome/administracion.html'
 		return render(request, template, {})
 
+
+def listado_res(request, id):
+	p = Propiedad.objects.get(id=id)
+	semanasR = Semana.objects.filter(reserva_id__isnull=False,propiedad_id=p.id)
+	semanasD = Semana.objects.filter(habilitada_reserva=True,propiedad_id=p.id)
+	return render(request, 'HomeSwitchHome/listado_res.html',{'semanasR':semanasR,'semanasD':semanasD,'prop':p})
+
+def listado_prop_res(request):
+	semanasR = Semana.objects.filter(reserva_id__isnull=False).order_by('propiedad_id').distinct()
+	semanasD = Semana.objects.filter(habilitada_reserva=True).order_by('propiedad_id').distinct()
+	propiedades = []
+	for sem in semanasR:
+		p = Propiedad.objects.get(id=sem.propiedad_id)
+		propiedades.append(p)
+	for sem in semanasD:
+		p = Propiedad.objects.get(id=sem.propiedad_id)
+		if p not in propiedades:
+			propiedades.append(p)
+	print(propiedades)
+	return render(request, 'HomeSwitchHome/listado_prop_res.html',{'Propiedades':propiedades})
+
 def propiedad(request, id):
 	p = Propiedad.objects.get(id=id)
-	return render(request, 'HomeSwitchHome/propiedad.html',{'Propiedad':p})
+	res = Semana.objects.filter(propiedad_id=p.id, reserva_id__isnull=False).count()
+	sub = Semana.objects.filter(propiedad_id=p.id, subasta_id__isnull=False).count()	
+	semanas= Semana.objects.filter(propiedad_id=p.id)
+
+	return render(request, 'HomeSwitchHome/propiedad.html',{'Propiedad':p,'res':res,'sub':sub,'semanas':semanas})
 
 def ver_prop(request, id):
 	p = Propiedad.objects.get(id=id)
-	return render(request, 'HomeSwitchHome/ver_prop.html',{'Propiedad':p})
+	res = Semana.objects.filter(propiedad_id=p.id, reserva_id__isnull=False).count()
+	sub = Semana.objects.filter(propiedad_id=p.id, subasta_id__isnull=False).count()	
+	semanas= Semana.objects.filter(propiedad_id=p.id)
+	es_premium = Perfil.objects.get(usuario=request.user).es_premium
+	return render(request, 'HomeSwitchHome/ver_prop.html',{'Propiedad':p,'res':res,'sub':sub,'semanas':semanas,'es_premium':es_premium})
+
+def realizar_reserva(request, id):
+	semana = Semana.objects.get(id=id)
+	tieneRes = Reserva.objects.filter(usuario_id=request.user,fecha_reserva=semana.fecha_inicio_sem).exists()
+	tieneCred = Perfil.objects.get(usuario_id=request.user).creditos > 0
+	print(tieneRes)
+	print(tieneCred)
+	return render(request, 'HomeSwitchHome/realizar_reserva.html',{'semana':semana,'tieneRes':tieneRes,'tieneCred':tieneCred})
+
+def confirmar_reserva(request, id):
+	semana = Semana.objects.get(id=id)
+	perfil = Perfil.objects.get(usuario_id=request.user)
+	r = Reserva.objects.create(usuario=request.user,reservada_desde='DIRECTA',fecha_reserva=semana.fecha_inicio_sem)
+	perfil.creditos-=1
+	perfil.save()
+	semana.reserva_id = r.id
+	semana.habilitada_reserva = False
+	semana.save()
+	r.save()
+
+	messages.success(request,'Reserva realizada!')
+	return redirect(reverse_lazy('home'))
 
 def eliminar_propiedad(request, id):
 	p= Propiedad.objects.get(id=id)
+	print('0------------')
+	tieneRes = Semana.objects.filter(propiedad_id=p.id, reserva_id__isnull=False,fecha_inicio_sem__gt=date.today()).count()
+	tieneSub = Semana.objects.filter(propiedad_id=p.id, subasta_id__isnull=False, fecha_inicio_sem__gt=date.today()).count()
+	print(tieneRes)
+	print(tieneSub)
+	if tieneRes:
+		print('1------')
+		reservas= Semana.objects.filter(propiedad_id=p.id, reserva_id__isnull=False,fecha_inicio_sem__gt=date.today()).values('reserva_id')
+		for r in reservas:
+			reserva = Reserva.objects.get(id=r['reserva_id'])
+			usuario = Perfil.objects.get(usuario_id=reserva.usuario_id)
+			mail = User.objects.get(id=reserva.usuario_id).email
+			messages.info(request, 'Se ha enviado un mail a '+mail+'(recupera +1 credito por Reserva Cancelada).')
+			usuario.creditos+=1
+			usuario.save()
+			reserva.delete()
+	elif tieneSub:
+		for s in subastas:	
+			subasta = Subasta.objects.delete(id=s['subasta'])
+			usuario = Perfil.objects.get(usuario_id=s['usuario'])
+			mail = User.objects.get(id=r['usuario']).mail
+			messages.info(request, 'Se ha enviado mail a  '+mail+'(recupera +1 credito por Subasta Cerrada).')
+			usuario.creditos+=1
+			usuario.save()
 	p.delete()
 	messages.success(request, 'Propiedad eliminada.')
 	return redirect(reverse_lazy(listado_prop))
 	
-# class AgregarPropiedad(CreateWithInlinesView):
-# 	template_name = 'HomeSwitchHome/agregar_propiedad.html'
-# 	model = Propiedad
-# 	form_class = forms.PropiedadForm
-# 	inlines = [forms.FotosInline,]
-# 	success_url = reverse_lazy('administracion')
+def generar_semanas (request, id): 
 
-# 	def form_valid(self, form):
-# 		p = form.save()
-# 		for i in range(1,53):
-# 			Semana.objects.create(propiedad= p, monto_base= 0, costo=0, numero_semana=i, fecha_inicio_sem=(get_start_end_dates(2019, i))[0], fecha_fin_sem=(get_start_end_dates(2019, i))[1])
-# 		return redirect(reverse_lazy('administracion'))
+	# La generacion de Semanas se realiza con un año de diferencia desde Hoy. 
+	# Se generan las semanas restantes del año siguiente al actual,
+	# y las semanas del año siguiente al año siguiente al actual. (En 2019: genera restantes del 2020 y todas del 2021). 
+	# Se toma como actual al año siguiente de hoy(2019-> Actual es 2020) para mantener el delta de 12 meses exactos.
 
-def generar_semanas (request, id): #### ID??? ####
-
-	### ENGANCHE DE SEMANA CON PROPIEDAD CON ID? ###
-	### NUMERO DEL AÑO ELEGIDO POR EL ADMIN ###
 	p= Propiedad.objects.get(id=id)
+	yy_actual = date.today().year  + 1
+	existeActual=Semana.objects.filter(propiedad=p, fecha_inicio_sem__year=yy_actual).exists()
+	existeActualSig=Semana.objects.filter(propiedad=p, fecha_inicio_sem__year=yy_actual+1).exists()
 
 	if request.method == 'POST':
 		año = int(request.POST.get('año'))
-		print(año)
-		for i in range(1,53):
-			Semana.objects.create(propiedad= p, monto_base= 0, costo=0, numero_semana=i,
-			 fecha_inicio_sem=(get_start_end_dates(año, i))[0],
-			  fecha_fin_sem=(get_start_end_dates(año, i))[1])
+
+
+		if año == yy_actual and not existeActual:
+			# GENERA SEMANAS RESTANTES 
+			for i in range(date.today().isocalendar()[1],53):
+				Semana.objects.create(propiedad= p, monto_base= 0, costo=0, numero_semana=i, fecha_inicio_sem=(get_start_end_dates(año, i))[0], fecha_fin_sem=(get_start_end_dates(año, i))[1])	
+		elif año == (yy_actual + 1) and not existeActualSig:
+			# GENERA TODAS LAS SEMANAS  
+			for i in range(1,53):
+				Semana.objects.create(propiedad= p, monto_base= 0, costo=0, numero_semana=i, fecha_inicio_sem=(get_start_end_dates(año, i))[0], fecha_fin_sem=(get_start_end_dates(año, i))[1])
+
 		messages.success(request, "Semanas generadas!")
 		return redirect(reverse_lazy('prop', kwargs= {'id':id}))
 	else:
-		existe2019=Semana.objects.filter(propiedad=p, fecha_inicio_sem__year=2019).exists()
-		existe2020=Semana.objects.filter(propiedad=p, fecha_inicio_sem__year=2020).exists()
+		return render(request, 'HomeSwitchHome/generar_semanas.html', {'existeActual':existeActual,'existeActualSig':existeActualSig,'actual':yy_actual, 'actualSig':yy_actual+1}) ### RENDER PARA BOTONES DE ELECCION DE AÑO ###
 
-		return render(request, 'HomeSwitchHome/generar_semanas.html', {'existe2019':existe2019,'existe2020':existe2020,}) ### RENDER PARA BOTONES DE ELECCION DE AÑO ###
+def listado_sem(request, id):
+	listado= Semana.objects.filter(fecha_inicio_sem__gte= date.today()).filter(propiedad=id)
+	############################################### GUARDAR SEMANA Y CREAR SUBASTA #########################################
+	if request.method == 'POST':
+		propiedad = Propiedad.objects.get(id=id)
+		propiedad.subastas_activas+=1
+		propiedad.save()
+		nro = request.POST.get('semana')
+		monto = request.POST.get('monto')
+		print('NUMERO:   '+nro)
+		print('MONTO:    '+monto)
+		sem = listado.get(numero_semana= nro)
+		print('SEMANA:  '+str(sem.numero_semana))
+		print('SEMANA inicia:  '+str(sem.fecha_inicio_sem))
+		print('SEMANA fin:  '+str(sem.fecha_fin_sem))
+		sem.monto_base = monto
+		sub = Subasta.objects.create(fecha_inicio = sem.fecha_inicio_sem,fecha_fin = sem.fecha_fin_sem)
+		sem.subasta = sub
+		sem.habilitada = False
+		sem.save()
+		return redirect(reverse_lazy('administracion')+'propiedad/'+id)
+	else:
+		return render(request, 'HomeSwitchHome/listado_sem.html', {'listado':listado})	
 
 
-
-# def habilitar_sem_reserva (request, id): #### ID??? ####
-
-	
-
-# 	Semana.objects.filter(id=id).update()	############
+def habilitar_reservas(request, id):
+	# SEMANAS QUE FALTEN ENTRE 12 MESES y 6 MESES PARA RESIDIR.
+	# 
+	listado = Semana.objects.filter(propiedad=id).filter(fecha_inicio_sem__lte= fechas.mover_delta_meses(date.today(), 12)).filter(fecha_inicio_sem__gt= fechas.mover_delta_meses(date.today(), 6),habilitada_reserva=False)
+	if request.method == 'GET':
+		p= Propiedad.objects.get(id=id)
+		return render(request, 'HomeSwitchHome/habilitar_reservas.html', {'listado':listado})
+	else:
+		seleccion = request.POST.get('semana')
+		costo = request.POST.get('costo')
+		semana = listado.get(numero_semana=seleccion)
+		semana.costo = costo
+		semana.habilitada_reserva = True
+		semana.save()
+		messages.success(request, "Se habilito la reserva !")
+		return redirect(reverse_lazy('administracion'))
 
 
 def agregar_propiedad(request):
@@ -187,23 +292,28 @@ def abrir_subastas(request):
 		monto = request.POST.get('monto')		
 		semanas = Semana.objects.all()
 		for sem in semanas:
-			delta = monthdelta(sem.fecha_creacion,date.today())
-			if delta >=6 and sem.habilitada:
 
-				print('INGRESA')
+			fecha_desplazada = fechas.mover_delta_meses(sem.fecha_inicio_sem, -6)
+			if (fecha_desplazada - timedelta(days=3)<= date.today() <= fecha_desplazada + timedelta(days=3) ) and not sem.habilitada_subasta:
 				ct+=1
 				ct2+=1
 				propiedad = Propiedad.objects.get(id=sem.propiedad_id)
 				propiedad.subastas_activas+=1
+				prop = propiedad.titulo
 				propiedad.save()
 				sem.monto_base = monto
 				sub = Subasta.objects.create(fecha_inicio = date.today(), fecha_inicio_sem=sem.fecha_inicio_sem)
 				sem.subasta = sub
-				sem.habilitada = False
+				sem.habilitada_reserva = False
+				sem.habilitada_subasta = True
+				fecha = sem.fecha_inicio_sem
+				nro = sem.numero_semana
 				sem.save()
-			elif delta >=6 and not sem.habilitada:
-				ct+=1
-		messages.success(request,'Se abrieron '+str(ct2)+' de '+str(ct)+' Subastas totales.')
+
+				messages.success(request,prop.titulo+' Semana '+str(nro)+' ('+str(fecha)+') ahora está en subasta.')
+		if ct == 0:
+			messages.success(request,'No se abrieron subastas.')
+
 		return redirect(reverse_lazy('administracion'))
 	return render(request,'HomeSwitchHome/abrir_subastas.html',{})
 
@@ -212,28 +322,39 @@ def cerrar_subastas(request):
 	subastas = Subasta.objects.all()
 	for sub in subastas:
 		delta = date.today()-sub.fecha_inicio
+		print('DELTA: '+str(delta))
 		if delta.days >= 3:
-			print('INGRESA')
+			print('INGRESA a Cerrar ')
+			print(sub)
 			ct+=1
-			hay_postores = Postor.objects.filter(subasta=sub).exists()
+			hay_postores = Postor.objects.filter(subasta=sub).count()
+			print(hay_postores)
 			if not hay_postores:
+				print('..NO Hay Postores..')
 				messages.info(request,'No se encontró ganador válido(No hay postores).')
 			else:
+				print('..Hay Postores..')
 				ganador_valido = False
 				while hay_postores and not ganador_valido:
 					ultpostor = Postor.objects.filter(subasta=sub).latest('fecha_puja')
 					ultpostor_perfil = Perfil.objects.get(usuario_id=ultpostor.usuario_id)
 					tiene_reservas = Reserva.objects.filter(usuario_id=ultpostor.usuario_id, fecha_reserva=sub.fecha_inicio_sem).exists()
 					if not tiene_reservas and ultpostor_perfil.creditos >= 1:
+						messages.info(request,'Se ha enviado un Mail al ganador '+ultpostor.usuario.email)
 						ganador_valido = True
 					else:
 						ultpostor.delete()
-						hay_postores = Postor.objects.filter(subasta=sub).exists()
+						hay_postores = Postor.objects.filter(subasta=sub).count()
 				if ganador_valido:
-					Reserva.objects.create(usuario_id=ultpostor.usuario_id,fecha_reserva=sub.fecha_inicio_sem)
+					sem = Semana.objects.get(subasta_id=sub.id)
+					r = Reserva.objects.create(usuario_id=ultpostor.usuario_id,fecha_reserva=sub.fecha_inicio_sem,reservada_desde='SUBASTA')
+					sem.reserva_id=r.id
+					sem.habilitada_subasta=False
+					sem.save()
+					r.save()
 				else:
-					messages.info(request,'No se encontró ganador válido (Creditos insuficientes/Reservas Activas).')
-				sub.delete()
+					messages.info(request,'No se encontró ganador válido (Tienen creditos Insuficientes / Reservas Activas).')
+			sub.delete()
 	if ct:
 		messages.success(request,'Se Cerraron '+str(ct)+' Subastas.')
 	else:
@@ -242,29 +363,20 @@ def cerrar_subastas(request):
 	return redirect(reverse_lazy('administracion'))
 
 
-def listado_sem(request, id):
-	listado= Semana.objects.filter(fecha_inicio_sem__gte= date.today()).filter(propiedad=id)
-	############################################### GUARDAR SEMANA Y CREAR SUBASTA #########################################
+def cerrar_subasta(request, id):
+
+	listado_hab = Semana.objects.filter(propiedad=id).filter(habilitada_subasta = True).filter(subasta_id__isnull=False)
+	############################################### CERRAR SUBASTA . BORRA LA SUBASTA y disminuye cant subastas #########################################
 	if request.method == 'POST':
 		propiedad = Propiedad.objects.get(id=id)
-		propiedad.subastas_activas+=1
-		propiedad.save()
 		nro = request.POST.get('semana')
-		monto = request.POST.get('monto')
-		print('NUMERO:   '+nro)
-		print('MONTO:    '+monto)
-		sem = listado.get(numero_semana= nro)
-		print('SEMANA:  '+str(sem.numero_semana))
-		print('SEMANA inicia:  '+str(sem.fecha_inicio_sem))
-		print('SEMANA fin:  '+str(sem.fecha_fin_sem))
-		sem.monto_base = monto
-		sub = Subasta.objects.create(fecha_inicio = sem.fecha_inicio_sem,fecha_fin = sem.fecha_fin_sem)
-		sem.subasta = sub
-		sem.habilitada = False
-		sem.save()
-		return redirect(reverse_lazy('administracion')+'propiedad/'+id)
+		sem = listado_hab.get(numero_semana= nro)
+		subasta = sem.subasta
+		propiedad.subastas_activas-=1
+		propiedad.save()
+		return redirect(reverse_lazy('administracion')+'determinarganador/'+str(subasta.id))
 	else:
-		return render(request, 'HomeSwitchHome/listado_sem.html', {'listado':listado})	
+		return render(request, 'HomeSwitchHome/cerrar_subasta.html', {'listado_hab':listado_hab})
 
 def determinar_ganador(request, id):	
 
@@ -320,9 +432,23 @@ def buscar_x_zona (request):
 
 def  ver_cuadrilla_x_zona (request, zona):
 	listado_res = Propiedad.objects.filter(localidad = zona)
+
+	semanasR = Semana.objects.filter(habilitada_reserva=True).values('propiedad_id').distinct()
+	semanasS = Semana.objects.filter(habilitada_subasta=True).values('propiedad_id').distinct()
+	semanasH = Semana.objects.filter(habilitada_hotsale=True).values('propiedad_id').distinct()
+	propR = []
+	propS = []
+	propH = []
+	for s in semanasR:
+		propR.append(Propiedad.objects.get(id=s['propiedad_id'],localidad = zona))
+	for s in semanasS:
+		propS.append(Propiedad.objects.get(id=s['propiedad_id'],localidad = zona))
+	for s in semanasH:
+		propH.append(Propiedad.objects.get(id=s['propiedad_id'],localidad = zona))
+
 	if not request.user.is_authenticated:
 				listado_res = listado_res[:5]
-	return render (request, 'HomeSwitchHome/cuadrilla_prop.html',{'propiedades':listado_res})
+	return render (request, 'HomeSwitchHome/cuadrilla_prop.html',{'propiedades':listado_res,'propR':propR,'propS':propS,'propH':propH})
 
 	##################### REVISAR LOCALIDAD DEL POST ###############################
 
@@ -340,27 +466,27 @@ def  ver_cuadrilla_x_zona (request, zona):
 	# 	return render (request, 'HomeSwitchHome/buscar_x_zona.html',{'zonas':listado_zonas})
 
 
-def cerrar_subasta(request, id):
-
-	listado_hab = Semana.objects.filter(propiedad=id).filter(habilitada = False).filter(subasta_id__isnull=False)
-	############################################### CERRAR SUBASTA . BORRA LA SUBASTA y disminuye cant subastas #########################################
-	if request.method == 'POST':
-		propiedad = Propiedad.objects.get(id=id)
-		nro = request.POST.get('semana')
-		sem = listado_hab.get(numero_semana= nro)
-		subasta = sem.subasta
-		propiedad.subastas_activas-=1
-		propiedad.save()
-		return redirect(reverse_lazy('administracion')+'determinarganador/'+str(subasta.id))
-	else:
-		return render(request, 'HomeSwitchHome/cerrar_subasta.html', {'listado_hab':listado_hab})
-
 def ver_cuadrilla_propiedades(request):
 	propiedades= Propiedad.objects.all()
+	semanasR = Semana.objects.filter(habilitada_reserva=True).values('propiedad_id').distinct()
+	semanasS = Semana.objects.filter(habilitada_subasta=True).values('propiedad_id').distinct()
+	semanasH = Semana.objects.filter(habilitada_hotsale=True).values('propiedad_id').distinct()
+	propR = []
+	propS = []
+	propH = []
+	for s in semanasR:
+		print('SEMANAS CON RESERVA')
+		print(s['propiedad_id'])
+		propR.append(Propiedad.objects.get(id=s['propiedad_id']))
+	for s in semanasS:
+		propS.append(Propiedad.objects.get(id=s['propiedad_id']))
+	for s in semanasH:
+		propH.append(Propiedad.objects.get(id=s['propiedad_id']))
+
 	if not request.user.is_authenticated:
 		propiedades = propiedades[:5]
 	template = 'HomeSwitchHome/cuadrilla_prop.html'
-	return render(request, template, {'propiedades':propiedades})
+	return render(request, template, {'propiedades':propiedades,'propR':propR,'propS':propS,'propH':propH})
 
 def ver_subastas_activas(request):
 	semanas= Semana.objects.exclude(subasta_id__isnull = True)
@@ -369,38 +495,50 @@ def ver_subastas_activas(request):
 
 
 def ingresar_subasta(request, id):
+
 	subasta=Subasta.objects.get(id=id)
 	semana = Semana.objects.get(subasta=subasta)
-	print('------------')
-	print(subasta.id)
-	print(semana.subasta.id)
-	print('------------')
 	args={}
+
 	if request.method == 'POST':
-		form = forms.PostorForm(request.POST)
-		
-		if form.is_valid(): 
-			print('Formulario Valido')
-			monto_puja = float(request.POST.get('monto_puja'))
+		monto_puja = float(request.POST.get('monto_puja'))
+		print('POST---')
+		if request.user.perfil.creditos > 0:
+			print('0-----------')
 			if Postor.objects.count() > 0:
 				ultpostor = Postor.objects.filter(subasta=subasta).latest('fecha_puja')
-				if monto_puja > ultpostor.monto_puja:
-					f = form.save(commit=False)
-					f.subasta = subasta
-					f.save() 
+				print('1-----------')
+				if monto_puja > ultpostor.monto_puja and monto_puja>semana.monto_base:
+					if not Reserva.objects.filter(usuario_id=request.user,fecha_reserva=semana.fecha_inicio_sem).exists():
+						print('2--------')
+						usuario_perfil = Perfil.objects.get(usuario=request.user)
+						usuario_perfil.creditos-=1
+						usuario_perfil.save()
+						Postor.objects.create(usuario=request.user,subasta=subasta,monto_puja=monto_puja,fecha_puja=datetime.now())
+						messages.success(request,'Puja de Subasta Registrada!')
+					else:
+						messages.error(request,'Ya tienes una Reserva en esa semana.')
+				else:
+					messages.error(request,'Monto de puja No Valido.')
+			elif monto_puja>semana.monto_base:
+				if not Reserva.objects.filter(usuario_id=request.user,fecha_reserva=semana.fecha_inicio_sem).exists():
+					usuario_perfil = Perfil.objects.get(usuario=request.user)
+					usuario_perfil.creditos-=1
+					usuario_perfil.save()
+					Postor.objects.create(usuario=request.user,subasta=subasta,monto_puja=monto_puja,fecha_puja=datetime.now())
+					messages.success(request,'Puja de Subasta Registrada!')
+				else:
+					messages.error(request,'Ya tienes una Reserva en esa semana.')
 			else:
-				f = form.save(commit=False)
-				f.subasta = subasta
-				f.save()
+				messages.error(request,'Monto de puja No Valido.')
 		else:
-			print('formulario invalido!')
+			messages.error(request,'creditos insuficientes para participar en subasta.')
 		return redirect(reverse_lazy('home'))
 	else:
-		form = forms.PostorForm()
 		if Postor.objects.count() > 0:
-			args={'form':form,'semana':semana, 'monto_mas_alto':(Postor.objects.latest('fecha_puja')).monto_puja}
+			args={'semana':semana, 'monto_mas_alto':Postor.objects.filter(subasta=subasta).latest('fecha_puja').monto_puja}
 		else:
-			args={'form':form,'semana':semana}
+			args={'semana':semana}
 		return render(request, 'HomeSwitchHome/ingresar_subasta.html', args)
 
 #perfil = Perfil.objects.get(usuario=request.user)

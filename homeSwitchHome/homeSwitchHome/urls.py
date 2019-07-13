@@ -26,13 +26,17 @@ urlpatterns = [
 
     # USER VIEWS
 
-	path('', views.home, name='home'),
+	path('', views.ver_cuadrilla_propiedades, name='home'),
     path('registrarUsuario', views.RegistroUsuario, name= 'RegistroUser'),
     path('iniciar_sesion_usuario', views.userLogin, name= 'InicioUser'),
     path('cerrar_sesion_usuario', views.userLogout, name='SalirUser'),
     path('subastasactivas', views.ver_subastas_activas, name= 'subastas_activas'),
     path('ingresarsubasta/<id>', views.ingresar_subasta, name= 'ingresar_subasta'),
-    path('cuadrillaprop/propiedad/<id>', views.ver_prop, name='ver_prop'),
+
+    path('realizarreserva/<id>', views.realizar_reserva, name= 'realizar_reserva'),
+    path('confirmarreserva/<id>', views.confirmar_reserva, name= 'confirmar_reserva'),
+    path('propiedad/<id>', views.ver_prop, name='ver_prop'),
+
     path('perfil', views.verPerfil, name='perfil'),
     path('editar_perfil/<id>', views.editarPerfil, name='editarPerfil'),
     path('cuadrillaprop', views.ver_cuadrilla_propiedades, name= 'cuadrilla_prop'),
@@ -47,6 +51,8 @@ urlpatterns = [
     # ADMIN VIEWS
 
     path('administracion/listado_prop', views.listado_prop, name='listado_prop'),
+    path('administracion/listado_res', views.listado_prop_res, name='listado_prop_res'),
+    path('administracion/listado_res/<id>', views.listado_res, name='listado_res'),
     path('administracion/propiedad/<id>', views.propiedad, name='prop'),
     path('administracion/agregar_propiedad', views.agregar_propiedad, name='agregar_prop'),
     path('administracion/modificar_propiedad/<id>', views.modificar_propiedad, name='modificar_prop'),
@@ -60,6 +66,7 @@ urlpatterns = [
     path('administracion/propiedad/<id>/cerrar_subasta', views.cerrar_subasta, name='cerrar_subasta'),
     path('administracion/determinarganador/<id>', views.determinar_ganador, name='determinar_ganador'),
     path('administracion/propiedad/<id>/generarsemanas', views.generar_semanas, name='generar_semanas'),
+    path('administracion/propiedad/<id>/habilitar_reservas', views.habilitar_reservas, name='habilitar_reservas'),
     path('administracion/abrirsubastas', views.abrir_subastas, name='abrir_subastas'),
     path('administracion/cerrarsubastas', views.cerrar_subastas, name='cerrar_subastas')
 ]

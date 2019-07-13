@@ -19,9 +19,13 @@
 		<h1>{{Propiedad.titulo}}</h1>
 		<hr>
 		<a class="btn btn-outline-danger" href="{% url 'modificar_prop' Propiedad.id %}">Modificar</a>
+	
 		<a class="btn btn-danger" id="lanzarModal" href="#">Eliminar</a>
 		
 		<a class="btn btn-outline-danger" href="{% url 'generar_semanas' Propiedad.id %}">Generar Semanas</a>
+		
+		<a class="btn btn-outline-warning" href="{% url 'habilitar_reservas' Propiedad.id %}">Habilitar Reservas</a>
+		
 		<hr>
 
 		<div class="row">
@@ -58,7 +62,22 @@
 				</div>
 			{% endfor %}
 		</div>
-
+		<br><br>
+		<div class="p-3 mb-2 bg-secondary text-light"><h6>Semanas Activas</h6></div>
+			{% for s in semanas %}
+				{% if s.habilitada_reserva %}
+					<div class="col-md-4">
+						[{{s.numero_semana}}]{{s.fecha_inicio_sem}} 
+						<span class="badge badge-primary">En Reserva</span>
+					</div>
+				{% elif s.habilitada_subasta %}
+					<div class="col-md-4">
+						[{{s.numero_semana}}]{{s.fecha_inicio_sem}} 
+					<span class="badge badge-primary">En Subasta</span>
+					</div>
+				{% endif %}
+			{% endfor %}
+			<hr>
 
 	</div>
 
@@ -73,15 +92,16 @@
         </button>
       </div>
 
-		{% if Propiedad.subastas_activas < 1 %}
+		{% if res or sub  %}
+			<div class="modal-body">
+				<p>La propiedad tiene  {{res}} Reservas y {{sub}} Subastas Activas.</p>
+		  		  	<a class="btn btn-danger btn-sm" href="{%url 'eliminar_propiedad' Propiedad.id %}" style="margin: 14px;">Eliminar de todos modos</a>
+			</div>	
+		{% else %}
 			<div class="modal-body">
 				<p>¿Confirma que desea eliminar la propiedad?</p>
 			</div>
-		  	<a class="btn btn-danger btn-sm" href="{%url 'eliminar_propiedad' Propiedad.id %}" style="margin: 14px;">Eliminar</a>
-		{% else %}
-			<div class="modal-body">
-				<p>No se puede eliminar la propiedad(tiene subastas o reservas activas).</p>
-			</div>	
+		  	<a class="btn btn-danger btn-sm" href="{%url 'eliminar_propiedad' Propiedad.id %}" style="margin: 14px;">Eliminar</a>	
 		{% endif %}
     </div>
   </div>

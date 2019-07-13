@@ -1,5 +1,8 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 {% load static %}
 <link rel="stylesheet" href="{% static "home.css" %}">
 
@@ -7,21 +10,43 @@
 
 {% include 'HomeSwitchHome/navBar.html' %}
 
-<div class="main-container">
-	<div class="jumbotron jumbotron-fluid">
-		<div class="container">
-			<img class="logo-hsh-home" src="{% static "logotext.png" %}">
-			<p class="lead"></p>
-		</div>
-	</div>
+<div class="sidebar">
+  <a  href="{% url 'buscar_x_fecha' %}"><i class="far fa-calendar-alt"></i>Buscar por fecha</a>
+  <a  href="{% url 'buscar_x_zona'%}"><i class="fas fa-map-marker-alt"></i>Buscar por zona</a>
+</div>
 
-<div class="prop-container">
-		<div>
-			<h1>Cuadrilla de Propiedades</h1>
-			<a class="btn btn-primary btn-sm" href="{% url 'buscar_x_fecha' %}">Buscar por fecha</a>
-			<a class="btn btn-primary btn-sm" href="{% url 'buscar_x_zona'%}">Buscar por zona</a>
-			<a class="btn btn-primary btn-sm" href="{% url 'cuadrilla_prop'%}">Quitar Filtro</a>
-		</div>
+{% if request.user.is_authenticated %}
+
+
+<div class="main">
+<ul class="messages">
+    {% for message in messages %}
+    <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}><h4>{{ message }}</h4></div>
+    {% endfor %}
+</ul>
+<ul class="nav nav-tabs justify-content-end" id="myTab" role="tablist">
+	<li class="nav-item active">
+	<a class="nav-link text-secondary" id="todas-tab" data-toggle="tab" href="#Todas" role="tab" aria-controls="todas" aria-selected="true">Todas</a>
+	</li>
+  <li class="nav-item ">
+    <a class="nav-link text-info" id="ReservaDirecta-tab" data-toggle="tab" href="#ReservaDirecta" role="tab" aria-controls="ReservaDirecta" aria-selected="false"><i class="fas fa-angle-double-right"></i>  Reserva Directa</a>
+  </li>
+  <li class="nav-item ">
+    <a class="nav-link text-success " id="Subasta-tab" data-toggle="tab" href="#Subasta" role="tab" aria-controls="Subasta" aria-selected="false"><i class="fas fa-gavel"></i>  En Subasta</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-warning" id="HotSale-tab" data-toggle="tab" href="#HotSale" role="tab" aria-controls="HotSale" aria-selected="false"><i class="fas fa-fire"></i>  Hot-Sale</a>
+  </li>
+</ul>
+
+
+
+
+<div class="tab-content" id="myTabContent">
+
+  <div class="tab-pane fade show active" id="Todas" role="tabpanel" aria-labelledby="todas-tab">
+  	<div class="prop-container">
+		<div class="p-3 mb-2 text-secondary"><h4>Todas las Propiedades</h4></div>
 		<hr>
 		<ul class="list-group">
 			{% if propiedades %}
@@ -31,12 +56,16 @@
 							<img src="{{f.archivo.url}}" class="mr-3" alt="Sin Imagen" class="img-thumbnail" style="height:75px; left:0px;">
 						{% endfor %}				
 						<div class="media-body">
-						<h5 class="mt-0">{{ Propiedad.titulo }}</h5>
+						<h5 class="mt-0">{{ Propiedad.titulo }}
+
+						</h5>
 						{{Propiedad.localidad}}
 						</div>
 						
-						<a class="btn btn-outline-success btn-sm" href='cuadrillaprop/propiedad/{{ Propiedad.id}}'>Ver detalle</a>
+
+						<a class="btn btn-outline-success btn-sm" href='/propiedad/{{ Propiedad.id}}'>Ver detalle</a>
 					</div>
+
 				{% endfor %}
 						
 			{% else %}
@@ -51,3 +80,176 @@
 			{% endif %}
 		</ul>
 	</div>
+  </div>
+
+  <div class="tab-pane fade" id="ReservaDirecta" role="tabpanel" aria-labelledby="ReservaDirecta-tab">
+  	<div class="prop-container">
+		<div class="p-3 mb-2 bg-info text-light"><h4>Propiedades Reserva Directa</h4></div>
+		<hr>
+		<ul class="list-group">
+			{% if propR %}
+				{% for Propiedad in propR %} 
+					<div class="media" style="padding: 10px; background-color:#ddd">
+						{% for f in Propiedad.foto_set.all|slice:":1" %}
+							<img src="{{f.archivo.url}}" class="mr-3" alt="Sin Imagen" class="img-thumbnail" style="height:75px; left:0px;">
+						{% endfor %}				
+						<div class="media-body">
+						<h5 class="mt-0">{{ Propiedad.titulo }}
+
+						</h5>
+						{{Propiedad.localidad}}
+						</div>
+						
+
+						<a class="btn btn-outline-success btn-sm" href='/propiedad/{{ Propiedad.id}}'>Ver detalle</a>
+					</div>
+
+				{% endfor %}
+						
+			{% else %}
+
+				<div class="listado-propiedad-container">
+					<h3 class="listado-propiedad-msg">
+						
+						No hay propiedades que mostrar
+
+					</h3>
+				</div>
+			{% endif %}
+		</ul>
+	</div>
+  </div>
+
+  <div class="tab-pane fade" id="Subasta" role="tabpanel" aria-labelledby="Subasta-tab">
+  	<div class="prop-container">
+				<div class="p-3 mb-2 bg-success text-light"><h4>Propiedades con Subastas</h4></div>
+		<hr>
+		<ul class="list-group">
+			{% if propS %}
+				{% for Propiedad in propS %} 
+					<div class="media" style="padding: 10px; background-color:#ddd">
+						{% for f in Propiedad.foto_set.all|slice:":1" %}
+							<img src="{{f.archivo.url}}" class="mr-3" alt="Sin Imagen" class="img-thumbnail" style="height:75px; left:0px;">
+						{% endfor %}				
+						<div class="media-body">
+						<h5 class="mt-0">{{ Propiedad.titulo }}
+
+						</h5>
+						{{Propiedad.localidad}}
+						</div>
+						
+
+						<a class="btn btn-outline-success btn-sm" href='/propiedad/{{ Propiedad.id}}'>Ver detalle</a>
+					</div>
+
+				{% endfor %}
+						
+			{% else %}
+
+				<div class="listado-propiedad-container">
+					<h3 class="listado-propiedad-msg">
+						
+						No hay propiedades que mostrar
+
+					</h3>
+				</div>
+			{% endif %}
+		</ul>
+	</div>
+  </div>
+  <div class="tab-pane fade" id="HotSale" role="tabpanel" aria-labelledby="HotSale-tab">
+  	<div class="prop-container">
+				<div class="p-3 mb-2 bg-warning text-light"><h4>Propiedades Hot-Sale</h4></div>
+		<hr>
+		<ul class="list-group">
+			{% if propH %}
+				{% for Propiedad in propH %} 
+					<div class="media" style="padding: 10px; background-color:#ddd">
+						{% for f in Propiedad.foto_set.all|slice:":1" %}
+							<img src="{{f.archivo.url}}" class="mr-3" alt="Sin Imagen" class="img-thumbnail" style="height:75px; left:0px;">
+						{% endfor %}				
+						<div class="media-body">
+						<h5 class="mt-0">{{ Propiedad.titulo }}
+
+						</h5>
+						{{Propiedad.localidad}}
+						</div>
+						
+
+						<a class="btn btn-outline-success btn-sm" href='/propiedad/{{ Propiedad.id}}'>Ver detalle</a>
+					</div>
+
+				{% endfor %}
+						
+			{% else %}
+
+				<div class="listado-propiedad-container">
+					<h3 class="listado-propiedad-msg">
+						
+						No hay propiedades que mostrar
+
+					</h3>
+				</div>
+			{% endif %}
+		</ul>
+	</div>
+  </div>
+</div>
+
+{% else %}
+<div class="main">
+
+<div class="prop-container">
+		<div>
+			<h1>Cuadrilla de Propiedades</h1>
+
+		</div>
+		<hr>
+		<ul class="list-group">
+			{% if propiedades %}
+				{% for Propiedad in propiedades %} 
+					<div class="media" style="padding: 10px; background-color:#ddd">
+						{% for f in Propiedad.foto_set.all|slice:":1" %}
+							<img src="{{f.archivo.url}}" class="mr-3" alt="Sin Imagen" class="img-thumbnail" style="height:75px; left:0px;">
+						{% endfor %}				
+						<div class="media-body">
+						<h5 class="mt-0">{{ Propiedad.titulo }}
+
+						</h5>
+						{{Propiedad.localidad}}
+						</div>
+
+
+						<a class="btn btn-outline-success btn-sm" href='/propiedad/{{ Propiedad.id}}'>Ver detalle</a>
+					</div>
+
+				{% endfor %}
+						
+			{% else %}
+
+				<div class="listado-propiedad-container">
+					<h3 class="listado-propiedad-msg">
+						
+						No hay propiedades que mostrar
+
+					</h3>
+				</div>
+			{% endif %}
+		</ul>
+	</div>
+	</div>
+
+
+{% endif %}
+
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$('#myTab a').on('click', function (e) {
+		  e.preventDefault()
+		  console.log('CLICK')
+		  $(this).tab('show')
+		})
+	})
+</script>

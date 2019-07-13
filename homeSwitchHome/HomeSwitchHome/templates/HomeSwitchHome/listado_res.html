@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "administracion.css" %}">
+
+<title>Administracion</title>
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-4">Administración</h1>
+			<p class="lead"></p>
+		</div>
+	</div>
+<ul class="messages">
+{% for message in messages %}
+<div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}><h4>{{ message }}</h4></div>
+{% endfor %}
+</ul>
+
+<div class="prop-container">
+		
+		<div class="p-3 mb-2 bg-info text-light">{{prop.titulo}}
+		<h4>Reservas</h4></div>
+		<hr>
+		<ul class="list-group">
+				{% for s in semanasR %} 
+
+					<a class='list-group-item list-group-item-action'>
+
+						<h5>Semana {{s.numero_semana}}</h5>
+						<h6>{{s.fecha_inicio_sem}})</h6>
+						<p class="text-warning">RESERVADA</p>
+					</a>
+						
+				{% endfor %}
+				{% for s in semanasD %} 
+
+					<a class='list-group-item list-group-item-action'>
+
+						<h5>Semana {{s.numero_semana}}</h5>
+						<h6>{{s.fecha_inicio_sem}})</h6>
+						<p class="text-success">DISPONIBLE</p>
+					</a>
+						
+				{% endfor %}
+		</ul>
+	</div>

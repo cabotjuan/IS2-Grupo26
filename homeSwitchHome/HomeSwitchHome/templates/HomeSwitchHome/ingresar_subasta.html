@@ -15,39 +15,22 @@
 		</div>
 	</div>
 	<div class="prop-container">
-		<h1>{{semana.propiedad.titulo}}</h1>
+		<h5>{{semana.propiedad.titulo}}</h5>
+		<h5>Semana Subastada: {{semana.numero_semana}}</h5>
+		<h5>({{semana.fecha_inicio_sem}} a {{semana.fecha_fin_sem}})</h5>
 		<hr>
-
-		<div class="row">
-			<div class="col">
-				Descripcion:		<h5>{{semana.propiedad.descripcion}}</h5>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				Pais:		<h5>{{semana.propiedad.pais}}</h5>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				Provincia:		<h5>{{semana.propiedad.provincia}}</h5>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				Direccion:		<h5>{{semana.propiedad.direccion}}</h5>
-			</div>
-		</div>
-	</div>
-
+		<br>
+<br>
+<ul class="messages">
+		{% for message in messages %}
+		<div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}><h4>{{ message }}</h4></div>
+		{% endfor %}
+		</ul>
 	<h1>Ingresar a la Subasta</h1>
 	<hr>
 	<form method="POST">
 		{% csrf_token %}
-		<h5>1. ingresar correo electronico:</h5>
-			{{form.mail}}
-		<hr>
-		<h5>2. ingresar monto de puja:</h5>
+		<h5> ingresar monto de puja:</h5>
 		<h6>
 			Monto Base: ${{semana.monto_base}}
 		</h6>
@@ -56,7 +39,7 @@
 			Puja mas alta: ${{monto_mas_alto}}
 		</h6>
 		{% endif %}
-			{{form.monto_puja}}
+		<input type="number" name="monto_puja" min="0">
 		
 		<hr>
 		<input type="submit" class="btn btn-success btn-lg btn-block" value="Enviar"></input>

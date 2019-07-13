@@ -34,19 +34,22 @@
 			<h1>Elija el año para el que desea generar semanas</h1>
 		</div>
 
-			{% if not existe2019 %}
-				<button id="lanzarModal" class="btn btn-primary">2019</button>
+			<form method="post">
+			{% csrf_token %}
+			{% if not existeActual %}
+				<input class="btn btn-primary" name='año' type="submit" value="{{actual}}">
 			{% else %}
-				<input class="btn btn-primary" name='año' type="submit" value="2019" disabled="true">
-				Ya no hay Semanas Disponibles para generar en 2019.
+				<input class="btn btn-primary" name='año' type="submit" value="{{actual}}" disabled="true">
+				Ya no hay Semanas Disponibles para generar en {{actual}}.
 			{% endif %}
 			<br>
 			<br>
-			{% if not existe2020 %}
-				<button id="lanzarModal2" class="btn btn-primary">2020</button>
+
+			{% if not existeActualSig %}
+				<input class="btn btn-primary" name='año' type="submit" value="{{actualSig}}">
 			{% else %}
-				<input class="btn btn-primary" name='año' type="submit" value="2020" disabled="true">
-				No hay Semanas Disponibles para generar en 2020.
+				<input class="btn btn-primary" name='año' type="submit" value="{{actualSig}}" disabled="true">
+				No hay Semanas Disponibles para generar en {{actualSig}}.
 			{% endif %}
 			<br><br>
 			<a class="btn btn-info" href="{%url 'administracion' %}">Cancelar</a>
