@@ -20,19 +20,19 @@
 		</div>
 			<form method="post">
 			{% csrf_token %}
-			{% if not existe2019 %}
-				<input class="btn btn-primary" name='año' type="submit" value="2019">
+			{% if not existeActual %}
+				<input class="btn btn-primary" name='año' type="submit" value="{{actual}}">
 			{% else %}
-				<input class="btn btn-primary" name='año' type="submit" value="2019" disabled="true">
-				Ya no hay Semanas Disponibles para generar en 2019.
+				<input class="btn btn-primary" name='año' type="submit" value="{{actual}}" disabled="true">
+				Ya no hay Semanas Disponibles para generar en {{actual}}.
 			{% endif %}
 			<br>
 			<br>
-			{% if not existe2020 %}
-				<input class="btn btn-primary" name='año' type="submit" value="2020">
+			{% if not existeActualSig %}
+				<input class="btn btn-primary" name='año' type="submit" value="{{actualSig}}">
 			{% else %}
-				<input class="btn btn-primary" name='año' type="submit" value="2020" disabled="true">
-				No hay Semanas Disponibles para generar en 2020.
+				<input class="btn btn-primary" name='año' type="submit" value="{{actualSig}}" disabled="true">
+				No hay Semanas Disponibles para generar en {{actualSig}}.
 			{% endif %}
 			<br><br>
 			</form>

@@ -2,6 +2,7 @@
 	position: fixed;
 	top: 0px;
 	width: 100%;
+	z-index: 999!important;
 }
 .navbar{
 	height: 50px;

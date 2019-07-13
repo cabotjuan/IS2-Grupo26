@@ -28,25 +28,28 @@ class Semana(models.Model):
 	numero_semana = models.IntegerField(blank=True)
 	fecha_inicio_sem = models.DateField(blank=True)
 	fecha_fin_sem = models.DateField(blank=True)
-	habilitada = models.BooleanField(default=True)
+	habilitada_reserva = models.BooleanField(default=False)
+	habilitada_subasta = models.BooleanField(default=False)
+	habilitada_hotsale = models.BooleanField(default=False)
 	fecha_creacion = models.DateField(auto_now_add=True, blank=True)
 class Reserva(models.Model):
-	usuario = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
+	OPCIONES_RESV = [('DIRECTA', 'DIRECTA'),('SUBASTA', 'SUBASTA'),('HOTSALE', 'HOTSALE')]
+	usuario = models.ForeignKey(User,unique=False, null=True, on_delete=models.SET_NULL)
+	reservada_desde = models.CharField(choices=OPCIONES_RESV, max_length=15) 
 	fecha_reserva = models.DateField(blank=True)
 
 class Subasta(models.Model):
-	usuario = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
 	fecha_inicio = models.DateField(blank=True)
 	fecha_inicio_sem = models.DateField(blank=True)
 
 class Postor(models.Model):
-	usuario = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
+	usuario = models.ForeignKey(User, null=True,unique=False, on_delete=models.SET_NULL)
 	subasta = models.ForeignKey('Subasta', on_delete=models.CASCADE)	
 	monto_puja = models.FloatField()	
 	fecha_puja = models.DateTimeField(default=timezone.now)
 	class Meta:
 		order_with_respect_to = 'fecha_puja'	
-
+	
 class Foto(models.Model):
 	archivo = models.ImageField(blank=True, null=True, upload_to='images/')
 	propiedad = models.ForeignKey('Propiedad', on_delete= models.CASCADE)

@@ -8,14 +8,13 @@
 {% include 'HomeSwitchHome/navBar.html' %}
 
 <div class="main-container">
-	<div class="jumbotron jumbotron-fluid">
-		<div class="container">
-			<img class="logo-hsh-home" src="{% static "logotext.png" %}">
-			<p class="lead"></p>
+		<div class="jumbotron jumbotron-fluid">
+			<div class="container">
+				<h1>{{Propiedad.titulo}}</h1>
+				<p class="lead"></p>
+			</div>
 		</div>
-	</div>
 	<div class="prop-container">
-		<h1>{{Propiedad.titulo}}</h1>
 		<hr>
 
 		<div class="row">
@@ -51,6 +50,31 @@
 		</div>
 		{% endfor %}
 		</div>
+
+
+		<br><br>
+		<div class="p-3 mb-2 bg-secondary text-light"><h6>Semanas Activas</h6></div>
+			{% for s in semanas %}
+				{% if s.habilitada_reserva %}
+					<div class="col-md-10">
+					<span class="badge badge-primary">En Reserva</span><h5>({{s.numero_semana}}°){{s.fecha_inicio_sem}} a {{s.fecha_fin_sem}} 
+				{% if not es_premium %}
+					<a class="btn btn-primary btn-sm disabled" href="#">Reservar</a>(Debes ser Premium para acceder.)
+				{% else %}
+					<a class="btn btn-primary btn-sm " href="{% url 'realizar_reserva' s.id %}">Reservar</a>
+				{% endif %}
+					</h5>
+					</div>
+				{% elif s.habilitada_subasta %}
+					<div class="col-md-10">
+					<span class="badge badge-success">En Subasta</span><h5>({{s.numero_semana}}°){{s.fecha_inicio_sem}}a {{s.fecha_fin_sem}}
+				<a class="btn btn-success btn-sm" href="{% url 'ingresar_subasta' s.subasta_id %}">Ingresar a Subasta</a></h5> 
+					</div>
+				{% endif %}
+			{% endfor %}
+			<hr>
 		
 	</div>
 </div>
+
+

@@ -28,7 +28,9 @@
 	{{ usuario|crispy }}
 	<hr>
 	<h5>Personal</h5>
-	{{ perfil|crispy }}
+	{{ perfil.nombre }}
+	{{ perfil.apellido }}
+	{{ perfil.fecha_nacimiento }}
 	<hr>
 	<h5>Tarjeta</h5>
 	{{ tarjeta|crispy }}
