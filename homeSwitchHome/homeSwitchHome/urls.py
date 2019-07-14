@@ -44,7 +44,7 @@ urlpatterns = [
     path('cuadrillaprop/buscar_x_zona', views.buscar_x_zona, name='buscar_x_zona'),
     path('cuadrillaprop/porfecha', views.buscar_x_fecha, name='buscar_x_fecha'),
    # path('propiedadesacotado', views.prop_acotado, name='prop_acotado')
-
+    path('recuperarclave', views.recuperarClave, name= 'recuperar_clave'),
 
 
 
@@ -63,12 +63,14 @@ urlpatterns = [
  	path('administracion/', views.administracion, name='administracion'),
  	path('administracion/eliminarpropiedad/<id>', views.eliminar_propiedad, name='eliminar_propiedad'),
     path('administracion/propiedad/<id>/listado_sem', views.listado_sem, name='listado_sem'),
-    path('administracion/propiedad/<id>/cerrar_subasta', views.cerrar_subasta, name='cerrar_subasta'),
-    path('administracion/determinarganador/<id>', views.determinar_ganador, name='determinar_ganador'),
+    #path('administracion/propiedad/<id>/cerrar_subasta', views.cerrar_subasta, name='cerrar_subasta'),
+    #path('administracion/determinarganador/<id>', views.determinar_ganador, name='determinar_ganador'),
     path('administracion/propiedad/<id>/generarsemanas', views.generar_semanas, name='generar_semanas'),
     path('administracion/propiedad/<id>/habilitar_reservas', views.habilitar_reservas, name='habilitar_reservas'),
     path('administracion/abrirsubastas', views.abrir_subastas, name='abrir_subastas'),
-    path('administracion/cerrarsubastas', views.cerrar_subastas, name='cerrar_subastas')
+    path('administracion/cerrarsubastas', views.cerrar_subastas, name='cerrar_subastas'),
+    path('administracion/usuario/<id>', views.ver_perfil_usuario, name='perfil_usuario'),
+    path('administracion/listado_usuarios', views.listado_usuarios, name='listado_usuarios'),
 ]
 urlpatterns += staticfiles_urlpatterns()
 

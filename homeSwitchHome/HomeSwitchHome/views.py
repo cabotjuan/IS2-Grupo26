@@ -19,6 +19,10 @@ from django.forms import modelformset_factory
 from django.template import RequestContext
 from django.contrib import messages
 from django.db import models
+from django.core.mail import EmailMessage
+import os
+import random
+
 # Create your views here.
 
 def home(request):
@@ -87,6 +91,10 @@ def confirmar_reserva(request, id):
 	perfil.save()
 	semana.reserva_id = r.id
 	semana.habilitada_reserva = False
+	p= semana.propiedad.titulo
+	mail=r.usuario.email
+	email = EmailMessage('Reserva de propiedad ' + p, 'Se ha registrado una reserva a su nombre por la propiedad '+ p + ' para la semana ' + str(semana.fecha_inicio_sem), to=[mail])
+	email.send()
 	semana.save()
 	r.save()
 
@@ -107,6 +115,11 @@ def eliminar_propiedad(request, id):
 			reserva = Reserva.objects.get(id=r['reserva_id'])
 			usuario = Perfil.objects.get(usuario_id=reserva.usuario_id)
 			mail = User.objects.get(id=reserva.usuario_id).email
+			email = EmailMessage('Propiedad eliminada ', 'La propiedad ' + p.titulo + ' se ha eliminado y su reserva para la semana ' + str(reserva.fecha_reserva) + ' fué cancelada.\nSe le reintegra la suma de 1 (uno) crédito', to=[mail])
+			email.send()
+
+			f=open(os.getcwd()+'/mail1', 'w')
+			f.write('Asunto: Propiedad eliminada \nCuerpo: La propiedad ' + p.titulo + ' se ha eliminado y su reserva para la semana ' + str(reserva.fecha_reserva) + ' fué cancelada.\nSe le reintegra la suma de 1 (uno) crédito \n Para: ' + mail)
 			messages.info(request, 'Se ha enviado un mail a '+mail+'(recupera +1 credito por Reserva Cancelada).')
 			usuario.creditos+=1
 			usuario.save()
@@ -116,6 +129,11 @@ def eliminar_propiedad(request, id):
 			subasta = Subasta.objects.delete(id=s['subasta'])
 			usuario = Perfil.objects.get(usuario_id=s['usuario'])
 			mail = User.objects.get(id=r['usuario']).mail
+			email = EmailMessage('Propiedad eliminada ', 'La propiedad ' + p.titulo + ' se ha eliminado y la subasta para la semana ' + str(subasta.fecha_inicio_sem) + ' fué cancelada.', to=[mail])
+			email.send()
+
+			f=open(os.getcwd()+'/mail1', 'w')
+			f.write('Asunto: Propiedad eliminada \nCuerpo: La propiedad ' + p.titulo + ' se ha eliminado y su reserva para la semana ' + str(subasta.fecha_inicio_sem) + ' fué cancelada.\nPara: ' + mail)
 			messages.info(request, 'Se ha enviado mail a  '+mail+'(recupera +1 credito por Subasta Cerrada).')
 			usuario.creditos+=1
 			usuario.save()
@@ -294,7 +312,7 @@ def abrir_subastas(request):
 		for sem in semanas:
 
 			fecha_desplazada = fechas.mover_delta_meses(sem.fecha_inicio_sem, -6)
-			if (fecha_desplazada - timedelta(days=3)<= date.today() <= fecha_desplazada + timedelta(days=3) ) and not sem.habilitada_subasta:
+			if (fecha_desplazada - timedelta(days=3)<= date.today() <= fecha_desplazada + timedelta(days=3) ) and not sem.habilitada_subasta and sem.reserva_id__isnull == True:
 				ct+=1
 				ct2+=1
 				propiedad = Propiedad.objects.get(id=sem.propiedad_id)
@@ -340,6 +358,7 @@ def cerrar_subastas(request):
 					ultpostor_perfil = Perfil.objects.get(usuario_id=ultpostor.usuario_id)
 					tiene_reservas = Reserva.objects.filter(usuario_id=ultpostor.usuario_id, fecha_reserva=sub.fecha_inicio_sem).exists()
 					if not tiene_reservas and ultpostor_perfil.creditos >= 1:
+						
 						messages.info(request,'Se ha enviado un Mail al ganador '+ultpostor.usuario.email)
 						ganador_valido = True
 					else:
@@ -350,8 +369,13 @@ def cerrar_subastas(request):
 					r = Reserva.objects.create(usuario_id=ultpostor.usuario_id,fecha_reserva=sub.fecha_inicio_sem,reservada_desde='SUBASTA')
 					sem.reserva_id=r.id
 					sem.habilitada_subasta=False
+					titulo_prop = sem.propiedad.titulo
+					mail = ultpostor.usuario.email
+					email = EmailMessage('Finalización de subasta para propiedad ' + titulo_prop, '¡Ha ganado la subasta por la semana '+ sub.fecha_inicio_sem + ' para la propiedad ' + titulo_prop +'!', to=[mail])
+					email.send()
 					sem.save()
 					r.save()
+
 				else:
 					messages.info(request,'No se encontró ganador válido (Tienen creditos Insuficientes / Reservas Activas).')
 			sub.delete()
@@ -363,33 +387,33 @@ def cerrar_subastas(request):
 	return redirect(reverse_lazy('administracion'))
 
 
-def cerrar_subasta(request, id):
+# def cerrar_subasta(request, id):
 
-	listado_hab = Semana.objects.filter(propiedad=id).filter(habilitada_subasta = True).filter(subasta_id__isnull=False)
-	############################################### CERRAR SUBASTA . BORRA LA SUBASTA y disminuye cant subastas #########################################
-	if request.method == 'POST':
-		propiedad = Propiedad.objects.get(id=id)
-		nro = request.POST.get('semana')
-		sem = listado_hab.get(numero_semana= nro)
-		subasta = sem.subasta
-		propiedad.subastas_activas-=1
-		propiedad.save()
-		return redirect(reverse_lazy('administracion')+'determinarganador/'+str(subasta.id))
-	else:
-		return render(request, 'HomeSwitchHome/cerrar_subasta.html', {'listado_hab':listado_hab})
+# 	listado_hab = Semana.objects.filter(propiedad=id).filter(habilitada_subasta = True).filter(subasta_id__isnull=False)
+# 	############################################### CERRAR SUBASTA . BORRA LA SUBASTA y disminuye cant subastas #########################################
+# 	if request.method == 'POST':
+# 		propiedad = Propiedad.objects.get(id=id)
+# 		nro = request.POST.get('semana')
+# 		sem = listado_hab.get(numero_semana= nro)
+# 		subasta = sem.subasta
+# 		propiedad.subastas_activas-=1
+# 		propiedad.save()
+# 		return redirect(reverse_lazy('administracion')+'determinarganador/'+str(subasta.id))
+# 	else:
+# 		return render(request, 'HomeSwitchHome/cerrar_subasta.html', {'listado_hab':listado_hab})
 
-def determinar_ganador(request, id):	
+# def determinar_ganador(request, id):	
 
-	sub = Subasta.objects.get(id=id)
-	print('HOLAAAA')
-	print(sub.id)
-	hay_ganador = Postor.objects.filter(subasta=sub).exists()
-	if hay_ganador:
-		ganador = Postor.objects.filter(subasta=sub).latest('fecha_puja')
-	else:
-		ganador = None
-	Subasta.objects.filter(id=id).delete()
-	return render(request, 'HomeSwitchHome/determinar_ganador.html',{'ganador':ganador})
+# 	sub = Subasta.objects.get(id=id)
+# 	print('HOLAAAA')
+# 	print(sub.id)
+# 	hay_ganador = Postor.objects.filter(subasta=sub).exists()
+# 	if hay_ganador:
+# 		ganador = Postor.objects.filter(subasta=sub).latest('fecha_puja')
+# 	else:
+# 		ganador = None
+# 	Subasta.objects.filter(id=id).delete()
+# 	return render(request, 'HomeSwitchHome/determinar_ganador.html',{'ganador':ganador})
 
 def buscar_x_fecha(request):
 	##################### REVISAR FECHAS DEL POST ###############################
@@ -493,6 +517,28 @@ def ver_subastas_activas(request):
 	template = 'HomeSwitchHome/subastas_activas.html'
 	return render(request, template, {'semanas':semanas})
 
+def recuperarClave(request):
+	if request.method == 'POST':
+		mail = request.POST.get('mail_usuario')
+		#verificar mail exista. si existe,
+		# enviar un mail con clave nueva.
+		# sino informar que el mail es invalido.
+		if User.objects.filter(email=mail):
+			usuario=User.objects.get(email=mail)
+			pas=''
+			
+			pas= ''.join(random.choice('0123456789ABCDEF') for _ in range(8))
+			usuario.set_password(pas)
+			usuario.save()
+			print (pas)
+			email = EmailMessage('Envío de nueva clave', 'Su nueva clave es '+ pas, to=[mail])
+			email.send()
+			messages.success(request,'Se ha enviado un mail con una nueva contraseña a ' + mail)
+		else:
+			messages.error(request,'El mail ingresado no existe en el sistema.')
+		return redirect('InicioUser')
+	else:
+		return render(request, 'HomeSwitchHome/recuperar_clave.html', {})
 
 def ingresar_subasta(request, id):
 
@@ -636,6 +682,16 @@ class Login (LoginView):
 class Logout(LogoutView):
 	pass
 
+def listado_usuarios(request):
+	perfiles=Perfil.objects.all()
+	return render(request, 'HomeSwitchHome/listado_usuarios.html', {'perfiles': perfiles})
+
+def ver_perfil_usuario(request, id):
+	print(request.user.id)
+	perfil = Perfil.objects.get(usuario=id)
+	return render(request, 'HomeSwitchHome/perfil_usuario.html', {'perfil':perfil})
+
+
 def verPerfil(request):
 	print(request.user.id)
 	perfil = Perfil.objects.get(usuario=request.user.id)
@@ -666,3 +722,4 @@ def editarPerfil(request, id):
 	#			if mail == user_form.cleaned_data.get('email'):
 
 	return render(request, 'HomeSwitchHome/editar_perfil.html',{'usuario':user_form,'perfil':perfil_form,'tarjeta':tarj_form})
+

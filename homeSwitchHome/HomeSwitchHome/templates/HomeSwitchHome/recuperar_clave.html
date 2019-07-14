@@ -1,32 +1,24 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 {% load crispy_forms_tags %}
+
 <ul class="messages">
 {% for message in messages %}
 	<div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}><h4>{{ message }}</h4></div>
 {% endfor %}
 </ul>
+
 <div class="jumbotron jumbotron-fluid">
 		<div class="container">
-			<h1 class="display-5">Iniciar Sesion</h1>
+			<h1 class="display-5">Recuperar Clave</h1>
 		</div>
-	</div>		
+</div>		
+
+
 <div class="col-6">
 	<form method="post"> {% csrf_token %}
-		{{ form.non_field_errors }}
-		{% for field in form %}
-		{% if field.label == 'Nombre de usuario' %}
-			Email:
-		{% else %}
-			Contraseña:
-		{% endif %}
-		{{ field }}
-		{{ field.errors }}
-	</br></br></br>
-		{% endfor %}
-		<hr>
-	<input class="btn btn-primary" type="submit" value="Listo">
-
+		Email:
+		<input type="email" name="mail_usuario">
+		
+		<input class="btn btn-primary" type="submit" value="Listo">
 	</form>
-	<a class="btn btn-outline-danger" href="{% url 'recuperar_clave' %}">Recuperar clave</a>
-</div>

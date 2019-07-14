@@ -1,0 +1,52 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "administracion.css" %}">
+
+<title>Administracion</title>
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-4">Administración</h1>
+			<p class="lead"></p>
+		</div>
+	</div>
+<ul class="messages">
+{% for message in messages %}
+<div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}><h4>{{ message }}</h4></div>
+{% endfor %}
+</ul>
+
+<div class="prop-container">
+		<h1>Listado de Usuarios</h1>
+		<hr>
+		<ul class="list-group">
+			{% if perfiles %}
+				{% for perfil in perfiles %} 
+
+					<a class='list-group-item list-group-item-action' href='/administracion/usuario/{{perfil.usuario_id}}'>{{ perfil.nombre }} 
+
+					{% if perfil.es_premium %}
+					<span class="badge badge-warning">PREMIUM</span>
+					{% else %}
+					<span class="badge badge-secondary">COMÚN</span>
+					{% endif %}
+
+					</a>
+						
+				{% endfor %}
+			{% else %}
+
+				<div class="listado-propiedad-container">
+					<h3 class="listado-propiedad-msg">
+						
+						No hay usuarios que mostrar
+
+					</h3>
+				</div>
+			{% endif %}
+		</ul>
+	</div>

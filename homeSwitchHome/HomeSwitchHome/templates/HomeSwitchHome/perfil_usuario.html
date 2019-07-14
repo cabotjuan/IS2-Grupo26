@@ -1,0 +1,76 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% load static %}
+<link rel="stylesheet" href="{% static "home.css" %}">
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-4">{{perfil.nombre}}</h1>
+			<p class="lead"></p>
+		</div>
+	</div>
+
+</div>
+<ul class="messages">
+{% for message in messages %}
+<div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}><h4>{{ message }}</h4></div>
+{% endfor %}
+</ul>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-6 col-md-4">
+      <h5>Email: </h5>
+    </div>
+    <div class="col-12 col-sm-6 col-md-8">
+		<h5>{{ usuario.email }}</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 col-md-4">
+      <h5>Nombre: </h5>
+    </div>
+    <div class="col-12 col-sm-6 col-md-8">
+		<h5>{{ perfil.nombre }}</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 col-md-4">
+      <h5>Apellido: </h5>
+    </div>
+    <div class="col-12 col-sm-6 col-md-8">
+		<h5>{{ perfil.apellido }}</h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6 col-md-4">
+      <h5>Fecha de Nacimiento: </h5>
+    </div>
+    <div class="col-12 col-sm-6 col-md-8">
+		<h5>{{ perfil.fecha_nacimiento }}</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 col-md-4">
+      <h5>Creditos: </h5>
+    </div>
+    <div class="col-12 col-sm-6 col-md-8">
+		<h5><i class="fas fa-coins"></i> {{ perfil.creditos }}</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 col-md-4">
+      <h5>Tipo de cuenta: </h5>
+    </div>
+    <div class="col-12 col-sm-6 col-md-8">
+		<h5>{% if perfil.es_premium  %}
+				 Premium
+			{% else %}
+	 			Comun
+			{% endif %}</h5>
+    </div>
+  </div>
