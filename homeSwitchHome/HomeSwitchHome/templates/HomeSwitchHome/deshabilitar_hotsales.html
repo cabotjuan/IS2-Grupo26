@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "administracion.css" %}">
+
+
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-4">Administración</h1>
+			<p class="lead"></p>
+		</div>
+	</div>
+
+<div class="prop-container">
+		<h1>Deshabilitar Hot-Sale</h1>
+		<hr>
+		<form method="POST">
+			{% csrf_token %}
+			<h5>1. Selecciona una semana:</h5>
+			<ul class="list-group">
+				<div class="input-group">
+				  <select name='semana' class="custom-select" id="inputGroupSelect04" required>
+				    <option selected disabled> Seleccionar.. </option>
+					{% for Semana in listado %} 
+						    <option value="{{Semana.numero_semana}}">{{Semana.numero_semana}} ({{Semana.fecha_inicio_sem}} al {{Semana.fecha_fin_sem}})</option>
+
+					{% endfor %}
+
+				  </select>
+				</div>
+			</ul>
+			<hr>
+			<input type="submit" class="btn btn-success btn-lg btn-block" value="Listo"></input>
+
+		</form>
+
+</div>

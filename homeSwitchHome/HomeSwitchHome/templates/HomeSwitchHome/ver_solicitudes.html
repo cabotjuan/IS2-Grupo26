@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "administracion.css" %}">
+
+<title>Administracion</title>
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+<ul class="messages">
+{% for message in messages %}
+<div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}><h4>{{ message }}</h4></div>
+{% endfor %}
+</ul>
+
+<div class="prop-container">
+		
+		<div class="p-3 mb-2 bg-secondary text-white">
+		<h4>Solicitudes</h4></div>
+		<hr>
+		<ul class="list-group">
+			{% if solicitudes %}
+				{% for s in solicitudes %} 
+					<a class='list-group-item list-group-item-action'>
+						<p class="text-secondary">Usuario: {{s.usuario.email}}</p>
+						<p class="text-info">Motivo: {{s.motivo}}</p>
+						<p class="text-info">Tipo: {{s.tipo}}</p>
+						{% if s.tipo == 'ALTA' %}
+							<a class='bt-ingresar btn btn-success btn-sm' href='{% url 'aceptar_alta' s.id %}'>Aceptar</a> 
+							<a class='bt-ingresar btn btn-danger btn-sm' href='{% url 'rechazar_alta' s.id %}'>Rechazar</a> 
+						{% else %}
+							<a class='bt-ingresar btn btn-success btn-sm' href='{% url 'aceptar_baja' s.id %}'>Aceptar</a> 
+							<a class='bt-ingresar btn btn-danger btn-sm' href='{% url 'rechazar_baja' s.id %}'>Rechazar</a> 
+						{% endif %}
+					</a>											
+				{% endfor %}
+			{% else %}
+				No hay Solicitudes Alta/Baja Premium pendientes.
+			{% endif %}
+		</ul>
+	</div>

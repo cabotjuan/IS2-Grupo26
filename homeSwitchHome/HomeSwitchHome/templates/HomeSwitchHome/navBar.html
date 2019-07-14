@@ -23,8 +23,11 @@
 			{{request.user.username}}
 			</button>
 			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-			<a class="dropdown-item" href="{% url 'perfil' %}">Ver mi Perfil</a>
-			<a class="dropdown-item active" href="{% url 'SalirUser' %}">Cerrar Sesión</a>
+			<a class="dropdown-item" href="{% url 'perfil' %}"><i class="far fa-id-card"></i> Ver mi Perfil</a>
+			<a class="dropdown-item" href="{% url 'mis_subastas' %}"><i class="fas fa-gavel"></i> Ver mis Subastas</a>
+			<a class="dropdown-item" href="{% url 'mis_reservas' %}"><i class="fas fa-angle-double-right"></i> Ver mis Reservas</a>
+			<a class="dropdown-item" href="{% url 'ver_fav' %}"><i class="fas fa-star"></i> Ver Favoritos</a>
+			<a class="dropdown-item active" href="{% url 'SalirUser' %}"><i class="fas fa-power-off"></i> Cerrar Sesión</a>
 			</div>
 			</div>
 		{% else %}
@@ -37,9 +40,9 @@
 	</nav>
 </div>
 
-
 <script>
 	$(document).ready(function(){
 		$('.dropdown-toggle').dropdown()
 	});
 </script>
+

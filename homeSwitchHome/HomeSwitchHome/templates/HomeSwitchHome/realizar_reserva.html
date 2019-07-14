@@ -17,7 +17,12 @@
 	<hr>
 	{%if not tieneRes and tieneCred %}
 		<h3>Estas seguro que deseas realizar la Reserva?</h3>
-		<a class="btn btn-primary btn-sm " href="{% url 'confirmar_reserva' semana.id %}">Confirmar</a>
+		
+		{% if r_hotsale %}
+			<a class="btn btn-primary btn-sm " href="{% url 'confirmar_reserva_hotsale' semana.id %}">Confirmar</a>
+		{% else %}
+			<a class="btn btn-primary btn-sm " href="{% url 'confirmar_reserva' semana.id %}">Confirmar</a>
+		{% endif %}
 		<a class="btn btn-danger btn-sm " href='/propiedad/{{ semana.propiedad_id}}'>Cancelar</a>
 	{%elif tieneRes %}
 		<h3>Ya tienes Reservas en esta semana.</h3>

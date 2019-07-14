@@ -1,0 +1,70 @@
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% load static %}
+<link rel="stylesheet" href="{% static "home.css" %}">
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+	<ul class="messages">
+	{% for message in messages %}
+	<div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}><h4>{{ message }}</h4></div>
+	{% endfor %}
+	</ul>
+	<div class="prop-container">
+		<div class="p-3 mb-2 bg-info text-light">
+			<h4>Mis Reservas</h4>
+		</div>
+		<hr>
+		{% if l_sem %}
+			<ul class="list-group">
+				{% for s in l_sem %}
+					<a class='list-group-item list-group-item-action'>
+						<p class="text-secondary">Propiedad: {{s.propiedad.titulo}}</p>
+						<p class="text-info">Fecha de Reserva: {{s.fecha_inicio_sem}}</p>
+						<p class="text-info">
+							Estado:
+							{% if s.reserva.cancelada %}
+							CANCELADA
+							{% else %}
+							RESERVADA
+						<a class='bt-ingresar btn btn-danger btn-sm' href='#' id="lanzarModal">Cancelar Reserva</a> 
+							{% endif %}
+						</p>
+					</a>			
+					<div id="eliminarModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cancelar Reserva</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div><br>
+            <div class="modal-body">
+      	Confirma que Desea Cancelar La reserva?<br>
+		<a class='bt-ingresar btn btn-danger btn-sm' href='{% url 'cancelar_reserva' s.reserva_id %}'>Cancelar Reserva</a> <br><br><br></div>
+    </div>
+  </div>
+</div> 				
+				{% endfor %}
+			</ul>
+		{% else %}
+			<h5>Sin reservas.</h5>
+		{% endif %}
+	</div>
+</div>
+
+
+
+
+
+<script>
+	$(document).ready(function(){
+		$( "#lanzarModal" ).click(function() {
+			$("#eliminarModal").modal()
+		});
+	});
+</script>

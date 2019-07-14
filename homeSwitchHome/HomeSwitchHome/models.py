@@ -37,6 +37,7 @@ class Reserva(models.Model):
 	usuario = models.ForeignKey(User,unique=False, null=True, on_delete=models.SET_NULL)
 	reservada_desde = models.CharField(choices=OPCIONES_RESV, max_length=15) 
 	fecha_reserva = models.DateField(blank=True)
+	cancelada =models.BooleanField(default=False)
 
 class Subasta(models.Model):
 	fecha_inicio = models.DateField(blank=True)
@@ -72,3 +73,13 @@ class Tarjeta(models.Model):
 	m_vencimiento = models.SmallIntegerField(validators=[MinValueValidator(1),MaxValueValidator(12)])
 	a_vencimiento = models.SmallIntegerField(validators=[MinValueValidator(2019),MaxValueValidator(2100)])
 	cod_seguridad = models.SmallIntegerField()
+
+class Solicitud(models.Model):
+	TIPO_SLT = [('ALTA', 'ALTA'),('BAJA', 'BAJA')]
+	usuario = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+	motivo = models.CharField(max_length=50, null=True)
+	tipo = models.CharField(choices=TIPO_SLT, max_length=10) 
+
+class Favorito(models.Model):
+	usuario = models.ForeignKey(User, null=True,unique=False, on_delete=models.SET_NULL)
+	semana = models.ForeignKey(Semana, null=True,unique=False, on_delete=models.SET_NULL)

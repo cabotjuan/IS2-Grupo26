@@ -27,17 +27,26 @@ urlpatterns = [
     # USER VIEWS
 
 	path('', views.ver_cuadrilla_propiedades, name='home'),
+    path('favoritos', views.ver_fav, name='ver_fav'),
+    path('quitar_fav/<id>', views.quitar_fav, name='quitar_fav'),
+    path('agregar_fav/<id>', views.agregar_fav, name='agregar_fav'),
     path('registrarUsuario', views.RegistroUsuario, name= 'RegistroUser'),
     path('iniciar_sesion_usuario', views.userLogin, name= 'InicioUser'),
     path('cerrar_sesion_usuario', views.userLogout, name='SalirUser'),
     path('subastasactivas', views.ver_subastas_activas, name= 'subastas_activas'),
+    path('mis_reservas', views.ver_mis_reservas, name= 'mis_reservas'),
+    path('mis_subastas', views.ver_mis_subastas, name= 'mis_subastas'),
     path('ingresarsubasta/<id>', views.ingresar_subasta, name= 'ingresar_subasta'),
 
     path('realizarreserva/<id>', views.realizar_reserva, name= 'realizar_reserva'),
     path('confirmarreserva/<id>', views.confirmar_reserva, name= 'confirmar_reserva'),
+    path('realizar_reserva_hotsale/<id>', views.realizar_reserva_hotsale, name= 'realizar_reserva_hotsale'),
+    path('cancelar_reserva/<id>', views.cancelar_reserva, name= 'cancelar_reserva'),
     path('propiedad/<id>', views.ver_prop, name='ver_prop'),
 
     path('perfil', views.verPerfil, name='perfil'),
+    path('solicitar_baja', views.solicitar_baja, name='solicitar_baja'),
+    path('solicitar_alta', views.solicitar_alta, name='solicitar_alta'),
     path('editar_perfil/<id>', views.editarPerfil, name='editarPerfil'),
     path('cuadrillaprop', views.ver_cuadrilla_propiedades, name= 'cuadrilla_prop'),
     path('cuadrillaprop/porzona/<zona>', views.ver_cuadrilla_x_zona, name= 'cuadrilla_prop_por_zona'),
@@ -67,10 +76,16 @@ urlpatterns = [
     #path('administracion/determinarganador/<id>', views.determinar_ganador, name='determinar_ganador'),
     path('administracion/propiedad/<id>/generarsemanas', views.generar_semanas, name='generar_semanas'),
     path('administracion/propiedad/<id>/habilitar_reservas', views.habilitar_reservas, name='habilitar_reservas'),
+    path('administracion/propiedad/<id>/habilitar_hotsales', views.habilitar_hotsales, name='habilitar_hotsale'),
     path('administracion/abrirsubastas', views.abrir_subastas, name='abrir_subastas'),
     path('administracion/cerrarsubastas', views.cerrar_subastas, name='cerrar_subastas'),
     path('administracion/usuario/<id>', views.ver_perfil_usuario, name='perfil_usuario'),
     path('administracion/listado_usuarios', views.listado_usuarios, name='listado_usuarios'),
+    path('administracion/aceptar_alta/<id>', views.aceptar_alta, name='aceptar_alta'),
+    path('administracion/rechazar_alta/<id>', views.rechazar_alta, name='rechazar_alta'),
+    path('administracion/aceptar_baja/<id>', views.aceptar_baja, name='aceptar_baja'),
+    path('administracion/rechazar_baja/<id>', views.rechazar_baja, name='rechazar_baja'),
+    path('administracion/ver_solicitudes', views.ver_solicitudes, name='ver_solicitudes')
 ]
 urlpatterns += staticfiles_urlpatterns()
 
