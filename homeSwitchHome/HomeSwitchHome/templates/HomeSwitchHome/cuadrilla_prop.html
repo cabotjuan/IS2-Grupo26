@@ -61,9 +61,11 @@
 						</h5>
 						{{Propiedad.localidad}}
 						</div>
-						
+						{% if request.user.is_authenticated %}
 
 						<a class="btn btn-outline-success btn-sm" href='/propiedad/{{ Propiedad.id}}'>Ver detalle</a>
+
+						{% endif %}
 					</div>
 
 				{% endfor %}
@@ -99,9 +101,10 @@
 						</h5>
 						{{Propiedad.localidad}}
 						</div>
-						
+						{% if request.user.is_authenticated %}
 
-						<a class="btn btn-outline-success btn-sm" href='/propiedad/{{ Propiedad.id}}'>Ver detalle</a>
+
+						<a class="btn btn-outline-success btn-sm" href='/propiedad/{{ Propiedad.id}}'>Ver detalle</a>{% endif %}
 					</div>
 
 				{% endfor %}
@@ -137,9 +140,10 @@
 						</h5>
 						{{Propiedad.localidad}}
 						</div>
-						
+						{% if request.user.is_authenticated %}
 
-						<a class="btn btn-outline-success btn-sm" href='/propiedad/{{ Propiedad.id}}'>Ver detalle</a>
+
+						<a class="btn btn-outline-success btn-sm" href='/propiedad/{{ Propiedad.id}}'>Ver detalle</a>{% endif %}
 					</div>
 
 				{% endfor %}
@@ -175,8 +179,10 @@
 						{{Propiedad.localidad}}
 						</div>
 						
+						{% if request.user.is_authenticated %}
 
-						<a class="btn btn-outline-success btn-sm" href='/propiedad/{{ Propiedad.id}}'>Ver detalle</a>
+
+						<a class="btn btn-outline-success btn-sm" href='/propiedad/{{ Propiedad.id}}'>Ver detalle</a>{% endif %}
 					</div>
 
 				{% endfor %}
@@ -219,8 +225,9 @@
 						{{Propiedad.localidad}}
 						</div>
 						
+						{% if request.user.is_authenticated %}
 
-						<a class="btn btn-outline-success btn-sm" href='/propiedad/{{ Propiedad.id}}'>Ver detalle</a>
+						<a class="btn btn-outline-success btn-sm" href='/propiedad/{{ Propiedad.id}}'>Ver detalle</a>{% endif %}
 					</div>
 
 				{% endfor %}

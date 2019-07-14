@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, render_to_response
-from .models import Propiedad, Semana, Subasta, Foto, Postor, Perfil, Tarjeta, Reserva
+from .models import Propiedad, Semana, Subasta, Foto, Favorito, Postor, Perfil, Tarjeta, Reserva, Solicitud
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
@@ -33,6 +33,24 @@ def listado_prop(request):
 def administracion(request):
 		template = 'HomeSwitchHome/administracion.html'
 		return render(request, template, {})
+
+
+def ver_mis_reservas(request):
+	l_res = Reserva.objects.filter(usuario_id=request.user.id)
+	l_sem = []
+	for r in l_res:
+		l_sem.append(Semana.objects.get(reserva_id=r.id))
+	return render(request,'HomeSwitchHome/ver_mis_reservas.html',{'l_sem':l_sem})
+
+def ver_mis_subastas(request):
+	l_sub_id = Postor.objects.filter(usuario_id=request.user.id).order_by('subasta_id').distinct().values('subasta_id')
+	l_sem = []
+	for s in l_sub_id:
+		l_sem.append(Semana.objects.get(subasta_id=s['subasta_id']))
+	return render(request,'HomeSwitchHome/ver_mis_subastas.html',{'l_sem':l_sem})
+
+
+
 
 
 def listado_res(request, id):
@@ -69,15 +87,56 @@ def ver_prop(request, id):
 	sub = Semana.objects.filter(propiedad_id=p.id, subasta_id__isnull=False).count()	
 	semanas= Semana.objects.filter(propiedad_id=p.id)
 	es_premium = Perfil.objects.get(usuario=request.user).es_premium
-	return render(request, 'HomeSwitchHome/ver_prop.html',{'Propiedad':p,'res':res,'sub':sub,'semanas':semanas,'es_premium':es_premium})
+	favs = Favorito.objects.filter(usuario_id=request.user).values('semana_id')
+	sem_favs = []
+	print(favs)
+	for f in favs:
+		sem_favs.append(Semana.objects.get(id=f['semana_id'])) 
+	print(sem_favs)
+	return render(request, 'HomeSwitchHome/ver_prop.html',{'user_favs':sem_favs,'Propiedad':p,'res':res,'sub':sub,'semanas':semanas,'es_premium':es_premium})
+
+
+
+def agregar_fav(request, id):
+	sem = Semana.objects.get(id=id)
+	f = Favorito.objects.create(usuario_id=request.user.id,semana_id=sem.id)
+	f.save()
+	print('ADD FAV . . .'+str(f))
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+def quitar_fav(request, id):
+	sem = Semana.objects.get(id=id)
+	f = Favorito.objects.get(usuario_id=request.user.id,semana_id=sem.id)
+	print('REM FAV . . .'+str(f))
+	f.delete()
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+	#return redirect(request.path)
+
+def ver_fav(request):
+	listado = Favorito.objects.filter(usuario_id=request.user.id).values('semana_id')
+	semanas = []
+	for s in listado:
+		semanas.append(Semana.objects.get(id=s['semana_id']))
+	return render(request, 'HomeSwitchHome/ver_fav.html',{'listado':semanas})
+
+
 
 def realizar_reserva(request, id):
 	semana = Semana.objects.get(id=id)
+	r_hotsale = False
 	tieneRes = Reserva.objects.filter(usuario_id=request.user,fecha_reserva=semana.fecha_inicio_sem).exists()
 	tieneCred = Perfil.objects.get(usuario_id=request.user).creditos > 0
 	print(tieneRes)
 	print(tieneCred)
-	return render(request, 'HomeSwitchHome/realizar_reserva.html',{'semana':semana,'tieneRes':tieneRes,'tieneCred':tieneCred})
+	return render(request, 'HomeSwitchHome/realizar_reserva.html',{'r_hotsale':r_hotsale,'semana':semana,'tieneRes':tieneRes,'tieneCred':tieneCred})
+
+
+def realizar_reserva_hotsale(request, id):
+	semana = Semana.objects.get(id=id)
+	r_hotsale = True
+	tieneRes = Reserva.objects.filter(usuario_id=request.user,fecha_reserva=semana.fecha_inicio_sem).exists()
+	tieneCred = Perfil.objects.get(usuario_id=request.user).creditos > 0
+	return render(request, 'HomeSwitchHome/realizar_reserva.html',{'r_hotsale':r_hotsale,'semana':semana,'tieneRes':tieneRes,'tieneCred':tieneCred})
 
 def confirmar_reserva(request, id):
 	semana = Semana.objects.get(id=id)
@@ -92,6 +151,38 @@ def confirmar_reserva(request, id):
 
 	messages.success(request,'Reserva realizada!')
 	return redirect(reverse_lazy('home'))
+
+def confirmar_reserva_hotsale(request, id):
+	semana = Semana.objects.get(id=id)
+	r = Reserva.objects.create(usuario=request.user,reservada_desde='HOTSALE',fecha_reserva=semana.fecha_inicio_sem)
+	semana.reserva_id = r.id
+	semana.habilitada_hotsale = False
+	semana.save()
+	r.save()
+	messages.success(request,'Reserva Hot Sale realizada!')
+	return redirect(reverse_lazy('home'))
+
+def cancelar_reserva(request, id):
+	reserva = Reserva.objects.get(id=id)
+	semana = Semana.objects.get(reserva_id=reserva.id)
+	if date.today()+timedelta(days=3) < reserva.fecha_reserva:
+		# MAS DE 6 M de anticipo
+		p = Perfil.objects.get(usuario_id=semana.reserva.usuario.id)
+		if semana.reserva.reservada_desde=='DIRECTA' or semana.reserva.reservada_desde=='SUBASTA':
+			p.creditos+=1
+		if fechas.mover_delta_meses(date.today(), 6) < reserva.fecha_reserva:
+			semana.habilitada_reserva = True 
+		else:
+			semana.habilitada_reserva = False 
+		semana.habilitada_subasta = False 
+		semana.habilitada_hotsale = False 
+		semana.reserva = None
+		semana.save()
+		reserva.delete() 
+		messages.success(request,'Reserva Cancelada.')  	
+	else:
+		messages.error(request,'Periodo cancelacion excedido.')  	
+	return redirect('home')
 
 def eliminar_propiedad(request, id):
 	p= Propiedad.objects.get(id=id)
@@ -194,6 +285,42 @@ def habilitar_reservas(request, id):
 		messages.success(request, "Se habilito la reserva !")
 		return redirect(reverse_lazy('administracion'))
 
+def habilitar_hotsales(request, id):
+	# SEMANAS QUE FALTEN MENOS de 5 MESES y 27 dias PARA RESIDIR.
+	# 
+	listado = Semana.objects.filter(propiedad=id).filter(fecha_inicio_sem__lt= fechas.mover_delta_meses(date.today(), 5)+timedelta(days=27),habilitada_reserva=False,habilitada_subasta=False,habilitada_hotsale=False)
+	if request.method == 'GET':
+		p= Propiedad.objects.get(id=id)
+		return render(request, 'HomeSwitchHome/habilitar_hotsales.html', {'listado':listado})
+	else:
+		seleccion = request.POST.get('semana')
+		costo = request.POST.get('costo')
+		semana = listado.get(numero_semana=seleccion)
+		semana.costo = costo
+		semana.habilitada_hotsale = True
+		semana.habilitada_reserva = False
+		semana.habilitada_subasta = False
+		semana.save()
+		messages.success(request, "Hot-Sale habilitado!")
+		return redirect(reverse_lazy('administracion'))
+
+def deshabilitar_hotsales(request, id):
+	# SEMANAS QUE FALTEN MENOS de 5 MESES y 27 dias PARA RESIDIR.
+	# 
+	listado = Semana.objects.filter(propiedad=id).filter(fecha_inicio_sem__lt= fechas.mover_delta_meses(date.today(), 5)+timedelta(days=27),habilitada_reserva=False,habilitada_subasta=False,habilitada_hotsale=True)
+	if request.method == 'GET':
+		p= Propiedad.objects.get(id=id)
+		return render(request, 'HomeSwitchHome/deshabilitar_hotsales.html', {'listado':listado})
+	else:
+		seleccion = request.POST.get('semana')
+		semana = listado.get(numero_semana=seleccion)
+		semana.habilitada_hotsale = False
+		semana.save()
+		messages.success(request, "Hot-Sale deshabilitado!")
+		return redirect(reverse_lazy('administracion'))
+
+
+
 
 def agregar_propiedad(request):
 	Imageformset = modelformset_factory(Foto, form= forms.ImageForm ,min_num=0, max_num=5,extra=5)
@@ -283,7 +410,8 @@ def borrar_fotos(request, id):
 def abrir_subastas(request):
 	ct=0
 	if request.method == 'POST':
-		monto = request.POST.get('monto')		
+		monto = request.POST.get('monto')	
+		print()	
 		semanas = Semana.objects.all()
 		for sem in semanas:
 			fecha_desplazada = fechas.mover_delta_meses(sem.fecha_inicio_sem, -6)
@@ -301,7 +429,7 @@ def abrir_subastas(request):
 				fecha = sem.fecha_inicio_sem
 				nro = sem.numero_semana
 				sem.save()
-				messages.success(request,prop.titulo+' Semana '+str(nro)+' ('+str(fecha)+') ahora está en subasta.')
+				messages.success(request,prop+' Semana '+str(nro)+' ('+str(fecha)+') ahora está en subasta.')
 		if ct == 0:
 			messages.success(request,'No se abrieron subastas.')
 
@@ -507,9 +635,6 @@ def ingresar_subasta(request, id):
 					messages.error(request,'Monto de puja No Valido.')
 			elif monto_puja>semana.monto_base:
 				if not Reserva.objects.filter(usuario_id=request.user,fecha_reserva=semana.fecha_inicio_sem).exists():
-					usuario_perfil = Perfil.objects.get(usuario=request.user)
-					usuario_perfil.creditos-=1
-					usuario_perfil.save()
 					Postor.objects.create(usuario=request.user,subasta=subasta,monto_puja=monto_puja,fecha_puja=datetime.now())
 					messages.success(request,'Puja de Subasta Registrada!')
 				else:
@@ -622,10 +747,71 @@ class Logout(LogoutView):
 	pass
 
 def verPerfil(request):
-	print(request.user.id)
-	perfil = Perfil.objects.get(usuario=request.user.id)
-	tarjeta = Tarjeta.objects.get(usuario=request.user.id)
-	return render(request, 'HomeSwitchHome/mi_perfil.html', {'usuario': request.user,'perfil':perfil,'tarjeta':tarjeta})
+	if request.method=='POST':
+		tipo = request.POST.get('tipo')
+		motivo = request.POST.get('motivo')
+		Solicitud.objects.create(usuario=request.user,tipo=tipo,motivo=motivo)
+		messages.success(request,'Solicitud de'+ tipo +' Premium enviada.')
+		return redirect('home')
+	else:	
+		print(request.user.id)
+		perfil = Perfil.objects.get(usuario=request.user.id)
+		tarjeta = Tarjeta.objects.get(usuario=request.user.id)
+		solicitud_alta = None
+		solicitud_baja = None
+		if Solicitud.objects.filter(usuario_id=request.user.id,tipo='BAJA').count():
+			solicitud_baja = Solicitud.objects.get(usuario_id=request.user.id,tipo='BAJA')
+		if Solicitud.objects.filter(usuario_id=request.user.id,tipo='ALTA').count():
+			solicitud_alta = Solicitud.objects.get(usuario_id=request.user.id,tipo='ALTA')
+		return render(request, 'HomeSwitchHome/mi_perfil.html', {'usuario': request.user,'perfil':perfil,'tarjeta':tarjeta,'solicitud_baja':solicitud_baja,'solicitud_alta':solicitud_alta})
+
+def solicitar_baja(request):
+	if request.method=='POST':
+		motivo = request.POST.get('motivo')
+		Solicitud.objects.create(usuario=request.user,tipo='BAJA',motivo=motivo)
+		messages.success(request,'Solicitud de Baja Premium enviada.')
+		return redirect('home')
+def solicitar_alta(request):
+	if request.method=='POST':
+		motivo = request.POST.get('motivo')
+		Solicitud.objects.create(usuario=request.user,tipo='ALTA',motivo=motivo)
+		messages.success(request,'Solicitud de Alta Premium enviada.')
+	return redirect('home')
+
+def aceptar_baja(request, id):
+	solicitud = Solicitud.objects.get(id=id)
+	perfil = Perfil.objects.get(usuario_id=solicitud.usuario_id)
+	perfil.es_premium = False
+	perfil.save()
+	solicitud.delete()
+	messages.success(request,'Solicitud de Baja Premium Aceptada.')
+	return redirect('ver_solicitudes')
+
+def rechazar_baja(request, id):
+	solicitud = Solicitud.objects.get(id=id)
+	solicitud.delete()
+	messages.success(request,'Solicitud de Baja Premium Rechazada.')
+	return redirect('ver_solicitudes')
+
+
+def aceptar_alta(request, id):
+	solicitud = Solicitud.objects.get(id=id)
+	perfil = Perfil.objects.get(usuario_id=solicitud.usuario_id)
+	perfil.es_premium = True
+	perfil.save()
+	solicitud.delete()
+	messages.success(request,'Solicitud de Alta Premium Aceptada.')
+	return redirect('ver_solicitudes')
+
+def rechazar_alta(request, id):
+	solicitud = Solicitud.objects.get(id=id)
+	solicitud.delete()
+	messages.success(request,'Solicitud de Alta Premium Rechazada.')
+	return redirect('ver_solicitudes')
+
+def ver_solicitudes(request):
+	solicitudes = Solicitud.objects.all()
+	return render(request, 'HomeSwitchHome/ver_solicitudes.html',{'solicitudes':solicitudes})
 
 def editarPerfil(request, id):
 	user = User.objects.get(id=id)
@@ -651,3 +837,4 @@ def editarPerfil(request, id):
 	#			if mail == user_form.cleaned_data.get('email'):
 
 	return render(request, 'HomeSwitchHome/editar_perfil.html',{'usuario':user_form,'perfil':perfil_form,'tarjeta':tarj_form})
+

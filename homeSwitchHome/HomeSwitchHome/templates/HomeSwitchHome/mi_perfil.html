@@ -7,6 +7,11 @@
 <div class="main-container">
 	<div class="jumbotron jumbotron-fluid">
 		<div class="container">
+      <ul class="messages">
+{% for message in messages %}
+<div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}><h4>{{ message }}</h4></div>
+{% endfor %}
+</ul>
 			<h1 class="display-4">Mi perfil</h1>
 			<a class="btn btn-info" href="{%url 'editarPerfil' request.user.id %}">Editar</a>
 			<p class="lead"></p>
@@ -14,13 +19,9 @@
 	</div>
 
 </div>
-<ul class="messages">
-{% for message in messages %}
-<div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}><h4>{{ message }}</h4></div>
-{% endfor %}
-</ul>
 
 <div class="container">
+
 
   <div class="row">
     <div class="col-6 col-md-4">
@@ -68,10 +69,65 @@
       <h5>Tipo de cuenta: </h5>
     </div>
     <div class="col-12 col-sm-6 col-md-8">
-		<h5>{% if perfil.es_premium  %}
+		<h5>
+
+      {% if perfil.es_premium  %}
+
 				 Premium
+
+        {% if solicitud_baja %}
+           <div class="card border-bottom-0 border-right-0 border-warning" style="width: 100%;">
+                <h6 class="card-header mb-2">Solicitar baja Premium</h6>
+              <div class="card-body">
+                <p class="card-text">Solicitud Enviada. Debes comunicarte por Telefono o acercarte a la Oficina para concretar la Solicitud.</p>
+              </div>
+            </div>
+
+        {% else %}
+          <form method="POST">
+            {% csrf_token %}
+            <h6><br><br>
+            <div class="card border-bottom-0 border-right-0 border-warning" style="width: 100%;">
+                <h6 class="card-header mb-2">Solicitar baja Premium</h6>
+              <div class="card-body">
+                <p class="card-text">Una vez enviada la solicitud debes comunicarte por Telefono o acercarte a la Oficina para concretar la Solicitud.</p>
+                Motivo:<br>
+              <input class='form-control' type="text" name="motivo" value="...">(opcional)<br>
+              <input type="hidden" name="tipo" value="BAJA"><br>
+                 <input class='form-control bg-info text-white' type="submit" class="card-link" value='Enviar Solicitud'>
+              </div>
+            </div>
+          </form>
+        {% endif %}
+
 			{% else %}
+
 	 			Comun
+
+        {% if solicitud_alta %}
+            <div class="card border-bottom-0 border-right-0 border-warning" style="width: 100%;">
+                <h6 class="card-header mb-2">Solicitar alta Premium</h6>
+              <div class="card-body">
+                <p class="card-text">Solicitud Enviada. Debes comunicarte por Telefono o acercarte a la Oficina para concretar la Solicitud.</p>
+              </div>
+            </div>
+        {% else %}
+          <form method="POST">
+            {% csrf_token %}
+            <h6><br><br>
+
+            <div class="card border-bottom-0 border-right-0 border-warning" style="width: 100%;">
+                <h6 class="card-header mb-2">Solicitar alta Premium</h6>
+              <div class="card-body">
+                <p class="card-text">Una vez enviada la solicitud debes comunicarte por Telefono o acercarte a la Oficina para concretar la Solicitud.</p>
+                Motivo:<br>
+              <input class='form-control' type="text" name="motivo" value="...">(opcional)<br>
+              <input type="hidden" name="tipo" value="ALTA"><br>
+                 <input class='form-control bg-info text-white' type="submit" class="card-link" value='Enviar Solicitud'>
+              </div>
+            </div>
+          </form>
+        {% endif %}
 			{% endif %}</h5>
     </div>
   </div>

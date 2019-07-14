@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% load static %}
+<link rel="stylesheet" href="{% static "home.css" %}">
+
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+<div class="main-container">
+	<ul class="messages">
+	{% for message in messages %}
+	<div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}><h4>{{ message }}</h4></div>
+	{% endfor %}
+	</ul>
+	<div class="prop-container">
+		<div class="p-3 mb-2 bg-success text-light">
+			<h4>Mis Subastas</h4>
+		</div>
+		<hr>
+		{% if l_sem %}
+			<ul class="list-group">
+				{% for s in l_sem %}
+					<a class='list-group-item'>
+						<p class="text-secondary">Propiedad: {{s.propiedad.titulo}}</p>
+						<p class="text-info">Fecha Subastada: {{s.fecha_inicio_sem}}</p>
+						<a class='bt-ingresar btn btn-outline-success btn-sm' href='/ingresarsubasta/{{s.subasta.id}}'>Ir a la Subasta</a> 
+					</a>						
+				{% endfor %}
+			</ul>
+		{% else %}
+			<h5>Listado de subastas activas vacio.</h5>
+		{% endif %}
+	</div>
+</div>

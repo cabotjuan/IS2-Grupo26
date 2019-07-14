@@ -54,10 +54,17 @@
 
 		<br><br>
 		<div class="p-3 mb-2 bg-secondary text-light"><h6>Semanas Activas</h6></div>
+			
+		{% if semanas %}
 			{% for s in semanas %}
 				{% if s.habilitada_reserva %}
 					<div class="col-md-10">
-					<span class="badge badge-primary">En Reserva</span><h5>({{s.numero_semana}}°){{s.fecha_inicio_sem}} a {{s.fecha_fin_sem}} 
+						
+					<span class="badge badge-primary">En Reserva</span><h5>	{% if s in user_favs %}
+				<a href="{% url 'quitar_fav' s.id %}"><i class="fas fa-star text-warning"></i></a>
+			{% else %}
+				<a href="{% url 'agregar_fav' s.id %}"><i class="far fa-star text-warning"></i></a>
+			{% endif %}({{s.numero_semana}}°){{s.fecha_inicio_sem}} a {{s.fecha_fin_sem}} 
 				{% if not es_premium %}
 					<a class="btn btn-primary btn-sm disabled" href="#">Reservar</a>(Debes ser Premium para acceder.)
 				{% else %}
@@ -67,11 +74,29 @@
 					</div>
 				{% elif s.habilitada_subasta %}
 					<div class="col-md-10">
-					<span class="badge badge-success">En Subasta</span><h5>({{s.numero_semana}}°){{s.fecha_inicio_sem}}a {{s.fecha_fin_sem}}
+						
+					<span class="badge badge-success">En Subasta</span><h5>	{% if s in user_favs %}
+				<a href="{% url 'quitar_fav' s.id %}"><i class="fas fa-star text-warning"></i></a>
+			{% else %}
+				<a href="{% url 'agregar_fav' s.id %}"><i class="far fa-star text-warning"></i></a>
+			{% endif %}({{s.numero_semana}}°){{s.fecha_inicio_sem}}a {{s.fecha_fin_sem}}
 				<a class="btn btn-success btn-sm" href="{% url 'ingresar_subasta' s.subasta_id %}">Ingresar a Subasta</a></h5> 
+					</div>
+					{% elif s.habilitada_hotsale %}
+					<div class="col-md-10">
+					
+					<span class="badge badge-warning">Hot-Sale</span><h5>	{% if s in user_favs %}
+				<a href="{% url 'quitar_fav' s.id %}"><i class="fas fa-star text-warning"></i></a>
+			{% else %}
+				<a href="{% url 'agregar_fav' s.id %}"><i class="far fa-star text-warning"></i></a>
+			{% endif %}({{s.numero_semana}}°){{s.fecha_inicio_sem}}a {{s.fecha_fin_sem}}
+				<a class="btn btn-success btn-sm" href="{% url 'realizar_reserva_hotsale' s.id %}">Reservar</a></h5> 
 					</div>
 				{% endif %}
 			{% endfor %}
+		{% else %}
+			No hay Semanas Activas por el momento ..
+		{% endif %}
 			<hr>
 		
 	</div>
