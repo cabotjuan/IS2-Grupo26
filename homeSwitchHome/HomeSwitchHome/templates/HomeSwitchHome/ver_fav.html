@@ -45,6 +45,10 @@
               <span class="badge badge-warning">Hot-Sale</span><h5>({{s.numero_semana}}°){{s.fecha_inicio_sem}}a {{s.fecha_fin_sem}}
             <a class="btn btn-success btn-sm" href="{% url 'realizar_reserva_hotsale' s.id %}">Reservar</a></h5> 
               </div>
+            {% else %}
+                  <div class="col-md-10">
+              <h5>({{s.numero_semana}}°){{s.fecha_inicio_sem}}a {{s.fecha_fin_sem}}</h5> 
+              </div>
             {% endif %}
       {% endfor %}
   {% else %}

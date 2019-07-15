@@ -285,7 +285,7 @@ def habilitar_reservas(request, id):
 	listado = Semana.objects.filter(propiedad=id).filter(fecha_inicio_sem__lte= fechas.mover_delta_meses(date.today(), 12)).filter(fecha_inicio_sem__gt= fechas.mover_delta_meses(date.today(), 6),habilitada_reserva=False)
 	if request.method == 'GET':
 		p= Propiedad.objects.get(id=id)
-		return render(request, 'HomeSwitchHome/habilitar_reservas.html', {'listado':listado})
+		return render(request, 'HomeSwitchHome/habilitar_reservas.html', {'listado':listado,'p':id})
 	else:
 		seleccion = request.POST.get('semana')
 		costo = request.POST.get('costo')
@@ -455,6 +455,7 @@ def cerrar_subastas(request):
 	for sub in subastas:
 		delta = date.today()-sub.fecha_inicio
 		print('DELTA: '+str(delta))
+		sem = Semana.objects.get(subasta_id=sub.id)
 		if delta.days >= 3:
 			print('INGRESA a Cerrar ')
 			print(sub)
@@ -463,7 +464,7 @@ def cerrar_subastas(request):
 			print(hay_postores)
 			if not hay_postores:
 				print('..NO Hay Postores..')
-				messages.info(request,'No se encontró ganador válido(No hay postores).')
+				messages.info(request,str(sem.propiedad.titulo)+' (SUB: '+str(sub.fecha_inicio_sem)+')'+'No se encontró ganador válido(No hay postores)')
 			else:
 				print('..Hay Postores..')
 				ganador_valido = False
@@ -472,10 +473,13 @@ def cerrar_subastas(request):
 					ultpostor_perfil = Perfil.objects.get(usuario_id=ultpostor.usuario_id)
 					tiene_reservas = Reserva.objects.filter(usuario_id=ultpostor.usuario_id, fecha_reserva=sub.fecha_inicio_sem).exists()
 					if not tiene_reservas and ultpostor_perfil.creditos >= 1:
-						
-						messages.info(request,'Se ha enviado un Mail al ganador '+ultpostor.usuario.email)
+						messages.info(request,str(sem.propiedad.titulo)+'(SUB: '+str(sub.fecha_inicio_sem)+')'+'Se ha enviado un Mail al ganador '+ultpostor.usuario.email)
 						ganador_valido = True
 					else:
+						if tiene_reservas:
+							messages.info(request,str(sem.propiedad.titulo)+'(SUB: '+str(sub.fecha_inicio_sem)+')'+' El Postor '+ultpostor.usuario.email+' ya Tiene Reservas(No apto para ganar).')
+						else:
+							messages.info(request,str(sem.propiedad.titulo)+'(SUB: '+str(sub.fecha_inicio_sem)+')'+'El Postor '+ultpostor.usuario.email+' no tiene creditos(No apto para ganar).')
 						ultpostor.delete()
 						hay_postores = Postor.objects.filter(subasta=sub).count()
 				if ganador_valido:
