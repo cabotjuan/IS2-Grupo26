@@ -159,6 +159,8 @@ def confirmar_reserva_hotsale(request, id):
 	messages.success(request,'Reserva Hot Sale realizada!')
 	return redirect(reverse_lazy('home'))
 
+def ver_cancelar_reserva(request, id):
+	return render(request,'HomeSwitchHome/cancelar_reserva.html',{'id':id})
 def cancelar_reserva(request, id):
 	reserva = Reserva.objects.get(id=id)
 	semana = Semana.objects.get(reserva_id=reserva.id)

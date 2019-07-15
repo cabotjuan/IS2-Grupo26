@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% load static %}
+<link rel="stylesheet" href="{% static "administracion.css" %}">
+
+
+
+{% include 'HomeSwitchHome/navBar.html' %}
+
+
+<div class="prop-container">
+		<h1>Cancelar Reserva</h1>
+		<hr>
+		<a class='bt-ingresar btn btn-danger btn-sm' href='{% url 'cancelar_reserva' id %}' >Confirmar la Cancelacion</a> 
+		<a class='bt-ingresar btn btn-danger btn-sm' href='{% url 'mis_reservas' %}' >Volver</a> 
+
+</div>

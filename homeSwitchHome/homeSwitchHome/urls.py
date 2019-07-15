@@ -42,6 +42,7 @@ urlpatterns = [
     path('confirmarreserva/<id>', views.confirmar_reserva, name= 'confirmar_reserva'),
     path('realizar_reserva_hotsale/<id>', views.realizar_reserva_hotsale, name= 'realizar_reserva_hotsale'),
     path('cancelar_reserva/<id>', views.cancelar_reserva, name= 'cancelar_reserva'),
+    path('ver_cancelar_reserva/<id>', views.ver_cancelar_reserva, name= 'ver_cancelar_reserva'),
     path('propiedad/<id>', views.ver_prop, name='ver_prop'),
 
     path('perfil', views.verPerfil, name='perfil'),
