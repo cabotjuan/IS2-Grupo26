@@ -423,11 +423,11 @@ def abrir_subastas(request):
 	if request.method == 'POST':
 		monto = request.POST.get('monto')	
 		print()	
-		semanas = Semana.objects.all()
+		semanas = Semana.objects.filter(reserva_id__isnull = True)
 		for sem in semanas:
 
 			fecha_desplazada = fechas.mover_delta_meses(sem.fecha_inicio_sem, -6)
-			if (fecha_desplazada - timedelta(days=3)<= date.today() <= fecha_desplazada + timedelta(days=3) ) and not sem.habilitada_subasta and sem.reserva_id__isnull == True:
+			if (fecha_desplazada - timedelta(days=3)<= date.today() <= fecha_desplazada + timedelta(days=3) ) and not sem.habilitada_subasta:
 				ct+=1
 				ct2+=1
 				propiedad = Propiedad.objects.get(id=sem.propiedad_id)
@@ -489,7 +489,7 @@ def cerrar_subastas(request):
 					sem.habilitada_subasta=False
 					titulo_prop = sem.propiedad.titulo
 					mail = ultpostor.usuario.email
-					email = EmailMessage('Finalización de subasta para propiedad ' + titulo_prop, '¡Ha ganado la subasta por la semana '+ sub.fecha_inicio_sem + ' para la propiedad ' + titulo_prop +'!', to=[mail])
+					email = EmailMessage('Finalización de subasta para propiedad ' + titulo_prop, '¡Ha ganado la subasta por la semana '+ str(sub.fecha_inicio_sem) + ' para la propiedad ' + titulo_prop +'!', to=[mail])
 					email.send()
 					sem.save()
 					r.save()
@@ -624,7 +624,7 @@ def ingresar_subasta(request, id):
 		print('POST---')
 		if request.user.perfil.creditos > 0:
 			print('0-----------')
-			if Postor.objects.count() > 0:
+			if Postor.objects.filter(subasta_id=id).count() > 0:
 				ultpostor = Postor.objects.filter(subasta=subasta).latest('fecha_puja')
 				print('1-----------')
 				if monto_puja > ultpostor.monto_puja and monto_puja>semana.monto_base:
@@ -651,8 +651,8 @@ def ingresar_subasta(request, id):
 			messages.error(request,'creditos insuficientes para participar en subasta.')
 		return redirect(reverse_lazy('home'))
 	else:
-		if Postor.objects.count() > 0:
-			args={'semana':semana, 'monto_mas_alto':Postor.objects.filter(subasta=subasta).latest('fecha_puja').monto_puja}
+		if Postor.objects.filter(subasta_id=id).count() > 0:
+			args={'semana':semana, 'monto_mas_alto':Postor.objects.filter(subasta_id=subasta).latest('fecha_puja').monto_puja}
 		else:
 			args={'semana':semana}
 		return render(request, 'HomeSwitchHome/ingresar_subasta.html', args)
