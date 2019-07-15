@@ -302,7 +302,7 @@ def habilitar_hotsales(request, id):
 	listado = Semana.objects.filter(propiedad=id).filter(fecha_inicio_sem__lte= fechas.mover_delta_meses(date.today(), 5)+timedelta(days=27),habilitada_reserva=False,habilitada_subasta=False,habilitada_hotsale=False).filter(fecha_inicio_sem__gte= date.today())
 	if request.method == 'GET':
 		p= Propiedad.objects.get(id=id)
-		return render(request, 'HomeSwitchHome/habilitar_hotsales.html', {'listado':listado})
+		return render(request, 'HomeSwitchHome/habilitar_hotsales.html', {'listado':listado,'p':id})
 	else:
 		seleccion = request.POST.get('semana')
 		costo = request.POST.get('costo')
