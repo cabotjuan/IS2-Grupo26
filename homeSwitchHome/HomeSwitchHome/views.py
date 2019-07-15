@@ -39,10 +39,11 @@ def administracion(request):
 
 def ver_mis_reservas(request):
 	l_res = Reserva.objects.filter(usuario_id=request.user.id)
-	l_sem = []
-	for r in l_res:
-		l_sem.append(Semana.objects.get(reserva_id=r.id))
-	return render(request,'HomeSwitchHome/ver_mis_reservas.html',{'l_sem':l_sem})
+	hoy = date.today() + timedelta(days=3)
+	#l_sem = []
+	#for r in l_res:
+	#	l_sem.append(Semana.objects.get(reserva_id=r.id))
+	return render(request,'HomeSwitchHome/ver_mis_reservas.html',{'l_res':l_res,'hoy':hoy})
 
 def ver_mis_subastas(request):
 	l_sub_id = Postor.objects.filter(usuario_id=request.user.id).order_by('subasta_id').distinct().values('subasta_id')
@@ -176,8 +177,9 @@ def cancelar_reserva(request, id):
 		semana.habilitada_subasta = False 
 		semana.habilitada_hotsale = False 
 		semana.reserva = None
+		reserva.cancelada = True
+		reserva.save()
 		semana.save()
-		reserva.delete() 
 		messages.success(request,'Reserva Cancelada.')  	
 	else:
 		messages.error(request,'Periodo cancelacion excedido.')  	
@@ -297,7 +299,7 @@ def habilitar_reservas(request, id):
 def habilitar_hotsales(request, id):
 	# SEMANAS QUE FALTEN MENOS de 5 MESES y 27 dias PARA RESIDIR.
 	# 
-	listado = Semana.objects.filter(propiedad=id).filter(fecha_inicio_sem__lt= fechas.mover_delta_meses(date.today(), 5)+timedelta(days=27),habilitada_reserva=False,habilitada_subasta=False,habilitada_hotsale=False)
+	listado = Semana.objects.filter(propiedad=id).filter(fecha_inicio_sem__lte= fechas.mover_delta_meses(date.today(), 5)+timedelta(days=27),habilitada_reserva=False,habilitada_subasta=False,habilitada_hotsale=False).filter(fecha_inicio_sem__gte= date.today())
 	if request.method == 'GET':
 		p= Propiedad.objects.get(id=id)
 		return render(request, 'HomeSwitchHome/habilitar_hotsales.html', {'listado':listado})

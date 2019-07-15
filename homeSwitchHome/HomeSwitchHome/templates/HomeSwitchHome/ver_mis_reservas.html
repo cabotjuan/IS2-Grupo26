@@ -18,24 +18,30 @@
 			<h4>Mis Reservas</h4>
 		</div>
 		<hr>
-		{% if l_sem %}
+		{% if l_res %}
 			<ul class="list-group">
-				{% for s in l_sem %}
-					<a class='list-group-item list-group-item-action'>
-						<p class="text-secondary">Propiedad: {{s.propiedad.titulo}}</p>
-						<p class="text-info">Fecha de Reserva: {{s.fecha_inicio_sem}}</p>
+				{% for r in l_res %}
+					<a class='list-group-item list-group-item-action bg-light'>
+						<p class="text-secondary">Propiedad: {{r.titulo_prop}}</p>
+						<p class="text-info">Fecha de Reserva: {{r.fecha_reserva}}</p>
 						<p class="text-info">
 							Estado:
-							{% if s.reserva.cancelada %}
+							{% if r.cancelada %}
 							CANCELADA
 							{% else %}
-							RESERVADA
-								<a class='bt-ingresar btn btn-danger btn-sm' href='{% url 'ver_cancelar_reserva' s.reserva_id %}' >Cancelar Reserva</a> 
+							RESERVADA (por {{r.reservada_desde}})
+								{% if r.fecha_reserva < hoy %}
+									<a class='bt-ingresar btn btn-secondary btn-sm' href='#'>Cancelar Reserva</a><i class="text-secondary">(Periodo cancelacion terminado)</i> 
 									<br><br><br>
 
+								{% else %}
+								<a class='bt-ingresar btn btn-danger btn-sm' href='{% url 'ver_cancelar_reserva' r.id %}' >Cancelar Reserva</a> 
+									<br><br>
+							{% endif %}
 							{% endif %}
 						</p>
-					</a>	
+
+					</a>	<br>
 
 				{% endfor %}
 			</ul>

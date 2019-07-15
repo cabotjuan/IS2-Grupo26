@@ -37,6 +37,7 @@ class Reserva(models.Model):
 	usuario = models.ForeignKey(User,unique=False, null=True, on_delete=models.SET_NULL)
 	reservada_desde = models.CharField(choices=OPCIONES_RESV, max_length=15) 
 	fecha_reserva = models.DateField(blank=True)
+	titulo_prop = models.CharField(max_length=30, blank=True,null=True)
 	cancelada =models.BooleanField(default=False)
 
 class Subasta(models.Model):
